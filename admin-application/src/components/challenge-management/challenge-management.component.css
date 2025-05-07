@@ -1,0 +1,76 @@
+/* Container for action buttons */
+.actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px 0 24px;
+  }
+  
+  .action-button {
+    min-width: 180px;
+  }
+  
+  /* Make sure icons and text are properly aligned */
+  .action-button mat-icon,
+  mat-card-title mat-icon,
+  mat-card-actions button mat-icon {
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  /* Form container with max width */
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding: 0 16px;
+  }
+  
+  /* Card styling */
+  .challenge-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-card-header {
+    background-color: #f5f5f5;
+    padding: 16px;
+    margin-bottom: 0 !important;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Form field takes full width */
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  /* Card content padding */
+  mat-card-content {
+    padding: 24px 16px 8px !important;
+  }
+  
+  /* Card actions alignment */
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 16px 16px !important;
+    gap: 8px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 599px) {
+    .actions-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .action-button {
+      width: 100%;
+    }
+  }
+  

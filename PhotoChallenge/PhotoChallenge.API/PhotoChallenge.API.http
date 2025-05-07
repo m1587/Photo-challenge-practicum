@@ -1,0 +1,6 @@
+@PhotoChallenge.API_HostAddress = http://localhost:5030
+
+GET {{PhotoChallenge.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

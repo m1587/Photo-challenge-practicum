@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoChallenge.API", "PhotoChallenge.API\PhotoChallenge.API.csproj", "{95112B11-75D7-4234-BEAF-DA57A4EC31F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoChallenge.Core", "PhotoChallenge.Core\PhotoChallenge.Core.csproj", "{AF53F30F-F0AD-4374-B7D4-92F6BB8CDE28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoChallenge.Data", "PhotoChallenge.Data\PhotoChallenge.Data.csproj", "{7904A109-2727-4075-BB98-A6B33564A410}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoChallenge.Service", "PhotoChallenge.Service\PhotoChallenge.Service.csproj", "{78A20F70-7C28-49C2-9885-A3F258D6E455}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95112B11-75D7-4234-BEAF-DA57A4EC31F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95112B11-75D7-4234-BEAF-DA57A4EC31F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95112B11-75D7-4234-BEAF-DA57A4EC31F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95112B11-75D7-4234-BEAF-DA57A4EC31F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF53F30F-F0AD-4374-B7D4-92F6BB8CDE28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF53F30F-F0AD-4374-B7D4-92F6BB8CDE28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF53F30F-F0AD-4374-B7D4-92F6BB8CDE28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF53F30F-F0AD-4374-B7D4-92F6BB8CDE28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7904A109-2727-4075-BB98-A6B33564A410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7904A109-2727-4075-BB98-A6B33564A410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7904A109-2727-4075-BB98-A6B33564A410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7904A109-2727-4075-BB98-A6B33564A410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A20F70-7C28-49C2-9885-A3F258D6E455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A20F70-7C28-49C2-9885-A3F258D6E455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A20F70-7C28-49C2-9885-A3F258D6E455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A20F70-7C28-49C2-9885-A3F258D6E455}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5268E722-5B5A-40CB-ACCD-B400ED7C94FB}
+	EndGlobalSection
+EndGlobal

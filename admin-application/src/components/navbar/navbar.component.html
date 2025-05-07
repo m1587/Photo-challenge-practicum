@@ -1,0 +1,43 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <div class="toolbar-container">
+    <div class="toolbar-left">
+      <button mat-icon-button routerLink="home" aria-label="Home">
+        <mat-icon>home</mat-icon>
+      </button>
+      <span class="app-title">Management System</span>
+    </div>
+    
+    <div class="toolbar-right">
+      @if (!authService.isSignedIn()) {
+        <button mat-raised-button class="login-button" routerLink="login">
+          <mat-icon>login</mat-icon>
+          SIGN IN
+        </button>
+      } @else {
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+          Management
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="users-management">
+            <mat-icon>people</mat-icon>
+            <span>Users Management</span>
+          </button>
+          <button mat-menu-item routerLink="challenge-management">
+            <mat-icon>flag</mat-icon>
+            <span>Challenge Management</span>
+          </button>
+          <button mat-menu-item routerLink="monthly-photo-report">
+            <mat-icon>assessment</mat-icon>
+            <span>Monthly Report</span>
+          </button>
+          <mat-divider></mat-divider>
+        </mat-menu>
+      }
+    </div>
+  </div>
+</mat-toolbar>
+
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>

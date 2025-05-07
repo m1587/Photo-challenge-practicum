@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  direction: rtl;
+  overflow: hidden; /* מונע גלילה */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 16px;
+  color: #3f51b5;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+h2:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #ff4081;
+}
+
+.form-container {
+  width: 100%;
+  padding: 0;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Enhanced form field styling */
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Make sure labels are visible */
+::ng-deep .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+::ng-deep .mat-form-field-appearance-outline:hover .mat-form-field-outline {
+  color: #3f51b5;
+  direction: ltr;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  color: #3f51b5;
+}
+
+/* Fix RTL prefix icon alignment */
+::ng-deep .mat-form-field-prefix {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+/* Fix dialog content padding */
+::ng-deep .mat-dialog-content {
+  padding: 0 24px;
+  max-height: none;
+  overflow: visible;
+}
+
+/* Fix dialog actions alignment */
+::ng-deep .mat-dialog-actions {
+  padding: 12px 24px 24px;
+  margin-bottom: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 0 5px 5px 0 !important;
+  border-right-style: solid !important;
+  border-left-style: none !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: 5px 0 0 5px !important;
+  border-left-style: solid !important;
+  border-right-style: none !important;
+}
+
+/* תיקון ליישור התווית והתוכן */
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .mat-form-field-infix {
+  text-align: right;
+  width: 100% !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  direction: rtl;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-dialog-content {
+    padding: 0 16px;
+  }
+
+  ::ng-deep .mat-dialog-actions {
+    padding: 8px 16px 16px;
+    flex-direction: row-reverse;
+    justify-content: center;
+  }
+
+  ::ng-deep .mat-dialog-actions button {
+    flex: 1;
+  }
+}

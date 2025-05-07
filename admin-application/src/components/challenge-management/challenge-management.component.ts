@@ -1,0 +1,106 @@
+import { Component } from '@angular/core';
+import { ChallengeService } from '../../services/challenge/challenge.service';
+import { Challenge } from '../../moduls/Challenge';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { log } from 'console';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+@Component({
+  selector: 'app-challenge-management',
+  imports: [   CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+  ],
+  templateUrl: './challenge-management.component.html',
+  styleUrl: './challenge-management.component.css'
+})
+export class ChallengeManagementComponent {
+  challengeForm: FormGroup;
+  showForm: boolean = false;
+  activeChallenge!: Challenge;
+
+  constructor(
+    private challengeService: ChallengeService,
+    private fb: FormBuilder
+  ) {
+    this.challengeForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+  }
+ 
+  ngOnInit(): void {
+    this.loadActiveChallenge();
+  }
+  
+  loadActiveChallenge() {
+    this.challengeService.getActiveChallenge().subscribe({
+      next: (challenge) => {
+        this.activeChallenge = challenge;
+      },
+      error: (err) => {
+        console.error(err);
+        alert('לא נמצא אתגר פעיל כרגע');
+      }
+    });
+  }
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  submitChallenge() {
+    if (this.challengeForm.valid) {
+      this.challengeService.addChallenge(this.challengeForm.value).subscribe({
+        next: res => {
+          alert('האתגר נוסף בהצלחה!');
+          this.challengeForm.reset();
+          this.showForm = false;
+        },
+        error: err => alert('שגיאה בהוספת האתגר.')
+      });
+    }
+  }
+  updateWinner(challengeId: number) {
+    console.log('עדכון תמונה מנצחת לאתגר עם ID:', challengeId);
+    this.challengeService.updateWinnerImage(challengeId).subscribe({
+      next: (res) => {
+        const updatedChallenge = (res as any).challenge;
+        alert(`עודכן בהצלחה! תמונה מנצחת ID: ${updatedChallenge.winnerImgId}`);      
+        // נשלח מייל מותאם אם יש winnerUserId
+        if (updatedChallenge.winnerUserId) {
+          console.log('מייל יישלח למשתמש עם ID:', updatedChallenge.winnerUserId);
+          const subject = 'מזל טוב! זכית באתגר השבועי 🎉';
+          const message = `התמונה שלך נבחרה כמנצחת באתגר "${updatedChallenge.title}"!`;
+  
+          this.challengeService.sendEmailToWinner(updatedChallenge.winnerUserId, subject, message).subscribe({
+            next: () => alert('המייל נשלח למשתמש הזוכה!'),
+            error: err => {
+              console.error('שליחת מייל נכשלה', err);
+              alert('שליחת המייל נכשלה.');
+            }
+          });
+        } else {
+          alert('לא נמצא משתמש מנצח לשליחת המייל.');
+        }
+  
+        this.loadActiveChallenge();
+      },
+      error: (err) => {
+        console.error(err);
+        alert("שגיאה בעדכון התמונה המנצחת. ודא שיש תמונות לאתגר.");
+      }
+    });
+  }
+  
+  
+  
+
+}
