@@ -4,13 +4,11 @@
 import type React from "react"
 import { useContext, useState } from "react"
 import { Avatar, Typography, Box, Menu, MenuItem, Skeleton } from "@mui/material"
-import { useNavigate } from 'react-router-dom'; // השתמש ב-useNavigate
-import { LogOut, Settings, User } from "lucide-react"
+import { LogOut, User } from "lucide-react"
 import { UserContext } from "../../context/UserContext"
 
 export function UserName() {
   const context = useContext(UserContext)
-  const navigate = useNavigate() // כאן השתמש ב-useNavigate
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [isLoading, setIsLoading] = useState(false)
 
