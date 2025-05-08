@@ -88,10 +88,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 builder.Services.AddCors(opt => opt.AddPolicy("MyPolicy", policy =>
 {
-    policy.WithOrigins("http://localhost:4200", "http://localhost:5173") 
-          .AllowAnyHeader()
-          .AllowAnyMethod()
-         .AllowCredentials();
+    policy.WithOrigins(
+        "http://localhost:4200",
+        "http://localhost:5173",
+        "https://photo-challenge.onrender.com",
+        "https://photo-challenge-admin.onrender.com"
+         )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
 }));
 builder.Services.AddTransient<ISendGridClient>(sp =>
 {
@@ -113,11 +118,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection(); // רק בלוקאלי
+}
 app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
