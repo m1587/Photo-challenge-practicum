@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run serve:ssr:admin-application",
-    "build": "ng build",
+    "start": "node dist/admin-application/server/server.mjs",
+    "build": "ng build && ng run admin-application:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:admin-application": "node dist/admin-application/server/server.mjs"
