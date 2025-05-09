@@ -29,20 +29,24 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "2MB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "5kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "4kb",
+                  "maximumError": "6kB"
                 }
               ],
               "outputHashing": "all"
@@ -80,7 +84,7 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {
-                "glob": "_redirects",
+                "glob": "**/*",
                 "input": "public"
               }
             ],

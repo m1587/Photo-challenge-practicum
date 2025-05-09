@@ -3,7 +3,6 @@ import { ChallengeService } from '../../services/challenge/challenge.service';
 import { Challenge } from '../../moduls/Challenge';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { log } from 'console';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';

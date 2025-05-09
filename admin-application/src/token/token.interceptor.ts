@@ -1,7 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = sessionStorage.getItem('token'); 
+  let token: string | null = null;
+  if (typeof window !== 'undefined') {
+    token = sessionStorage.getItem('token');
+  }
   if (token) {
     const clonedRequest = req.clone({
       setHeaders: {
