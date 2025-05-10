@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Set up Axios instance
 const api = axios.create({
-    baseURL: 'https://localhost:7282/api', // Backend API base URL
+    baseURL: 'https://photo-challenge-practicum-1.onrender.com/api', // Backend API base URL
   });
   
   // Add an interceptor to include the token in all requests

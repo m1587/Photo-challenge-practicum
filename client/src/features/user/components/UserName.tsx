@@ -1,11 +1,8 @@
-
-"use client"
-
 import type React from "react"
 import { useContext, useState } from "react"
 import { Avatar, Typography, Box, Menu, MenuItem, Skeleton } from "@mui/material"
 import { LogOut, User } from "lucide-react"
-import { UserContext } from "../../context/UserContext"
+import { UserContext } from "../../../context/UserContext"
 
 export function UserName() {
   const context = useContext(UserContext)

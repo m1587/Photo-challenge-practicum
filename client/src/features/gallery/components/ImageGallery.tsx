@@ -3,8 +3,8 @@ import type React from "react"
 import { useState, useContext, useEffect, useCallback } from "react"
 import { Button, Box, Typography } from "@mui/material"
 import CollectionsIcon from "@mui/icons-material/Collections"
-import { UserContext } from "../../context/UserContext"
-import api from "../../lib/axiosConfig"
+import { UserContext } from "../../../context/UserContext"
+import api from "../../../lib/axiosConfig"
 import { GalleryDialog } from "./GalleryDialog"
 
 interface ImageGalleryProps {

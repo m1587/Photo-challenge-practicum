@@ -385,8 +385,8 @@ import { motion } from "framer-motion"
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import axios from "axios"
-import FileUploader from "../upload/FileUploader"
-import ImageGallery from "../gallery/ImageGallery"
+import FileUploader from "../../upload/components/FileUploader"
+import ImageGallery from "../../gallery/components/ImageGallery"
 import ThemeCardWithGenerator from "./ThemeCardWithGenerator"
 
 interface WeeklyThemeSectionProps {

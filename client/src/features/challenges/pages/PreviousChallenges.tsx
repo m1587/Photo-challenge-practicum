@@ -1,12 +1,12 @@
 
 import { useState, useEffect } from "react"
 import { Box, Container } from "@mui/material"
-import { ChallengeHeader } from "./ChallengeHeader"
-import { ChallengeGrid } from "./ChallengeGrid"
-import { WinnerDisplay } from "./WinnerDisplay"
-import { Challenge } from "../../types/challenge"
-import { fetchPreviousChallenges } from "../../services/challenge"
+import { ChallengeHeader } from "../components/ChallengeHeader"
+import { ChallengeGrid } from "../components/ChallengeGrid"
+import { WinnerDisplay } from "../components/WinnerDisplay"
 import { Snackbar, Alert } from "@mui/material"
+import { Challenge } from "../../../types/challenge"
+import { fetchPreviousChallenges } from "../../../services/challenge"
 const PreviousChallenges = () => {
   const [snackOpen, setSnackOpen] = useState(false)
   const [snackMessage, setSnackMessage] = useState("")

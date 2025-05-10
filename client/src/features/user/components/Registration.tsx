@@ -6,11 +6,11 @@ import { Button, IconButton, InputAdornment, Modal, Paper, TextField, Typography
 import { AlternateEmail, LockOpen, Person, Visibility, VisibilityOff, CheckCircle
 } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
-import { UserContext } from "../../context/UserContext"
-import api from "../../lib/axiosConfig"
-import ErrorSnackbar from "../ui/Error"
-import TermsAndConditions from "../pages/TermsAndConditions"
-import SuccessSnackbar from "../ui/Success"
+import { UserContext } from "../../../context/UserContext"
+import api from "../../../lib/axiosConfig"
+import SuccessSnackbar from "../../../components/pages/Success"
+import ErrorSnackbar from "../../../components/pages/Error"
+import TermsAndConditions from "../../../components/pages/TermsAndConditions"
 
 // Styles object for better organization
 const registerStyles = {

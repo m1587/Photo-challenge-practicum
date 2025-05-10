@@ -9,10 +9,10 @@ import {
   AlternateEmail
 } from "@mui/icons-material"
 import { useLocation, useNavigate } from "react-router-dom"
-import { UserContext } from "../../context/UserContext"
-import ErrorSnackbar from "../ui/Error"
-import api from "../../lib/axiosConfig"
 import { ResetPassword } from "./ResetPassword"
+import { UserContext } from "../../../context/UserContext"
+import api from "../../../lib/axiosConfig"
+import ErrorSnackbar from "../../../components/pages/Error"
 
 // הגדרת הטיפוס של הרפרנס
 export interface LoginRef {

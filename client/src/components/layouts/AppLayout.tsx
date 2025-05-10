@@ -1,11 +1,11 @@
 
 import { useState, useRef } from 'react';
-import { Login, type LoginRef } from '../user/Login';
-import { Register } from '../user/Registration';
-import { UserName } from '../user/UserName';
 import Navbar from './Navbar';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { Login, LoginRef } from '../../features/user/components/Login';
+import { UserName } from '../../features/user/components/UserName';
+import Register from '../../features/user/components/Registration';
 
 const AppLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

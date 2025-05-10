@@ -2,7 +2,7 @@
 import type React from "react"
 import { Grid, Paper, Box, Card, CardContent, Typography } from "@mui/material"
 import { motion } from "framer-motion"
-import { Challenge } from "../../types/challenge"
+import { Challenge } from "../../../types/challenge"
 interface ChallengeGridProps {
   challenges: Challenge[]
   selectedChallenge: Challenge | null

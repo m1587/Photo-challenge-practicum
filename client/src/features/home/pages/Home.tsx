@@ -2,12 +2,12 @@
 import { useState, useEffect, useContext } from "react"
 import { Box, Button } from "@mui/material"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { HomeBackground } from "./HomeBackground"
-import { HomeContent } from "./HomeContent"
-import { UserContext } from "../../context/UserContext"
-import api from "../../lib/axiosConfig"
-import PreviousChallenges from "../challenges/PreviousChallenges"
-import { WeeklyThemeSectionWithGenerator } from "./WeeklyThemeSection"
+import { HomeBackground } from "../components/HomeBackground"
+import { HomeContent } from "../components/HomeContent"
+import { UserContext } from "../../../context/UserContext"
+import api from "../../../lib/axiosConfig"
+import PreviousChallenges from "../../features/challenges/PreviousChallenges"
+import { WeeklyThemeSectionWithGenerator } from "../components/WeeklyThemeSection"
 
 // Mock data for the current week's theme
 // const currentWeekTheme = {
