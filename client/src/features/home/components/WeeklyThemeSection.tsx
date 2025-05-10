@@ -419,7 +419,7 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
   useEffect(() => {
     const fetchTheme = async () => {
       try {
-        const response = await api.get("/Challenge/active-challenge")
+        const response = await api.get("Challenge/active-challenge")
         const themeData = response.data
         setTheme(themeData)
         setLoading(false)
