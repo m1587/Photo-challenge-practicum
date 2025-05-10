@@ -119,10 +119,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-if (!app.Environment.IsProduction())
-{
-    app.UseHttpsRedirection(); // רק בלוקאלי
-}
+app.UseHttpsRedirection(); // רק בלוקאלי
 app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
