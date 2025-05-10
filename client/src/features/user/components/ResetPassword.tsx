@@ -10,8 +10,8 @@ import {
   Alert
 } from "@mui/material"
 import { AlternateEmail, ArrowBack } from "@mui/icons-material"
-import ErrorSnackbar from "../ui/Error"
-import api from "../../lib/axiosConfig"
+import api from "../../../lib/axiosConfig";
+import ErrorSnackbar from "../../../components/pages/Error";
 
 // Styles object
 const resetPasswordStyles = {

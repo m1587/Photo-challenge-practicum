@@ -6,8 +6,8 @@ import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { TextField, Button, Typography, Paper, Alert, CircularProgress, InputAdornment, Box } from "@mui/material"
 import { LockOutlined, LockOpenOutlined, ArrowBack } from "@mui/icons-material"
-import api from "../../lib/axiosConfig"
-import ErrorSnackbar from "../ui/Error"
+import api from "../../../lib/axiosConfig"
+import ErrorSnackbar from "../../../components/pages/Error"
 
 // Styles object
 const resetPasswordStyles = {

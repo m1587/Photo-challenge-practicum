@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AppLayout from './components/layouts/AppLayout';
 import Contact from './components/pages/Contact';
-import PreviousChallenges from './features/challenges/PreviousChallenges';
 import Home from './features/home/pages/Home';
 import TermsAndConditions from './components/pages/TermsAndConditions';
-import ResetPasswordPage from './components/user/ResetPasswordPage';
-import { Login } from './components/user/Login';
+import PreviousChallenges from './features/challenges/pages/PreviousChallenges';
+import ResetPasswordPage from './features/user/components/ResetPasswordPage';
+import { Login } from './features/user/components/Login';
 
 export const router = createBrowserRouter([
   {

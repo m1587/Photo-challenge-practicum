@@ -6,8 +6,8 @@ import { HomeBackground } from "../components/HomeBackground"
 import { HomeContent } from "../components/HomeContent"
 import { UserContext } from "../../../context/UserContext"
 import api from "../../../lib/axiosConfig"
-import PreviousChallenges from "../../features/challenges/PreviousChallenges"
 import { WeeklyThemeSectionWithGenerator } from "../components/WeeklyThemeSection"
+import PreviousChallenges from "../../challenges/pages/PreviousChallenges"
 
 // Mock data for the current week's theme
 // const currentWeekTheme = {

@@ -2,8 +2,8 @@ import type React from "react"
 import { Box, Divider, Typography, Card, CardMedia, CardContent, Snackbar, Alert } from "@mui/material"
 import { motion } from "framer-motion"
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"
-import { Challenge } from "../../types/challenge"
 import { useState } from "react"
+import { Challenge } from "../../../types/challenge"
 interface WinnerDisplayProps {
   challenge: Challenge
 }
