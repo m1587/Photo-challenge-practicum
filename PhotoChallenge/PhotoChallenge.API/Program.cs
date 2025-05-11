@@ -18,10 +18,31 @@ builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddSingleton<IAmazonS3>(sp =>
 {
+    var awsRegion = Environment.GetEnvironmentVariable("AWS_REGION");
+    var sendgridKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+
+    if (string.IsNullOrWhiteSpace(awsRegion))
+    {
+        Console.WriteLine("?? AWS_REGION is missing!");
+    }
+    else
+    {
+        Console.WriteLine($"? AWS_REGION loaded: {awsRegion}");
+    }
+
+    if (string.IsNullOrWhiteSpace(sendgridKey))
+    {
+        Console.WriteLine("?? SENDGRID_API_KEY is missing!");
+    }
+    else
+    {
+        Console.WriteLine("? SENDGRID_API_KEY loaded (not printing value for security)");
+    }
+
     var configuration = sp.GetRequiredService<IConfiguration>();
     var credentials = new BasicAWSCredentials(
-       Environment.GetEnvironmentVariable("AWS_ACCESS_KEY"),
-       Environment.GetEnvironmentVariable("AWS_SECRET_KEY")
+       Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
+       Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY")
     );
     var clientConfig = new AmazonS3Config
     {
