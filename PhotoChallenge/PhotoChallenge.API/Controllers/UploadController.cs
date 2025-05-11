@@ -15,7 +15,7 @@ namespace PhotoChallenge.API.Controllers
         }
         [HttpGet("presigned-url")]
         [Authorize]
-        public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName)
+        public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName, [FromQuery] string contentType)
         {
             var request = new GetPreSignedUrlRequest
             {
@@ -24,6 +24,7 @@ namespace PhotoChallenge.API.Controllers
                 Verb = HttpVerb.PUT,
                 Expires = DateTime.UtcNow.AddMinutes(5),
                 //ContentType = "image/jpeg"
+                ContentType = contentType
             };
   
             string url = _s3Client.GetPreSignedURL(request);
