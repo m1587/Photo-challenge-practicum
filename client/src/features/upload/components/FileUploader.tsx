@@ -88,10 +88,13 @@ const FileUploader = () => {
       });
 
       const presignedUrl = response.data.url;
+      console.log("presignedUrl", presignedUrl);
+      console.log("Token:", token);
+      console.log("📁 Uploading file:", file.name, "type:", file.type,"size:",file.size)
       await axios.put(presignedUrl, file, {
-        headers: {
-          "Content-Type": "image/jpeg",
-        },
+        // headers: {
+        //   "Content-Type": "image/jpeg",
+        // },
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(((progressEvent.loaded || 0) * 100) / (progressEvent.total || 1));
           setProgress(percent);
@@ -103,7 +106,7 @@ const FileUploader = () => {
         Caption: currentCaption,
         ChallengeId: activeChallengeId,
       };
-
+      console.log("Image data:", imageData);
       await api.post("Image", imageData, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
@@ -117,6 +120,7 @@ const FileUploader = () => {
       setProgress(0);
 
     } catch (error) {
+      console.error("Upload error:", error);
       showSnackbar("An error occurred during the upload process. Please try again.", "warning")
     }
   };
