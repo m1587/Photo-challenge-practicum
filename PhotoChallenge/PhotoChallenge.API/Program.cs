@@ -25,7 +25,7 @@ builder.Services.AddSingleton<IAmazonS3>(sp =>
     );
     var clientConfig = new AmazonS3Config
     {
-        RegionEndpoint = RegionEndpoint.GetBySystemName(configuration["AWS:Region"])
+        RegionEndpoint = RegionEndpoint.GetBySystemName(Environment.GetEnvironmentVariable("AWS_REGION"))
     };
     return new AmazonS3Client(credentials, clientConfig);
 });

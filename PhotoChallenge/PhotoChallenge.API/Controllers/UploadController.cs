@@ -17,6 +17,10 @@ namespace PhotoChallenge.API.Controllers
         [Authorize]
         public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName, [FromQuery] string contentType)
         {
+            Console.WriteLine($"Signing with content type: {contentType}");
+
+            if (string.IsNullOrWhiteSpace(contentType))
+                return BadRequest("Missing content type");
             var request = new GetPreSignedUrlRequest
             {
                 BucketName = "photo-challenge-bucket-testpnoren",
