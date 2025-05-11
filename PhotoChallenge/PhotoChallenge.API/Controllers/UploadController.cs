@@ -23,7 +23,7 @@ namespace PhotoChallenge.API.Controllers
                 Key = fileName,
                 Verb = HttpVerb.PUT,
                 Expires = DateTime.UtcNow.AddMinutes(5),
-                ContentType = "image/jpeg"
+                //ContentType = "image/jpeg"
             };
   
             string url = _s3Client.GetPreSignedURL(request);
