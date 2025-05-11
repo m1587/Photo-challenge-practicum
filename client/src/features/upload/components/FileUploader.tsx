@@ -83,18 +83,21 @@ const FileUploader = () => {
     try {
       const token = getToken();
       const response = await api.get("Upload/presigned-url", {
-        params: { fileName: file.name },
+        params: { fileName: file.name ,contentType: file.type},
         headers: { Authorization: `Bearer ${token}` },
       });
 
       const presignedUrl = response.data.url;
       console.log("presignedUrl", presignedUrl);
       console.log("Token:", token);
-      console.log("📁 Uploading file:", file.name, "type:", file.type,"size:",file.size)
+      console.log("📁 Uploading file:", file.name, "type:", file.type, "size:", file.size)
       await axios.put(presignedUrl, file, {
         // headers: {
         //   "Content-Type": "image/jpeg",
         // },
+        headers: {
+          "Content-Type": file.type,
+        },
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(((progressEvent.loaded || 0) * 100) / (progressEvent.total || 1));
           setProgress(percent);
