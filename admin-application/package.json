@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/admin-application/server/server.mjs",
-   "build": "ng build --configuration production && ng run admin-application:server:production",
+   "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:admin-application": "node dist/admin-application/server/server.mjs"
