@@ -81,7 +81,7 @@ export class MonthlyPhotoReportComponent implements OnInit {
 
   loadMonthlyReport() {
     this.http
-      .get<{ [key: string]: number }>('https://localhost:7282/api/Challenge/monthly-photo-report')
+      .get<{ [key: string]: number }>('https://photo-challenge-practicum-1.onrender.com/api/Challenge/monthly-photo-report')
       .subscribe((report) => {
          this.barChartData.labels = Object.keys(report);
          this.barChartData.datasets[0].data = Object.values(report);
@@ -89,7 +89,7 @@ export class MonthlyPhotoReportComponent implements OnInit {
   }
   loadMonthlyRegistrationReport() {
     this.http
-      .get<{ [key: string]: number }>('https://localhost:7282/api/Challenge/monthly-registration-report')
+      .get<{ [key: string]: number }>('https://photo-challenge-practicum-1.onrender.com/api/Challenge/monthly-registration-report')
       .subscribe((report) => {
         const registrationCounts = Object.values(report);
         this.barChartData.datasets[1].data = registrationCounts;

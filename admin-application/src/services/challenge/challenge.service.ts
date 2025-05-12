@@ -51,7 +51,7 @@ export class ChallengeService {
       Subject: subject,
       Message: message,
     };
-    return this.http.post<any>(`https://localhost:7282/api/Contact/send-email-to-user/${userId}`, emailData);
+    return this.http.post<any>(`https://photo-challenge-practicum-1.onrender.com/api/Contact/send-email-to-user/${userId}`, emailData);
   }
 
 }
