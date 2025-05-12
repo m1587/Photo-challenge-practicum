@@ -27,7 +27,7 @@ const AppLayout = () => {
     <>
       <Box
         sx={{
-          backgroundImage: "url(public/images/1.jpg)",
+          // backgroundImage: "url(public/images/1.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           minHeight: "100vh",
