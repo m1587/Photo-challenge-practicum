@@ -8,7 +8,7 @@ import { Challenge } from '../../moduls/Challenge';
 })
 export class ChallengeService {
 
-  private apiUrl = 'https://localhost:7282/api/Challenge';
+  private apiUrl = 'https://photo-challenge-practicum-1.onrender.com/api/Challenge';
 
   constructor(private http: HttpClient) { }
 

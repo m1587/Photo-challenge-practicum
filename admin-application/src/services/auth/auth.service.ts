@@ -8,7 +8,7 @@ import { User } from '../../moduls/User';
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7282/api/User';
+  private apiUrl = 'https://photo-challenge-practicum-1.onrender.com/api/User';
   private userId: string | null = null;
   private userRole: string | null = null;
   constructor(private http: HttpClient) { }
