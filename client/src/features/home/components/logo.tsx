@@ -8,7 +8,7 @@ interface LogoProps extends BoxProps {
 }
 
 // import logoSvgPath from "/assets/logo.svg";  // ייבוא כ-URL
-import { ReactComponent as LogoSvg } from '../../assets/logo.svg';
+// import { ReactComponent as LogoSvg } from '../../assets/logo.svg';
 
 export default function Logo({ width = 120, height = 120, showText = true, ...props }: LogoProps) {
   return (
@@ -33,7 +33,7 @@ export default function Logo({ width = 120, height = 120, showText = true, ...pr
             objectFit: "contain",
           }}
         /> */}
-      <LogoSvg style={{ width, height }} />
+      {/* <LogoSvg style={{ width, height }} /> */}
     </Box>
   );
 }
