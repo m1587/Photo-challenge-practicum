@@ -83,7 +83,7 @@ const FileUploader = () => {
     try {
       const token = getToken();
       const response = await api.get("Upload/presigned-url", {
-        params: { fileName: file.name ,contentType: file.type},
+        params: { fileName: file.name},
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -95,9 +95,6 @@ const FileUploader = () => {
         // headers: {
         //   "Content-Type": "image/jpeg",
         // },
-        headers: {
-          "Content-Type": file.type,
-        },
         onUploadProgress: (progressEvent) => {
           const percent = Math.round(((progressEvent.loaded || 0) * 100) / (progressEvent.total || 1));
           setProgress(percent);

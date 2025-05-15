@@ -5,7 +5,7 @@ import PhoneIcon from "@mui/icons-material/Phone"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
 import SendIcon from "@mui/icons-material/Send"
 import { useState } from "react"
-import axios from "axios"
+import api from "../../lib/axiosConfig"
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +43,7 @@ const Contact = () => {
     try {
       console.log(formData);
       // שליחה לשרת דרך axios
-      const response = await axios.post("https://localhost:7282/api/Contact/send-email", formData);
+      const response = await api.post("Contact/send-email", formData);
       if (response.status === 200) {
         setSnackbarSeverity("success");
         setSnackbarMessage("Message sent successfully!");
