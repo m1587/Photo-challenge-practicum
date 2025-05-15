@@ -63,10 +63,12 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
         }}
         onError={(e) => {
         const img = e.target as HTMLImageElement
+        const fallbackSrc = "/assets/logo.svg"
         if (img.src !== window.location.origin + defaultImage) {
           console.error("Error loading theme image", img.src)
-          img.src = defaultImage
-        }
+          // img.src = defaultImage
+          img.src = fallbackSrc
+          img.dataset.errorHandled = "true"        }
         }}
       />
       <CardContent sx={{ p: 4, flex: 1 }}>
