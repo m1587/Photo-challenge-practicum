@@ -203,18 +203,29 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   // }
   const [imageSrc, setImageSrc] = useState<string>("/assets/logo.svg") // ברירת מחדל
 
-  useEffect(() => {
-    const unsplashUrl = `https://source.unsplash.com/featured/?${encodeURIComponent(theme.title)}`
-    const img = new Image()
-    img.src = unsplashUrl
-    img.onload = () => {
-      setImageSrc(unsplashUrl)
-    }
-    img.onerror = () => {
-      console.warn("Unsplash image failed to load, using fallback.")
+ useEffect(() => {
+  const fetchPixabayImage = async () => {
+    const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY
+    const query = encodeURIComponent(theme.title)
+    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${query}&image_type=photo&per_page=3&orientation=horizontal`
+
+    try {
+      const res = await fetch(url)
+      const data = await res.json()
+      if (data.hits && data.hits.length > 0) {
+        setImageSrc(data.hits[0].webformatURL)
+      } else {
+        console.warn("No image found for", theme.title)
+        setImageSrc("/assets/logo.svg")
+      }
+    } catch (error) {
+      console.error("Pixabay error:", error)
       setImageSrc("/assets/logo.svg")
     }
-  }, [theme.title])
+  }
+
+  fetchPixabayImage()
+}, [theme.title])
   return (
     <Card
       sx={{
