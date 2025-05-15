@@ -29,7 +29,7 @@
 //   // const [themeImage, setThemeImage] = useState<string | undefined>(theme.image)
 //   const defaultImage = 
 //     // theme.image || 
-//     `https://source.unsplash.com/featured/?${encodeURIComponent(theme.title)}`
+//     `https://picsum.photos/600/400?random=${theme.title}`
 //   // const defaultImage ="/assets/logo.svg"
 //   // const generatePrompt = () => {
 //   //   return `High quality professional photograph of ${theme.title}: ${theme.description}`
