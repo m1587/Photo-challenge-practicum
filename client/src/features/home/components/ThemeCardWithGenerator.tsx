@@ -1,9 +1,9 @@
 import type React from "react"
-import {useState } from "react"
+// import {useState } from "react"
 import { Box, Typography, Card, CardMedia, CardContent, Alert, Button } from "@mui/material"
 import UploadIcon from "@mui/icons-material/Upload"
 import HowToVoteIcon from "@mui/icons-material/HowToVote"
-import GenerateImageButton from "./GenerateImageButton"
+// import GenerateImageButton from "./GenerateImageButton"
 
 interface ThemeCardProps {
   theme: {
@@ -26,15 +26,15 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   onShowUploader,
   onShowVoting,
 }) => {
-  const [themeImage, setThemeImage] = useState<string | undefined>(theme.image)
+  // const [themeImage, setThemeImage] = useState<string | undefined>(theme.image)
   const defaultImage ="/assets/logo.svg"
-  const generatePrompt = () => {
-    return `High quality professional photograph of ${theme.title}: ${theme.description}`
-  }
-  // Handle the generated image
-  const handleImageGenerated = (imageUrl: string) => {
-    setThemeImage(imageUrl)
-  }
+  // const generatePrompt = () => {
+  //   return `High quality professional photograph of ${theme.title}: ${theme.description}`
+  // }
+  // // Handle the generated image
+  // const handleImageGenerated = (imageUrl: string) => {
+  //   setThemeImage(imageUrl)
+  // }
 
   return (
     <Card
@@ -49,7 +49,9 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
     >
       <CardMedia
         component="img"
-        image={themeImage || defaultImage}
+       image={
+          // themeImage || 
+           defaultImage}
         alt={theme.title}
         sx={{
           width: { xs: "100%", md: "40%" },
@@ -87,7 +89,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
         </Box>
 
         {/* AI Image Generation Button */}
-        <Box sx={{ mb: 3 }}>
+{/*         <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333", mb: 1 }}>
             Theme Visualization:
           </Typography>
@@ -101,7 +103,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
               Please log in to generate AI images for this theme
             </Typography>
           )}
-        </Box>
+        </Box> */}
 
         {!isLoggedIn ? (
           <Alert severity="info" sx={{ mb: 3 }}>
