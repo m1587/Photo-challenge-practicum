@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AiService } from '../../services/ai/ai.service';
 @Component({
   selector: 'app-challenge-management',
   imports: [   CommonModule,
@@ -28,7 +30,9 @@ export class ChallengeManagementComponent {
 
   constructor(
     private challengeService: ChallengeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private aiService: AiService
   ) {
     this.challengeForm = this.fb.group({
       title: ['', Validators.required],
@@ -97,9 +101,24 @@ export class ChallengeManagementComponent {
         alert("שגיאה בעדכון התמונה המנצחת. ודא שיש תמונות לאתגר.");
       }
     });
+    
   }
   
-  
+  tryAIExample() {
+  const prompt = 'תשלים את המשפט: ההשראה שלי לפרויקט היא';
+  this.aiService.generateText(prompt).subscribe({
+    next: (res: { generated_text: string; }[]) => {
+      const answer = res?.[0]?.generated_text ?? 'לא התקבלה תשובה';
+      console.log('AI:', answer);
+      alert(`AI ענה: ${answer}`);
+    },
+    error: (err: any) => {
+      console.error('שגיאת AI:', err);
+      alert('קריאה ל-AI נכשלה');
+    }
+  });
+}
+
   
 
 }
