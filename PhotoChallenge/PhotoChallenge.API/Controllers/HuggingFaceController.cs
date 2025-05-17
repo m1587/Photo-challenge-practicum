@@ -35,5 +35,7 @@ namespace PhotoChallenge.API.Controllers
                 return StatusCode(500, $"HuggingFace error: {ex.Message}");
             }
         }
+
+
     }
 }

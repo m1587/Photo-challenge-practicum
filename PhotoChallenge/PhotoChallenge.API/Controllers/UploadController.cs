@@ -15,12 +15,8 @@ namespace PhotoChallenge.API.Controllers
         }
         [HttpGet("presigned-url")]
         [Authorize]
-        public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName, [FromQuery] string contentType)
+        public async Task<IActionResult> GetPresignedUrl([FromQuery] string fileName)
         {
-            Console.WriteLine($"Signing with content type: {contentType}");
-
-            if (string.IsNullOrWhiteSpace(contentType))
-                return BadRequest("Missing content type");
             var request = new GetPreSignedUrlRequest
             {
                 BucketName = "photo-challenge-bucket-testpnoren",
@@ -28,12 +24,11 @@ namespace PhotoChallenge.API.Controllers
                 Verb = HttpVerb.PUT,
                 Expires = DateTime.UtcNow.AddMinutes(5),
                 //ContentType = "image/jpeg"
-                ContentType = contentType
             };
-  
             string url = _s3Client.GetPreSignedURL(request);
             return Ok(new { url, });
         }
+
 
         [HttpGet]
         [Authorize]

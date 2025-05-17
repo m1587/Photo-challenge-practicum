@@ -19,7 +19,7 @@ namespace PhotoChallenge.Data.Repositories
          .ToListAsync();
 
         public async Task<User> GetUserByIdAsync(int id) =>
-            await _dataContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
+            await _dataContext.Users.FirstOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
         public async Task<User?> GetUserByEmailAsync(string email) =>
              await _dataContext.Users.FirstOrDefaultAsync(u => u.Email == email);
         public async Task<User> RegisterUserAsync(User user)
