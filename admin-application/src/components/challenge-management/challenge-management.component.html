@@ -64,3 +64,35 @@
     </form>
   </mat-card>
 </div>
+
+
+
+
+
+<div class="description-generator" [@fadeAnimation]>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>generate</mat-icon>
+        <span>Generate Topic Description</span>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Topic</mat-label>
+        <input matInput [(ngModel)]="topicInput" placeholder="Enter a topic (e.g., חורף)" name="topicInput">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="generateDescription()">
+        <mat-icon>auto_awesome</mat-icon>
+        Generate Description
+      </button>
+
+      <div *ngIf="generatedDescription" class="generated-text">
+        <h4>Description:</h4>
+        <p>{{ generatedDescription }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

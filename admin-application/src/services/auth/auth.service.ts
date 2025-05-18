@@ -15,7 +15,7 @@ export class AuthService {
   private signedIn = false;
 
   isSignedIn(): boolean {
-    return this.signedIn;
+     return this.signedIn || !!sessionStorage.getItem('token');
   }
 
   signIn(): void {
