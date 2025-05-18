@@ -43,21 +43,24 @@ export class ChallengeManagementComponent {
       description: ['', Validators.required]
     });
   }
-  generateDescription() {
-    if (!this.topicInput.trim()) return;
+ generateDescription() {
+  if (!this.topicInput.trim()) return;
 
-    this.http.post('https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description', this.topicInput, {
-      headers: { 'Content-Type': 'application/json' }
-    }).subscribe({
-      next: (res: any) => {
-        this.generatedDescription = res;
-      },
-      error: err => {
-        console.error('Error generating description:', err);
-        this.generatedDescription = 'Failed to generate description.';
-      }
-    });
-  }
+  const body = { GeneratedText: this.topicInput };  
+
+  this.http.post('https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description', body, {
+    headers: { 'Content-Type': 'application/json' }
+  }).subscribe({
+    next: (res: any) => {
+      this.generatedDescription = res;
+    },
+    error: err => {
+      console.error('Error generating description:', err);
+      this.generatedDescription = 'Failed to generate description.';
+    }
+  });
+}
+
   ngOnInit(): void {
     this.loadActiveChallenge();
   }
