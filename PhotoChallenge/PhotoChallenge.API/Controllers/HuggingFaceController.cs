@@ -35,6 +35,19 @@ namespace PhotoChallenge.API.Controllers
                 return StatusCode(500, $"HuggingFace error: {ex.Message}");
             }
         }
+        [HttpPost("generate-description")]
+        public async Task<IActionResult> GenerateDescription([FromBody] string topic)
+        {
+            try
+            {
+                var description = await _huggingFaceService.GenerateTextAsync(topic);
+                return Ok(description);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"HuggingFace error: {ex.Message}");
+            }
+        }
 
 
     }

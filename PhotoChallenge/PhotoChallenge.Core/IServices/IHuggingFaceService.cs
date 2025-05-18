@@ -11,5 +11,7 @@ namespace PhotoChallenge.Core.IServices
     public interface IHuggingFaceService
     {
         public Task<byte[]> GenerateImageAsync(string prompt);
+        public Task<string> GenerateTextAsync(string topic);
+
     }
 }
