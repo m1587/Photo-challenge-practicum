@@ -53,9 +53,7 @@ namespace PhotoChallenge.Service
         }
 
         public async Task<string> GenerateTextAsync(string topic)
-        {
-            using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "YOUR_HUGGINGFACE_TOKEN");
+        { 
 
             var payload = new
             {
@@ -70,7 +68,7 @@ namespace PhotoChallenge.Service
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await httpClient.PostAsync("https://api-inference.huggingface.co/models/gpt2", content);
+            var response = await _httpClient.PostAsync("https://api-inference.huggingface.co/models/gpt2", content);
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
