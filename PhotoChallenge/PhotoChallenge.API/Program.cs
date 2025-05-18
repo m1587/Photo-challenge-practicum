@@ -75,7 +75,7 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
-//builder.Services.AddHttpClient<IHuggingFaceService, HuggingFaceService>();
+builder.Services.AddHttpClient<IHuggingFaceService, HuggingFaceService>();
 builder.Services.AddHttpClient<IHuggingFaceService, HuggingFaceService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["HuggingFace:BaseUrl"]);
