@@ -134,7 +134,7 @@
     </div>
 
     <!-- טופס האתגר -->
-    <form [formGroup]="challengeForm" (ngSubmit)="submitChallenge()">
+   <form *ngIf="challengeForm" [formGroup]="challengeForm" (ngSubmit)="submitChallenge()">
       <mat-form-field appearance="fill">
         <mat-label>כותרת</mat-label>
         <input matInput formControlName="title" />
