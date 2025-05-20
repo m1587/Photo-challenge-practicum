@@ -53,32 +53,6 @@ namespace PhotoChallenge.Service
 
             return await response.Content.ReadAsByteArrayAsync();  // מחזיר את התמונה כ- byte[]
         }
-
-        //public async Task<string> GenerateTextAsync(string topic)
-        //{
-
-        //    var payload = new
-        //    {
-        //        inputs = $"Write a poetic and vivid 5-line description about: {topic}",
-        //        parameters = new
-        //        {
-        //            max_new_tokens = 100,
-        //            temperature = 0.7
-        //        }
-        //    };
-
-        //    var json = JsonConvert.SerializeObject(payload);
-        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
-        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
-        //    var response = await _httpClient.PostAsync("https://api-inference.huggingface.co/models/google/flan-t5-small", content);
-        //    response.EnsureSuccessStatusCode();
-
-        //    var responseString = await response.Content.ReadAsStringAsync();
-        //    var result = JsonConvert.DeserializeObject<List<HuggingFaceTextResponse>>(responseString);
-
-        //    return result.FirstOrDefault()?.GeneratedText ?? "No description generated.";
-        //}
-
         public async Task<string> GenerateTextAsync(string topic)
         {
             var payload = new

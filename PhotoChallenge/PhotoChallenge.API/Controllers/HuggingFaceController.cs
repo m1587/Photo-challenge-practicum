@@ -41,7 +41,7 @@ namespace PhotoChallenge.API.Controllers
             try
             {
                 var description = await _huggingFaceService.GenerateTextAsync(request.GeneratedText);
-                return Ok(description);
+                return Ok(new { description });
             }
             catch (Exception ex)
             {

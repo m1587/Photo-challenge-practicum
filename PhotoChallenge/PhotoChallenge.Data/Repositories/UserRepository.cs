@@ -53,6 +53,7 @@ namespace PhotoChallenge.Data.Repositories
 
             existingUser.Name = user.Name;
             existingUser.Email = user.Email;
+            existingUser.Role = user.Role;
             existingUser.IsDeleted = user.IsDeleted;
             _dataContext.Users.Update(existingUser);
             Console.WriteLine(existingUser.IsDeleted);
