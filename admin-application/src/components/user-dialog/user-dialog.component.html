@@ -79,7 +79,6 @@
     <mat-form-field appearance="outline" class="full-width" dir="rtl">
       <mat-label>שם</mat-label>
       <input matInput formControlName="name" placeholder="הכנס שם משתמש">
-      <!-- <mat-icon class="icon-rtl">person</mat-icon> -->
       <mat-icon matPrefix>person</mat-icon>
       <mat-error *ngIf="userForm.get('name')?.hasError('required')">
         שם הוא שדה חובה
@@ -89,7 +88,6 @@
     <mat-form-field appearance="outline" class="full-width" dir="rtl">
       <mat-label>אימייל</mat-label>
       <input matInput formControlName="email" placeholder="הכנס כתובת אימייל">
-      <mat-icon class="icon-rtl">email</mat-icon>
       <mat-icon matPrefix>email</mat-icon>
       <mat-error *ngIf="userForm.get('email')?.hasError('required')">
         אימייל הוא שדה חובה
@@ -107,7 +105,6 @@
         formControlName="password" 
         placeholder="הכנס סיסמה"
       >
-      <!-- <mat-icon class="icon-rtl">lock</mat-icon> -->
       <mat-icon matPrefix>lock</mat-icon>
       <button 
         mat-icon-button 
@@ -131,7 +128,6 @@
         <mat-option value="Admin">מנהל</mat-option>
         <mat-option value="User">משתמש</mat-option>
       </mat-select>
-      <!-- <mat-icon class="icon-rtl">admin_panel_settings</mat-icon> -->
          <mat-icon matPrefix>admin_panel_settings</mat-icon>
     </mat-form-field>
   </form>
