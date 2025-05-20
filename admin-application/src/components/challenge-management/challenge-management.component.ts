@@ -35,7 +35,6 @@ export class ChallengeManagementComponent {
   activeChallenge!: Challenge;
    topicInput: string = '';
   generatedDescription: string = '';
-  isGenerating: boolean = false;
   constructor(
     private http: HttpClient,
     private challengeService: ChallengeService,
@@ -48,12 +47,10 @@ export class ChallengeManagementComponent {
   }
  generateDescription() {
   if (!this.topicInput.trim()) return;
-  this.isGenerating = true; // ⬅️ התחלה
   const body = { GeneratedText: this.topicInput };
   this.http.post('https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description', body, {
     headers: { 'Content-Type': 'application/json' }
   })
-  .pipe(finalize(() => this.isGenerating = false))
   .subscribe({
     next: (res: any) => {
       this.generatedDescription = res.description;

@@ -61,7 +61,58 @@
     padding: 8px 16px 16px !important;
     gap: 8px;
   }
-  
+  /* Add these styles to your existing CSS */
+.ai-generator-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.topic-input {
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.challenge-card {
+  margin-bottom: 20px;
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.form-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
   /* Responsive adjustments */
   @media (max-width: 599px) {
     .actions-container {
