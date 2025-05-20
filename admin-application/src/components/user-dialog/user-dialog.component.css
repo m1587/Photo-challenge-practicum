@@ -44,11 +44,7 @@ h2:after {
   pointer-events: none;
 }
 
-/* //Make sure labels are visible
-::ng-deep .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.6) !important;
-  font-size: 14px !important;
-} */
+
 ::ng-deep .mat-form-field-label {
   left: auto !important;
   right: 0 !important;
@@ -67,12 +63,12 @@ h2:after {
   color: #3f51b5;
 }
 
-/* Fix RTL prefix icon alignment */
-::ng-deep .mat-form-field-prefix {
-  margin-right: 8px;
- margin-left: 0;
-}
 
+::ng-deep .mat-form-field-prefix {
+  margin-right: 0;
+  margin-left: 8px;
+  color: gray;
+}
 /* Fix dialog content padding */
 ::ng-deep .mat-dialog-content {
   padding: 0 24px;
