@@ -16,8 +16,8 @@ const PreviousChallenges = () => {
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
-        const data = await fetchPreviousChallenges()
-        setChallenges(data)
+        const response = await fetchPreviousChallenges()
+        setChallenges(response.data)
         setSnackMessage("The challenges have been successfully loaded!")
         setSnackSeverity("success")
         setSnackOpen(true)
