@@ -112,7 +112,7 @@
         (click)="hidePassword = !hidePassword" 
         type="button"
       >
-        <mat-icon>{{hidePassword ?  'visibility':'visibility_off'}}</mat-icon>
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
       <mat-error *ngIf="userForm.get('password')?.hasError('required')">
         סיסמה היא שדה חובה
