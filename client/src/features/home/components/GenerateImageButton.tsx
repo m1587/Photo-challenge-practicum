@@ -3,37 +3,6 @@ import { useState } from "react"
 import { Button, CircularProgress, Snackbar, Alert } from "@mui/material"
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh"
 import axios from "axios"
-//--------------------------------------------------------------
-// export async function generateChallengeDescription(themeTitle: string): Promise<string> {
-//   const token = import.meta.env.VITE_HF_TOKEN
-
-//   if (!token) {
-//     throw new Error("Hugging Face token not found")
-//   }
-
-//   const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
-//     method: "POST",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       inputs: `Write a short and creative description for a photography challenge titled "${themeTitle}":`,
-//     }),
-//   })
-
-//   if (!response.ok) {
-//     const data = await response.json()
-//     console.error("Model error:", data)
-//     throw new Error(data?.error || "Failed to generate description")
-//   }
-
-//   const result = await response.json()
-//   const generated = result?.[0]?.generated_text || "No description generated"
-//   return generated
-// }
-
-//-------------------------------------------------------
 interface GenerateImageButtonProps {
   prompt: string
   onImageGenerated?: (imageUrl: string) => void

@@ -4,8 +4,10 @@ import { useState, useContext, useEffect, useCallback } from "react"
 import { Button, Box, Typography } from "@mui/material"
 import CollectionsIcon from "@mui/icons-material/Collections"
 import { UserContext } from "../../../context/UserContext"
-import api from "../../../lib/axiosConfig"
+// import api from "../../../lib/axiosConfig"
 import { GalleryDialog } from "./GalleryDialog"
+import { fetchAddVoteImage, fetchImageName, fetchVoteImage } from "../../../services/image"
+import { fetchActiveChallengeId } from "../../../services/challenge"
 
 interface ImageGalleryProps {
   uploadedFiles: { fileName: string; url: string; caption?: string }[]
@@ -31,9 +33,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
       if (!token) return
 
       try {
-        const response = await api.get("Challenge/active-challenge", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        // const response = await api.get("Challenge/active-challenge", {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // })
+        const response = await fetchActiveChallengeId(token);
         setActiveChallengeId(response.data.id)
         console.log("אתגר פעיל:", response.data.id);
         
@@ -62,11 +65,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
         if (!file?.fileName) continue
 
         try {
-          const imageResponse = await api.get("Image/Name", {
-            params: { imageName: file.fileName },
-            headers: { Authorization: `Bearer ${token}` },
-          })
-
+          // const imageResponse = await api.get("Image/Name", {
+          //   params: { imageName: file.fileName },
+          //   headers: { Authorization: `Bearer ${token}` },
+          // })
+          const imageResponse =await fetchImageName(token,file.fileName);
           const image = imageResponse.data
           // ✨ סינון לפי האתגר הפעיל
           if (image.challengeId !== activeChallengeId) {
@@ -75,10 +78,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
           updatedImageData[file.fileName] = image
           updatedCaptions[file.fileName] = image.caption || "No caption available"
 
-          const votesResponse = await api.get(`Vote/Count/${image.id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-
+          // const votesResponse = await api.get(`Vote/Count/${image.id}`, {
+          //   headers: { Authorization: `Bearer ${token}` },
+          // })
+          const votesResponse = await fetchVoteImage(token,image.id);
           updatedLikes[file.fileName] = votesResponse.data?.voteCount || 0
         } catch (error) {
           console.error(`Error fetching data for ${file.fileName}:`, error)
@@ -109,26 +112,26 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
       }))
 
       // שליפת מידע על התמונה
-      const response = await api.get(`Image/Name`, {
-        params: { imageName },
-        headers: { Authorization: `Bearer ${token}` },
-      })
-
-      const imageId = response.data?.id
+      // const imageResponse = await api.get(`Image/Name`, {
+      //   params: { imageName },
+      //   headers: { Authorization: `Bearer ${token}` },
+      // })
+      const imageResponse =await fetchImageName(token,imageName);
+      const imageId = imageResponse.data?.id
       if (!imageId) return
 
       // שליחת הצבעה
-      await api.post(
-        "Vote",
-        {
-          userId: context.state.id,
-          imageId: imageId,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      )
-
+      // await api.post(
+      //   "Vote",
+      //   {
+      //     userId: context.state.id,
+      //     imageId: imageId,
+      //   },
+      //   {
+      //     headers: { Authorization: `Bearer ${token}` },
+      //   },
+      // )
+      await fetchAddVoteImage(token,context.state.id,imageId);
       // עדכון מספר הלייקים מתוך השרת אחרי הצבעה מוצלחת
       await fetchAllImageData()
     } catch (error) {

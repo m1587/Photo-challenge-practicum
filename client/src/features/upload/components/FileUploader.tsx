@@ -6,6 +6,8 @@ import { UserContext } from "../../../context/UserContext"
 import axios from "axios"
 import { UploadForm } from "./UploadForm"
 import { UploadHeader } from "./UploadHeader"
+import { fetchAddImage } from "../../../services/image"
+import { fetchActiveChallengeId, fetchIsUploaded } from "../../../services/challenge"
 
 const FileUploader = () => {
   const context = useContext(UserContext)
@@ -24,9 +26,10 @@ const FileUploader = () => {
     const fetchActiveChallenge = async () => {
       try {
         const token = getToken()
-        const response = await api.get("Challenge/active-challenge", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        // const response = await api.get("Challenge/active-challenge", {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // })
+        const response = await fetchActiveChallengeId(token)
         setActiveChallengeId(response.data.id)
       } catch (error) {
         showSnackbar("Error retrieving active challenge", "warning")
@@ -54,13 +57,14 @@ const FileUploader = () => {
     }
     try {
       const token = getToken()
-      const response = await api.get("Challenge/check-uploaded", {
-        params: {
-          userId: context.state.id,
-          challengeId: activeChallengeId, // השתמש במזהה של האתגר הנוכחי
-        },
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      // const response = await api.get("Challenge/check-uploaded", {
+      //   params: {
+      //     userId: context.state.id,
+      //     challengeId: activeChallengeId, // השתמש במזהה של האתגר הנוכחי
+      //   },
+      //   headers: { Authorization: `Bearer ${token}` },
+      // })
+      const response = await fetchIsUploaded(token,context.state.id,activeChallengeId)
       if (response.data.hasUploaded) {
         showSnackbar("You can only upload one photo per challenge", "warning")
         return true
@@ -107,10 +111,10 @@ const FileUploader = () => {
         ChallengeId: activeChallengeId,
       };
       console.log("Image data:", imageData);
-      await api.post("Image", imageData, {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      });
-
+      // await api.post("Image", imageData, {
+      //   headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      // });
+      await fetchAddImage(token,imageData)
       showSnackbar("File uploaded successfully!", "success")
 
       // איפוס שדות
