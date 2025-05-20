@@ -36,6 +36,14 @@ h2:after {
   margin-bottom: 16px;
 }
 
+.icon-rtl {
+  position: absolute;
+  right: 12px;
+  top: 36px;
+  color: gray;
+  pointer-events: none;
+}
+
 /* //Make sure labels are visible
 ::ng-deep .mat-form-field-label {
   color: rgba(0, 0, 0, 0.6) !important;
