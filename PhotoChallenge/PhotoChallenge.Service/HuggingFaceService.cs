@@ -20,12 +20,14 @@ namespace PhotoChallenge.Service
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
+        private readonly string _apiKeyOpenrouter;
         private const string API_URL = "https://api-inference.huggingface.co/models/openai/clip-vit-base-patch32";
 
         public HuggingFaceService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _apiKey = Environment.GetEnvironmentVariable("HUGGING_FACE_APIKEY");
+            _apiKeyOpenrouter = Environment.GetEnvironmentVariable("OPEN_ROUTER_API");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
         }
 
@@ -52,30 +54,60 @@ namespace PhotoChallenge.Service
             return await response.Content.ReadAsByteArrayAsync();  // מחזיר את התמונה כ- byte[]
         }
 
-        public async Task<string> GenerateTextAsync(string topic)
-        { 
+        //public async Task<string> GenerateTextAsync(string topic)
+        //{
 
+        //    var payload = new
+        //    {
+        //        inputs = $"Write a poetic and vivid 5-line description about: {topic}",
+        //        parameters = new
+        //        {
+        //            max_new_tokens = 100,
+        //            temperature = 0.7
+        //        }
+        //    };
+
+        //    var json = JsonConvert.SerializeObject(payload);
+        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        //    var response = await _httpClient.PostAsync("https://api-inference.huggingface.co/models/google/flan-t5-small", content);
+        //    response.EnsureSuccessStatusCode();
+
+        //    var responseString = await response.Content.ReadAsStringAsync();
+        //    var result = JsonConvert.DeserializeObject<List<HuggingFaceTextResponse>>(responseString);
+
+        //    return result.FirstOrDefault()?.GeneratedText ?? "No description generated.";
+        //}
+
+        public async Task<string> GenerateTextAsync(string topic)
+        {
             var payload = new
             {
-                inputs = $"Write a poetic and vivid 5-line description about: {topic}",
-                parameters = new
+                model = "openai/gpt-3.5-turbo", // אפשר לשנות למודל אחר
+                messages = new[]
                 {
-                    max_new_tokens = 100,
-                    temperature = 0.7
-                }
+            new { role = "user", content = $"Write a poetic and vivid 5-line description about: {topic}" }
+        }
             };
 
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("https://api-inference.huggingface.co/models/google/flan-t5-small", content);
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", _apiKeyOpenrouter);
+            _httpClient.DefaultRequestHeaders.Add("X-Title", "my-dotnet-app");
+
+            var response = await _httpClient.PostAsync("https://openrouter.ai/api/v1/chat/completions", content);
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<HuggingFaceTextResponse>>(responseString);
+            dynamic result = JsonConvert.DeserializeObject(responseString);
+            string generated = result?.choices?[0]?.message?.content;
 
-            return result.FirstOrDefault()?.GeneratedText ?? "No description generated.";
+            return generated ?? "No description generated.";
         }
+
     }
 
 }
