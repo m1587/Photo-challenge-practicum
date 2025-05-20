@@ -68,7 +68,7 @@ namespace PhotoChallenge.Service
             var json = JsonConvert.SerializeObject(payload);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("https://api-inference.huggingface.co/models/gpt2", content);
+            var response = await _httpClient.PostAsync("https://api-inference.huggingface.co/models/google/flan-t5-small", content);
             response.EnsureSuccessStatusCode();
 
             var responseString = await response.Content.ReadAsStringAsync();
