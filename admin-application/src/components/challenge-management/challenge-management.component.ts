@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-challenge-management',
   imports: [   CommonModule,
@@ -22,6 +24,7 @@ import { HttpClient } from '@angular/common/http';
     MatInputModule,
     BrowserModule,
     FormsModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './challenge-management.component.html',
   styleUrl: './challenge-management.component.css'
@@ -49,7 +52,9 @@ export class ChallengeManagementComponent {
   const body = { GeneratedText: this.topicInput };
   this.http.post('https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description', body, {
     headers: { 'Content-Type': 'application/json' }
-  }).subscribe({
+  })
+  .pipe(finalize(() => this.isGenerating = false))
+  .subscribe({
     next: (res: any) => {
       this.generatedDescription = res.description;
       this.challengeForm.get('description')?.setValue(res.description);
