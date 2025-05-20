@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { error } from 'node:console';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-challenge-management',
@@ -46,14 +45,16 @@ export class ChallengeManagementComponent {
  generateDescription() {
   if (!this.topicInput.trim()) return;
 
-  const body = { GeneratedText: this.topicInput };  
-
+  const body = { GeneratedText: this.topicInput };
   this.http.post('https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description', body, {
     headers: { 'Content-Type': 'application/json' }
   }).subscribe({
     next: (res: any) => {
-      this.generatedDescription = res;
+      this.generatedDescription = res.description;
+     console.log('Generated description:', res);
+     console.log('Generated description:', res.description);
     },
+    
     error: err => {
       console.error('Error generating description:', err);
       this.generatedDescription = 'Failed to generate description.';

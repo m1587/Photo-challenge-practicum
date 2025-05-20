@@ -10,7 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-monthly-photo-report',
   standalone: true,
-  imports: [ BaseChartDirective,
+  imports: [BaseChartDirective,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -35,17 +35,17 @@ export class MonthlyPhotoReportComponent implements OnInit {
     scales: {
       y: {
         ticks: {
-          stepSize: 1, 
-          precision: 0, 
+          stepSize: 1,
+          precision: 0,
         },
         beginAtZero: true,
       },
       x: {
         ticks: {
           autoSkip: false,
-        } 
+        }
       },
-      
+
     }
   };
 
@@ -83,8 +83,8 @@ export class MonthlyPhotoReportComponent implements OnInit {
     this.http
       .get<{ [key: string]: number }>('https://photo-challenge-practicum-1.onrender.com/api/Challenge/monthly-photo-report')
       .subscribe((report) => {
-         this.barChartData.labels = Object.keys(report);
-         this.barChartData.datasets[0].data = Object.values(report);
+        this.barChartData.labels = Object.keys(report);
+        this.barChartData.datasets[0].data = Object.values(report);
       });
   }
   loadMonthlyRegistrationReport() {
