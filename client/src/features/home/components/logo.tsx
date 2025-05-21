@@ -1,13 +1,11 @@
 
 import { Box, type BoxProps } from "@mui/material"
-
+import  LogoSvg  from '../../../assets/logos/logo.svg';
 interface LogoProps extends BoxProps {
   width?: number
   height?: number
   showText?: boolean
 }
-
-import { ReactComponent as LogoSvg } from '../../assets/logo.svg';
 
 export default function Logo({ width = 120, height = 120, showText = true, ...props }: LogoProps) {
   return (
@@ -22,7 +20,7 @@ export default function Logo({ width = 120, height = 120, showText = true, ...pr
       }}
       {...props}
     >
-    <LogoSvg style={{ width, height }} /> 
+    <img src={LogoSvg} width={width} height={height} alt="Logo" />
     </Box>
   );
 }
