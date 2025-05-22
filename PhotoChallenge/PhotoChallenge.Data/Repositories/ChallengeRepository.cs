@@ -102,6 +102,10 @@ namespace PhotoChallenge.Data.Repositories
             var users = await _context.Users
                 .Where(u => !u.IsDeleted)
                 .ToListAsync(); // טוען את הנתונים לזיכרון
+            foreach (var user in users)
+            {
+                Console.WriteLine($"UserId: {user.Id}, CreatedAt: {user.CreatedAt}, Kind: {user.CreatedAt.Kind}, GroupKey: {user.CreatedAt.ToString("yyyy-MM")}");
+            }
 
             var monthlyReport = users
                 //.GroupBy(u => new { u.CreatedAt.Year, u.CreatedAt.Month })
@@ -113,8 +117,5 @@ namespace PhotoChallenge.Data.Repositories
             Console.WriteLine(users.Where(u => u.Id == 28).FirstOrDefault().CreatedAt);
             return monthlyReport;
         }
-
-
-
     }
 }
