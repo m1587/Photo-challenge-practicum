@@ -1,4 +1,4 @@
-<div class="report-container">
+<!-- <div class="report-container">
         <mat-card class="report-card">
           <mat-card-header>
             <mat-card-title>Monthly Report</mat-card-title>
@@ -18,4 +18,187 @@
           </mat-card-content>
         </mat-card>
       </div>
+       -->
+
+       <div class="report-container">
+  <mat-card class="report-card">
+    <mat-card-header>
+      <div class="header-icon">
+        <mat-icon>insights</mat-icon>
+      </div>
+      <div class="header-content">
+        <mat-card-title>Monthly Report</mat-card-title>
+        <mat-card-subtitle>Photos and Registrations Statistics</mat-card-subtitle>
+      </div>
+      <div class="header-actions">
+        <button mat-icon-button [matMenuTriggerFor]="optionsMenu" aria-label="Report options">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #optionsMenu="matMenu" xPosition="before">
+          <button mat-menu-item [matMenuTriggerFor]="exportMenu">
+            <mat-icon>download</mat-icon>
+            <span>Export Report</span>
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="fontMenu">
+            <mat-icon>format_size</mat-icon>
+            <span>Font Options</span>
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="themeMenu">
+            <mat-icon>palette</mat-icon>
+            <span>Chart Theme</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="refreshData()">
+            <mat-icon>refresh</mat-icon>
+            <span>Refresh Data</span>
+          </button>
+        </mat-menu>
+        
+        <mat-menu #exportMenu="matMenu">
+          <button mat-menu-item (click)="downloadAsPDF()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <span>Download as PDF</span>
+          </button>
+          <button mat-menu-item (click)="downloadAsImage()">
+            <mat-icon>image</mat-icon>
+            <span>Download as Image</span>
+          </button>
+          <button mat-menu-item (click)="downloadAsCSV()">
+            <mat-icon>table_chart</mat-icon>
+            <span>Download as CSV</span>
+          </button>
+        </mat-menu>
+        
+        <mat-menu #fontMenu="matMenu">
+          <button mat-menu-item (click)="setFontFamily('Inter')">
+            <span [style.fontFamily]="'Inter'">Inter</span>
+          </button>
+          <button mat-menu-item (click)="setFontFamily('Roboto')">
+            <span [style.fontFamily]="'Roboto'">Roboto</span>
+          </button>
+          <button mat-menu-item (click)="setFontFamily('Open Sans')">
+            <span [style.fontFamily]="'Open Sans'">Open Sans</span>
+          </button>
+          <button mat-menu-item (click)="setFontFamily('Arial')">
+            <span [style.fontFamily]="'Arial'">Arial</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="setFontSize('small')">
+            <span style="font-size: 0.9em">Small Text</span>
+          </button>
+          <button mat-menu-item (click)="setFontSize('medium')">
+            <span style="font-size: 1em">Medium Text</span>
+          </button>
+          <button mat-menu-item (click)="setFontSize('large')">
+            <span style="font-size: 1.1em">Large Text</span>
+          </button>
+        </mat-menu>
+        
+        <mat-menu #themeMenu="matMenu">
+          <button mat-menu-item (click)="setChartTheme('default')">
+            <div class="theme-preview default-theme"></div>
+            <span>Default</span>
+          </button>
+          <button mat-menu-item (click)="setChartTheme('pastel')">
+            <div class="theme-preview pastel-theme"></div>
+            <span>Pastel</span>
+          </button>
+          <button mat-menu-item (click)="setChartTheme('vibrant')">
+            <div class="theme-preview vibrant-theme"></div>
+            <span>Vibrant</span>
+          </button>
+          <button mat-menu-item (click)="setChartTheme('monochrome')">
+            <div class="theme-preview monochrome-theme"></div>
+            <span>Monochrome</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-card-header>
+    
+    <div class="report-toolbar">
+      <div class="time-range-selector">
+        <mat-button-toggle-group [(ngModel)]="selectedTimeRange" (change)="onTimeRangeChange()">
+          <mat-button-toggle value="3">3 Months</mat-button-toggle>
+          <mat-button-toggle value="6">6 Months</mat-button-toggle>
+          <mat-button-toggle value="12">12 Months</mat-button-toggle>
+          <mat-button-toggle value="all">All Time</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
       
+      <div class="chart-type-selector">
+        <button mat-icon-button [class.active]="barChartType === 'bar'" (click)="setChartType('bar')" matTooltip="Bar Chart">
+          <mat-icon>bar_chart</mat-icon>
+        </button>
+        <button mat-icon-button [class.active]="barChartType === 'line'" (click)="setChartType('line')" matTooltip="Line Chart">
+          <mat-icon>show_chart</mat-icon>
+        </button>
+      </div>
+    </div>
+    
+    <mat-divider></mat-divider>
+    
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Loading report data...</p>
+      </div>
+      
+      <div *ngIf="!isLoading" class="chart-container" #chartContainer>
+        <canvas baseChart
+                [data]="barChartData"
+                [options]="barChartOptions"
+                [type]="barChartType">
+        </canvas>
+      </div>
+      
+      <div class="report-summary">
+        <div class="summary-card">
+          <div class="summary-icon photos-icon">
+            <mat-icon>photo_library</mat-icon>
+          </div>
+          <div class="summary-content">
+            <div class="summary-value">{{ getTotalPhotos() }}</div>
+            <div class="summary-label">Total Photos</div>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon users-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="summary-content">
+            <div class="summary-value">{{ getTotalRegistrations() }}</div>
+            <div class="summary-label">Total Registrations</div>
+          </div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon trend-icon">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+          <div class="summary-content">
+            <div class="summary-value">{{ getGrowthRate() }}%</div>
+            <div class="summary-label">Monthly Growth</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    
+    <mat-divider></mat-divider>
+    
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" (click)="downloadAsPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        Export as PDF
+      </button>
+      <button mat-stroked-button color="primary" (click)="downloadAsCSV()">
+        <mat-icon>table_chart</mat-icon>
+        Export as CSV
+      </button>
+      <button mat-stroked-button color="primary" (click)="printReport()">
+        <mat-icon>print</mat-icon>
+        Print
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
