@@ -1,6 +1,6 @@
 import type React from "react"
 import { useState, useContext, useEffect, useCallback } from "react"
-import { Button, Box, Typography } from "@mui/material"
+import { Button, Box, Typography, CircularProgress } from "@mui/material"
 import CollectionsIcon from "@mui/icons-material/Collections"
 import { UserContext } from "../../../context/UserContext"
 import { GalleryDialog } from "./GalleryDialog"
@@ -175,13 +175,24 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
     }
   }, [uploadedFiles, fetchAllImageData, fetchAllImageData])
 
-  if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
-    return (
-      <Typography variant="body2" sx={{ color: "gray", mt: 2 }}>
-        אין תמונות להציג עבור האתגר הפעיל.
-      </Typography>
-    )
-  }
+  // if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
+  //   return (
+  //     <Typography variant="body2" sx={{ color: "gray", mt: 2 }}>
+  //       אין תמונות להציג עבור האתגר הפעיל.
+  //     </Typography>
+  //   )
+  // }
+  if (isLoading) {
+  return (
+    <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+      <CircularProgress color="inherit" />
+    </Box>
+  );
+}
+
+if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
+  return null;
+}
   return (
     <Box sx={{ width: "100%" }}>
       <GalleryButton compact={compact} onClick={() => setShowFiles(true)} />
