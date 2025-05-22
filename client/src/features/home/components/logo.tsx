@@ -1,6 +1,6 @@
 
 import { Box, type BoxProps } from "@mui/material"
-import  LogoSvg  from '../../../assets/logos/logo.svg';
+import  LogoSvg  from '../../../assets/logos/logo.svg?url';
 interface LogoProps extends BoxProps {
   width?: number
   height?: number

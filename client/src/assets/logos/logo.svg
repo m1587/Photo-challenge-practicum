@@ -6,7 +6,6 @@
   <text x="20" y="50" font-family="Arial, sans-serif" font-size="50" fill="#1a1a1a">
     S
   </text>
-  
   <!-- C as Camera Lens -->
   <circle cx="80" cy="50" r="20" fill="#C4A36D" />
   <circle cx="80" cy="50" r="15" fill="#1a1a1a" />
@@ -16,9 +15,9 @@
 
 </svg>
 
+<!-- 
 
-
-<!-- <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
   <!-- Background Circle -->
   <circle cx="100" cy="100" r="90" fill="#1a1a1a"/>
   
