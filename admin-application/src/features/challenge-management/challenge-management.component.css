@@ -1,4 +1,4 @@
-/* Container for action buttons */
+/* Container for action buttons
 .actions-container {
     display: flex;
     justify-content: center;
@@ -11,22 +11,22 @@
   }
   
   /* Make sure icons and text are properly aligned */
-  .action-button mat-icon,
+  /* .action-button mat-icon,
   mat-card-title mat-icon,
   mat-card-actions button mat-icon {
     margin-right: 8px;
     vertical-align: middle;
   }
-  
+   */
   /* Form container with max width */
-  .form-container {
+  /* .form-container {
     max-width: 800px;
     margin: 0 auto 40px;
     padding: 0 16px;
-  }
+  } */
   
   /* Card styling */
-  .challenge-card {
+  /* .challenge-card {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -41,28 +41,28 @@
   .header-content {
     display: flex;
     align-items: center;
-  }
+  } */
   
   /* Form field takes full width */
-  .full-width {
+  /* .full-width {
     width: 100%;
     margin-bottom: 16px;
   }
-  
+   */
   /* Card content padding */
-  mat-card-content {
+  /* mat-card-content {
     padding: 24px 16px 8px !important;
   }
   
   /* Card actions alignment */
-  mat-card-actions {
+  /* mat-card-actions {
     display: flex;
     justify-content: flex-end;
     padding: 8px 16px 16px !important;
     gap: 8px;
-  }
+  } */
   /* Add these styles to your existing CSS */
-.ai-generator-section {
+/* .ai-generator-section {
   display: flex;
   gap: 10px;
   margin-bottom: 16px;
@@ -75,9 +75,9 @@
 
 .full-width {
   width: 100%;
-}
+} */
 
-.header-content {
+/* .header-content {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -97,10 +97,10 @@
 
 .challenge-card {
   margin-bottom: 20px;
-}
+} */
 
 /* Animation for smooth transitions */
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   from {
     opacity: 0;
   }
@@ -114,7 +114,7 @@
 }
 
   /* Responsive adjustments */
-  @media (max-width: 599px) {
+  /* @media (max-width: 599px) {
     .actions-container {
       flex-direction: column;
       align-items: stretch;
@@ -123,5 +123,126 @@
     .action-button {
       width: 100%;
     }
+  }  */
+    /* Container for action buttons */
+.actions-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.action-button {
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+}
+
+/* Make sure icons and text are properly aligned */
+.action-button mat-icon,
+mat-card-title mat-icon,
+mat-card-actions button mat-icon {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Form container with max width */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Card styling */
+.challenge-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.challenge-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+mat-card-header {
+  background-color: var(--primary-color);
+  padding: 1rem;
+  margin-bottom: 0 !important;
+  color: white;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Form field takes full width */
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Card content padding */
+mat-card-content {
+  padding: 1.5rem 1rem 0.5rem !important;
+}
+
+/* Card actions alignment */
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 1rem 1rem !important;
+  gap: 0.5rem;
+}
+
+/* AI generator section */
+.ai-generator-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.topic-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .actions-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-button {
+    width: 100%;
+  }
+
+  .ai-generator-section {
+    flex-direction: column;
+  }
+
+  .topic-input {
+    width: 100%;
+  }
+}

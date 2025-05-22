@@ -1,4 +1,4 @@
-.login-form {
+/* .login-form {
   max-width: 400px;
   margin: 40px auto;
   padding: 0 20px;
@@ -28,15 +28,86 @@ mat-card-actions {
 mat-card-actions button {
   width: 100%;
   padding: 8px 0;
-}
+} */
 
 /* Add some responsive styling */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .login-form {
     margin: 20px auto;
   }
 
   mat-card {
     padding: 16px;
+  }
+} */
+
+.login-form {
+  max-width: 400px;
+  margin: 2.5rem auto;
+  padding: 0 1.25rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+mat-card {
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+mat-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+mat-card-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0.5rem;
+}
+
+mat-card-actions button {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-radius: var(--radius);
+  background-color: var(--primary-color);
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+mat-card-actions button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Add some responsive styling */
+@media (max-width: 480px) {
+  .login-form {
+    margin: 1.25rem auto;
+  }
+
+  mat-card {
+    padding: 1rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

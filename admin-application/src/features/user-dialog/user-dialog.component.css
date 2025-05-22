@@ -1,18 +1,18 @@
-:host {
+/* :host {
   display: block;
   direction: rtl;
   overflow: hidden; /* מונע גלילה */
-}
+/* } */
 
-h2 {
+/* h2 {
   text-align: center;
   margin-bottom: 16px;
   color: #3f51b5;
   font-weight: 500;
   position: relative;
   padding-bottom: 10px;
-}
-
+} */
+/* 
 h2:after {
   content: "";
   position: absolute;
@@ -28,10 +28,10 @@ h2:after {
   width: 100%;
   padding: 0;
   animation: fadeIn 0.4s ease-out;
-}
+} */
 
 /* Enhanced form field styling */
-.full-width {
+/* .full-width {
   width: 100%;
   margin-bottom: 16px;
 }
@@ -68,16 +68,16 @@ h2:after {
   margin-right: 0;
   margin-left: 8px;
   color: gray;
-}
+} */
 /* Fix dialog content padding */
-::ng-deep .mat-dialog-content {
+/* ::ng-deep .mat-dialog-content {
   padding: 0 24px;
   max-height: none;
   overflow: visible;
-}
+} */
 
 /* Fix dialog actions alignment */
-::ng-deep .mat-dialog-actions {
+/* ::ng-deep .mat-dialog-actions {
   padding: 12px 24px 24px;
   margin-bottom: 0;
 }
@@ -92,10 +92,10 @@ h2:after {
   border-radius: 5px 0 0 5px !important;
   border-left-style: solid !important;
   border-right-style: none !important;
-}
+} */
 
 /* תיקון ליישור התווית והתוכן */
-::ng-deep .mat-form-field-wrapper {
+/* ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 0;
 }
 
@@ -127,6 +127,146 @@ h2:after {
 
   ::ng-deep .mat-dialog-actions {
     padding: 8px 16px 16px;
+    flex-direction: row-reverse;
+    justify-content: center;
+  }
+
+  ::ng-deep .mat-dialog-actions button {
+    flex: 1;
+  }
+} */
+:host {
+  display: block;
+  direction: rtl;
+  overflow: hidden;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.625rem;
+}
+
+h2:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.75rem;
+  height: 0.1875rem;
+  background-color: var(--accent-color);
+}
+
+.form-container {
+  width: 100%;
+  padding: 0;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Enhanced form field styling */
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.icon-rtl {
+  position: absolute;
+  right: 0.75rem;
+  top: 2.25rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+::ng-deep .mat-form-field-label {
+  left: auto !important;
+  right: 0 !important;
+  transform-origin: top right !important;
+  text-align: right !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--border-color);
+}
+
+::ng-deep .mat-form-field-appearance-outline:hover .mat-form-field-outline {
+  color: var(--primary-color);
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  color: var(--primary-color);
+}
+
+::ng-deep .mat-form-field-prefix {
+  margin-right: 0;
+  margin-left: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/* Fix dialog content padding */
+::ng-deep .mat-dialog-content {
+  padding: 0 1.5rem;
+  max-height: none;
+  overflow: visible;
+}
+
+/* Fix dialog actions alignment */
+::ng-deep .mat-dialog-actions {
+  padding: 0.75rem 1.5rem 1.5rem;
+  margin-bottom: 0;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 0 var(--radius) var(--radius) 0 !important;
+  border-right-style: solid !important;
+  border-left-style: none !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: var(--radius) 0 0 var(--radius) !important;
+  border-left-style: solid !important;
+  border-right-style: none !important;
+}
+
+/* תיקון ליישור התווית והתוכן */
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .mat-form-field-infix {
+  text-align: right;
+  width: 100% !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  direction: rtl;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-dialog-content {
+    padding: 0 1rem;
+  }
+
+  ::ng-deep .mat-dialog-actions {
+    padding: 0.5rem 1rem 1rem;
     flex-direction: row-reverse;
     justify-content: center;
   }
