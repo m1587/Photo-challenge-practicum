@@ -7,10 +7,10 @@ import { AlternateEmail, LockOpen, Person, Visibility, VisibilityOff, CheckCircl
 } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../../context/UserContext"
-import api from "../../../lib/axiosConfig"
 import SuccessSnackbar from "../../../components/pages/Success"
 import ErrorSnackbar from "../../../components/pages/Error"
 import TermsAndConditions from "../../../components/pages/TermsAndConditions"
+import { fetchUserRegister } from "../../../services/user"
 
 // Styles object for better organization
 const registerStyles = {
@@ -208,12 +208,12 @@ export const Register = ({ onSwitchToLogin }: RegisterProps) => {
     setIsLoading(true)
 
     try {
-      const response = await api.post("User", {
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-      })
-
+      // const response = await api.post("User", {
+      //   email: formData.email,
+      //   password: formData.password,
+      //   name: formData.name,
+      // })
+      const response =await fetchUserRegister(formData.email, formData.password, formData.name)
       dispatch({ type: "CREATE_USER", payload: response.data })
       setFormData({ name: "", email: "", password: "" })
       setOpenSuccessSnackbar(true);

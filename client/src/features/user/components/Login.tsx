@@ -1,18 +1,14 @@
 
 import { useContext, useEffect, useState, forwardRef, useImperativeHandle, useRef } from "react"
-import { Button, Modal, TextField, Typography, Paper, IconButton, InputAdornment, FormControlLabel, Checkbox, Link, CircularProgress,
-Snackbar, Alert} from "@mui/material"
 import {
-  Visibility,
-  VisibilityOff,
-  LockOpen,
-  AlternateEmail
-} from "@mui/icons-material"
+  Button, Modal, TextField, Typography, Paper, IconButton, InputAdornment, FormControlLabel, Checkbox, Link, CircularProgress} from "@mui/material"
+import { Visibility,VisibilityOff,LockOpen,AlternateEmail} from "@mui/icons-material"
 import { useLocation, useNavigate } from "react-router-dom"
 import { ResetPassword } from "./ResetPassword"
 import { UserContext } from "../../../context/UserContext"
-import api from "../../../lib/axiosConfig"
 import ErrorSnackbar from "../../../components/pages/Error"
+import { fetchUserLogin } from "../../../services/user"
+import SuccessSnackbar from "../../../components/pages/Success"
 
 // הגדרת הטיפוס של הרפרנס
 export interface LoginRef {
@@ -97,7 +93,7 @@ export const Login = forwardRef<LoginRef, LoginProps>(({ onLoginSuccess }, ref) 
     throw new Error("Your Component must be used within a UserProvider")
   }
 
-  const {dispatch} = context
+  const { dispatch } = context
   const [open, setOpen] = useState(false)
   const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
 
@@ -152,11 +148,11 @@ export const Login = forwardRef<LoginRef, LoginProps>(({ onLoginSuccess }, ref) 
 
     setIsLoading(true)
     try {
-      const res = await api.post<{ token: string; user: any }>("User/login", {
-        email: userEmail,
-        password: password,
-      })
-
+      // const res = await api.post<{ token: string; user: any }>("User/login", {
+      //   email: userEmail,
+      //   password: password,
+      // })
+      const res = await fetchUserLogin(userEmail, password);
       // Handle remember me
       if (rememberMe) {
         localStorage.setItem("userEmail", userEmail)
@@ -174,7 +170,7 @@ export const Login = forwardRef<LoginRef, LoginProps>(({ onLoginSuccess }, ref) 
       onLoginSuccess()
       setPassword("")
       setSuccessSnackbarOpen(true);
-      openedFromRoute.current = false 
+      openedFromRoute.current = false
       navigate("/")
     } catch (error: any) {
       // Enhanced error handling
@@ -334,16 +330,11 @@ export const Login = forwardRef<LoginRef, LoginProps>(({ onLoginSuccess }, ref) 
           setOpen(true) // פתח מחדש את מודל ההתחברות
         }}
       />
-      <Snackbar
-  open={successSnackbarOpen}
-  autoHideDuration={4000}
-  onClose={() => setSuccessSnackbarOpen(false)}
-  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
->
-  <Alert severity="success" onClose={() => setSuccessSnackbarOpen(false)} sx={{ width: '100%' }}>
-    Login successful!
-  </Alert>
-</Snackbar>
+      <SuccessSnackbar
+        open={successSnackbarOpen}
+        onClose={() => setSuccessSnackbarOpen(false)}
+        message="Login successful!"
+      />
 
       <ErrorSnackbar
         error={error}

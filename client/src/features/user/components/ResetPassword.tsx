@@ -10,8 +10,8 @@ import {
   Alert
 } from "@mui/material"
 import { AlternateEmail, ArrowBack } from "@mui/icons-material"
-import api from "../../../lib/axiosConfig";
 import ErrorSnackbar from "../../../components/pages/Error";
+import {  fetchPasswordResetRequest } from "../../../services/user";
 
 // Styles object
 const resetPasswordStyles = {
@@ -122,12 +122,12 @@ export const ResetPassword = ({ open, onClose, onBackToLogin }: ResetPasswordPro
     
     try {
       // API call to request password reset
-      await api.post("PasswordReset/request", email, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      
+      // await api.post("PasswordReset/request", email, {
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   }
+      // })
+      await fetchPasswordResetRequest(email)
       // Show success message
       setSuccess(true)
       

@@ -35,7 +35,6 @@ export const GalleryDialog: React.FC<GalleryDialogProps> = ({ open, onClose, upl
     return `https://photo-challenge-bucket-testpnoren.s3.us-east-1.amazonaws.com/${file.fileName}`
   }
 
-  // בדיקה אם צריך להציג חיצים (אם יש גלילה אופקית)
   useEffect(() => {
     if (carouselRef.current) {
       const checkOverflow = () => {
@@ -51,7 +50,6 @@ export const GalleryDialog: React.FC<GalleryDialogProps> = ({ open, onClose, upl
     }
   }, [uploadedFiles, open])
 
-  // התחלת מעבר אוטומטי כשהדיאלוג פתוח
   useEffect(() => {
     if (open && uploadedFiles.length > 1) {
       startAutoPlay()

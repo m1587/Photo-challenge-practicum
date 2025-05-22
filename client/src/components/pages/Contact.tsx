@@ -1,11 +1,13 @@
-import { Box, Typography, Container, TextField, Button, Grid, Paper, Snackbar, Alert } from "@mui/material"
+import { Box, Typography, Container, TextField, Button, Grid, Paper } from "@mui/material"
 import { motion } from "framer-motion"
 import EmailIcon from "@mui/icons-material/Email"
 import PhoneIcon from "@mui/icons-material/Phone"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
 import SendIcon from "@mui/icons-material/Send"
 import { useState } from "react"
-import api from "../../lib/axiosConfig"
+import { fetchSendEmail } from "../../services/contact"
+import SuccessSnackbar from "./Success"
+import ErrorSnackbar from "./Error"
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +45,8 @@ const Contact = () => {
     try {
       console.log(formData);
       // שליחה לשרת דרך axios
-      const response = await api.post("Contact/send-email", formData);
+      // const response = await api.post("Contact/send-email", formData);
+      const response = await fetchSendEmail(formData);
       if (response.status === 200) {
         setSnackbarSeverity("success");
         setSnackbarMessage("Message sent successfully!");
@@ -369,7 +372,7 @@ const Contact = () => {
             </Box>
           </Grid>
         </Grid>
-        <Snackbar
+        {/* <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
@@ -382,7 +385,21 @@ const Contact = () => {
         >
           {snackbarMessage}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
+        {snackbarSeverity === "success" ? (
+          <SuccessSnackbar
+            open={openSnackbar}
+            onClose={handleCloseSnackbar}
+            message={snackbarMessage}
+          />
+        ) : (
+          <ErrorSnackbar
+            open={openSnackbar}
+            onClose={handleCloseSnackbar}
+            error={{ response: { status: 500 }, message: snackbarMessage }} // או שימי `error` אמיתי אם קיים
+          />
+        )}
+
       </Container>
     </Box>
   )

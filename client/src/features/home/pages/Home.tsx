@@ -5,19 +5,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { HomeBackground } from "../components/HomeBackground"
 import { HomeContent } from "../components/HomeContent"
 import { UserContext } from "../../../context/UserContext"
-import api from "../../../lib/axiosConfig"
 import { WeeklyThemeSectionWithGenerator } from "../components/WeeklyThemeSection"
 import PreviousChallenges from "../../challenges/pages/PreviousChallenges"
-
-// Mock data for the current week's theme
-// const currentWeekTheme = {
-//   title: "Urban Wildlife",
-//   description:
-//     "Capture the fascinating intersection of nature and city life. Show us how wildlife adapts and thrives in urban environments.",
-//   endDate: "Friday, 11:59 PM",
-//   // שימוש בתמונה מ-Unsplash במקום placeholder
-//   image: "https://images.unsplash.com/photo-1504006833117-8886a355efbf?q=80&w=2070",
-// }
+import { fetchImageUpload } from "../../../services/image"
 const Home = () => {
   const [showPreviousChallenges, setShowPreviousChallenges] = useState(false)
   const [showWeeklyTheme, setShowWeeklyTheme] = useState(false)
@@ -49,10 +39,10 @@ const Home = () => {
 
       console.log("Fetching uploaded files...")
 
-      const response = await api.get("upload", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-
+      // const response = await api.get("upload", {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // })
+      const response = await fetchImageUpload(token);
       if (!response.data || !Array.isArray(response.data)) {
         console.error("Invalid response data:", response.data)
         return

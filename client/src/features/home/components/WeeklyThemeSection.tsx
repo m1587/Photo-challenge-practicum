@@ -1,4 +1,3 @@
-
 import type React from "react"
 import { useEffect, useState } from "react"
 import { Box, Typography, Container, Button, Paper } from "@mui/material"
@@ -8,7 +7,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import FileUploader from "../../upload/components/FileUploader"
 import ImageGallery from "../../gallery/components/ImageGallery"
 import ThemeCardWithGenerator from "./ThemeCardWithGenerator"
- import api from "../../../lib/axiosConfig"
+import { fetchActiveChallengeId } from "../../../services/challenge"
+import ErrorSnackbar from "../../../components/pages/Error"
+import SuccessSnackbar from "../../../components/pages/Success"
 
 interface WeeklyThemeSectionProps {
   isLoggedIn: boolean
@@ -36,17 +37,36 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
   const [theme, setTheme] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>(null)
-
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+  const handleCloseSnackbar = () => {
+    setSnackOpen(false);
+    setIsError(false);
+    setError(null);
+    setSuccessMessage("");
+  };
+  const getToken = () => localStorage.getItem("token")
   useEffect(() => {
     const fetchTheme = async () => {
       try {
-        const response = await api.get("Challenge/active-challenge")
+
+        // const response = await api.get("Challenge/active-challenge")
+        const token = getToken()
+        if (!token) return
+        const response = await fetchActiveChallengeId(token);
         const themeData = response.data
         setTheme(themeData)
         setLoading(false)
+        setSuccessMessage("Theme loaded successfully!");
+        setIsError(false);
+        setSnackOpen(true);
+
       } catch (err) {
-        setError(err)
-        setLoading(false)
+        setError(err);
+        setIsError(true);
+        setSnackOpen(true);
+        setLoading(false);
       }
     }
 
@@ -174,6 +194,12 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
           )}
         </Paper>
       </Container>
+      {isError ? (
+        <ErrorSnackbar open={snackOpen} onClose={handleCloseSnackbar} error={error} />
+      ) : (
+        <SuccessSnackbar open={snackOpen} onClose={handleCloseSnackbar} message={successMessage} />
+      )}
+
     </Box>
   )
 }

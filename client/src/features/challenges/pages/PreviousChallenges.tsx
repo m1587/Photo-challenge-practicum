@@ -3,9 +3,10 @@ import { Box, Container } from "@mui/material"
 import { ChallengeHeader } from "../components/ChallengeHeader"
 import { ChallengeGrid } from "../components/ChallengeGrid"
 import { WinnerDisplay } from "../components/WinnerDisplay"
-import { Snackbar, Alert } from "@mui/material"
 import { Challenge } from "../../../types/challenge"
 import { fetchPreviousChallenges } from "../../../services/challenge"
+import SuccessSnackbar from "../../../components/pages/Success"
+import ErrorSnackbar from "../../../components/pages/Error"
 const PreviousChallenges = () => {
   const [snackOpen, setSnackOpen] = useState(false)
   const [snackMessage, setSnackMessage] = useState("")
@@ -55,7 +56,7 @@ const PreviousChallenges = () => {
         />
         {selectedChallenge && selectedChallenge.winnerImageUrl && <WinnerDisplay challenge={selectedChallenge} />}
       </Container>
-      <Snackbar
+      {/* <Snackbar
         open={snackOpen}
         autoHideDuration={4000}
         onClose={() => setSnackOpen(false)}
@@ -68,7 +69,24 @@ const PreviousChallenges = () => {
         >
           {snackMessage}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
+      {snackSeverity === "success" ? (
+        <SuccessSnackbar
+          open={snackOpen}
+          onClose={() => setSnackOpen(false)}
+          message={snackMessage}
+        />
+      ) : (
+        <ErrorSnackbar
+          open={snackOpen}
+          onClose={() => setSnackOpen(false)}
+          error={{
+            message: snackMessage,
+            response: { status: 500 }, 
+          }}
+        />
+      )}
+
     </Box>
   )
 }

@@ -1,13 +1,14 @@
 import type React from "react"
 import { useState, useContext, useEffect } from "react"
-import { Box, Grid, Snackbar, Alert } from "@mui/material"
-import api from "../../../lib/axiosConfig"
+import { Box, Grid } from "@mui/material"
 import { UserContext } from "../../../context/UserContext"
 import axios from "axios"
 import { UploadForm } from "./UploadForm"
 import { UploadHeader } from "./UploadHeader"
-import { fetchAddImage } from "../../../services/image"
+import { fetchAddImage, fetchPresignedUrl } from "../../../services/image"
 import { fetchActiveChallengeId, fetchIsUploaded } from "../../../services/challenge"
+import ErrorSnackbar from "../../../components/pages/Error"
+import SuccessSnackbar from "../../../components/pages/Success"
 
 const FileUploader = () => {
   const context = useContext(UserContext)
@@ -19,7 +20,7 @@ const FileUploader = () => {
   const [activeChallengeId, setActiveChallengeId] = useState<number | null>(null)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState("")
-  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "info" | "warning">("success")
+  const [isError, setIsError] = useState(false)
 
   const getToken = () => localStorage.getItem("token")
   useEffect(() => {
@@ -40,7 +41,7 @@ const FileUploader = () => {
   }, [])
   const showSnackbar = (message: string, severity: "success" | "error" | "info" | "warning" = "success") => {
     setSnackbarMessage(message)
-    setSnackbarSeverity(severity)
+    setIsError(severity === "error" || severity === "warning")
     setSnackbarOpen(true)
   }
 
@@ -64,7 +65,7 @@ const FileUploader = () => {
       //   },
       //   headers: { Authorization: `Bearer ${token}` },
       // })
-      const response = await fetchIsUploaded(token,context.state.id,activeChallengeId)
+      const response = await fetchIsUploaded(token, context.state.id, activeChallengeId)
       if (response.data.hasUploaded) {
         showSnackbar("You can only upload one photo per challenge", "warning")
         return true
@@ -86,11 +87,11 @@ const FileUploader = () => {
 
     try {
       const token = getToken();
-      const response = await api.get("Upload/presigned-url", {
-        params: { fileName: file.name},
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
+      // const response = await api.get("Upload/presigned-url", {
+      //   params: { fileName: file.name},
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+      const response = await fetchPresignedUrl(token, file.name)
       const presignedUrl = response.data.url;
       console.log("presignedUrl", presignedUrl);
       console.log("Token:", token);
@@ -114,7 +115,7 @@ const FileUploader = () => {
       // await api.post("Image", imageData, {
       //   headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       // });
-      await fetchAddImage(token,imageData)
+      await fetchAddImage(token, imageData)
       showSnackbar("File uploaded successfully!", "success")
 
       // איפוס שדות
@@ -151,16 +152,12 @@ const FileUploader = () => {
           />
         </Grid>
       </Grid>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={4000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      {isError ? (
+        <ErrorSnackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)} error={{ response: { status: 400 } }} />
+      ) : (
+        <SuccessSnackbar open={snackbarOpen} onClose={() => setSnackbarOpen(false)} message={snackbarMessage} />
+      )}
+
 
     </Box>
   )

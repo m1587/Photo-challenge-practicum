@@ -6,8 +6,8 @@ import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { TextField, Button, Typography, Paper, Alert, CircularProgress, InputAdornment, Box } from "@mui/material"
 import { LockOutlined, LockOpenOutlined, ArrowBack } from "@mui/icons-material"
-import api from "../../../lib/axiosConfig"
 import ErrorSnackbar from "../../../components/pages/Error"
+import { fetchPasswordReset } from "../../../services/user"
 
 // Styles object
 const resetPasswordStyles = {
@@ -151,12 +151,12 @@ const ResetPasswordPage = () => {
     setError(null)
 
     try {
-      await api.post("/PasswordReset/reset", {
-        token,
-        email,
-        newPassword: password,
-      })
-
+      // await api.post("/PasswordReset/reset", {
+      //   token,
+      //   email,
+      //   newPassword: password,
+      // })
+      await fetchPasswordReset(token, email, password)
       setSuccess(true)
 
       // Automatically redirect to login page after 5 seconds

@@ -1,13 +1,13 @@
-
 import type React from "react"
 import { useState, useContext, useEffect, useCallback } from "react"
 import { Button, Box, Typography } from "@mui/material"
 import CollectionsIcon from "@mui/icons-material/Collections"
 import { UserContext } from "../../../context/UserContext"
-// import api from "../../../lib/axiosConfig"
 import { GalleryDialog } from "./GalleryDialog"
 import { fetchAddVoteImage, fetchImageName, fetchVoteImage } from "../../../services/image"
 import { fetchActiveChallengeId } from "../../../services/challenge"
+import ErrorSnackbar from "../../../components/pages/Error"
+import SuccessSnackbar from "../../../components/pages/Success"
 
 interface ImageGalleryProps {
   uploadedFiles: { fileName: string; url: string; caption?: string }[]
@@ -16,6 +16,17 @@ interface ImageGalleryProps {
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = false }) => {
   const context = useContext(UserContext)
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [error, setError] = useState<any>(null);
+  const [isError, setIsError] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setSnackOpen(false);
+    setIsError(false);
+    setError(null);
+    setSuccessMessage("");
+  };
   if (!context) {
     throw new Error("Your Component must be used within a UserProvider")
   }
@@ -39,7 +50,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
         const response = await fetchActiveChallengeId(token);
         setActiveChallengeId(response.data.id)
         console.log("אתגר פעיל:", response.data.id);
-        
+
       } catch (error) {
         console.error("שגיאה בשליפת האתגר הפעיל:", error)
       }
@@ -69,7 +80,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
           //   params: { imageName: file.fileName },
           //   headers: { Authorization: `Bearer ${token}` },
           // })
-          const imageResponse =await fetchImageName(token,file.fileName);
+          const imageResponse = await fetchImageName(token, file.fileName);
           const image = imageResponse.data
           // ✨ סינון לפי האתגר הפעיל
           if (image.challengeId !== activeChallengeId) {
@@ -81,7 +92,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
           // const votesResponse = await api.get(`Vote/Count/${image.id}`, {
           //   headers: { Authorization: `Bearer ${token}` },
           // })
-          const votesResponse = await fetchVoteImage(token,image.id);
+          const votesResponse = await fetchVoteImage(token, image.id);
           updatedLikes[file.fileName] = votesResponse.data?.voteCount || 0
         } catch (error) {
           console.error(`Error fetching data for ${file.fileName}:`, error)
@@ -98,7 +109,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
     } finally {
       setIsLoading(false)
     }
-  }, [uploadedFiles,activeChallengeId])
+  }, [uploadedFiles, activeChallengeId])
 
   const handleLike = async (imageName: string) => {
     const token = getToken()
@@ -116,7 +127,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
       //   params: { imageName },
       //   headers: { Authorization: `Bearer ${token}` },
       // })
-      const imageResponse =await fetchImageName(token,imageName);
+      const imageResponse = await fetchImageName(token, imageName);
       const imageId = imageResponse.data?.id
       if (!imageId) return
 
@@ -131,8 +142,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
       //     headers: { Authorization: `Bearer ${token}` },
       //   },
       // )
-      await fetchAddVoteImage(token,context.state.id,imageId);
+      await fetchAddVoteImage(token, context.state.id, imageId);
       // עדכון מספר הלייקים מתוך השרת אחרי הצבעה מוצלחת
+      setSuccessMessage("Your vote has been submitted successfully!");
+      setIsError(false);
+      setSnackOpen(true);
       await fetchAllImageData()
     } catch (error) {
       console.error("Error during vote:", error)
@@ -142,6 +156,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
         ...prevLikes,
         [imageName]: Math.max((prevLikes[imageName] || 1) - 1, 0),
       }))
+      // ✅ הודעת שגיאה
+      setError(error);
+      setIsError(true);
+      setSnackOpen(true);
     }
   }
 
@@ -149,13 +167,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
     if (showFiles) {
       fetchAllImageData()
     }
-  }, [showFiles, fetchAllImageData,fetchAllImageData])
+  }, [showFiles, fetchAllImageData, fetchAllImageData])
 
   useEffect(() => {
     if (uploadedFiles.length) {
       fetchAllImageData()
     }
-  }, [uploadedFiles, fetchAllImageData,fetchAllImageData])
+  }, [uploadedFiles, fetchAllImageData, fetchAllImageData])
 
   if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
     return (
@@ -177,6 +195,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
         handleLike={handleLike}
         isLoading={isLoading}
       />
+      {isError ? (
+        <ErrorSnackbar open={snackOpen} onClose={handleCloseSnackbar} error={error} />
+      ) : (
+        <SuccessSnackbar open={snackOpen} onClose={handleCloseSnackbar} message={successMessage} />
+      )}
     </Box>
   )
 }

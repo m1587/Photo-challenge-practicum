@@ -1,9 +1,10 @@
 import type React from "react"
-import { Box, Divider, Typography, Card, CardMedia, CardContent, Snackbar, Alert } from "@mui/material"
+import { Box, Divider, Typography, Card, CardMedia, CardContent } from "@mui/material"
 import { motion } from "framer-motion"
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"
 import { useState } from "react"
 import { Challenge } from "../../../types/challenge"
+import ErrorSnackbar from "../../../components/pages/Error"
 interface WinnerDisplayProps {
   challenge: Challenge
 }
@@ -123,7 +124,7 @@ export const WinnerDisplay: React.FC<WinnerDisplayProps> = ({ challenge }) => {
           </Typography>
         </CardContent>
       </Card>
-      <Snackbar
+      {/* <Snackbar
         open={snackOpen}
         autoHideDuration={4000}
         onClose={() => setSnackOpen(false)}
@@ -136,7 +137,15 @@ export const WinnerDisplay: React.FC<WinnerDisplayProps> = ({ challenge }) => {
         >
           Error loading winner image. An alternate image is displayed.
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
+      <ErrorSnackbar
+        open={snackOpen}
+        onClose={() => setSnackOpen(false)}
+        error={{
+          message: "Error loading winner image. An alternate image is displayed.",
+          response: { status: 404 } // אפשר לשים גם 500 אם את מעדיפה
+        }}
+      />
     </Box>
   )
 }

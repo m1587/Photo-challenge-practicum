@@ -1,6 +1,4 @@
 
-"use client"
-
 import type React from "react"
 import { createContext, useReducer, type ReactNode } from "react"
 import { initialState, type UserAction, userReducer, type User } from "../reducer/UserReducer"
