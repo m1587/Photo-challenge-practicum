@@ -1,6 +1,6 @@
 
 import { Box, type BoxProps } from "@mui/material"
-import  LogoSvg  from '../../../assets/logos/logo.svg';
+// import  LogoSvg  from '../../../assets/logos/logo.svg';
 interface LogoProps extends BoxProps {
   width?: number
   height?: number
@@ -20,7 +20,8 @@ export default function Logo({ width = 120, height = 120, showText = true, ...pr
       }}
       {...props}
     >
-    <img src={LogoSvg} width={width} height={height} alt="Logo" />
+    {/* <img src={LogoSvg} width={width} height={height} alt="Logo" /> */}
+    <img src="/assets/logo.svg" width={width} height={height} alt="Logo" />
     </Box>
   );
 }
