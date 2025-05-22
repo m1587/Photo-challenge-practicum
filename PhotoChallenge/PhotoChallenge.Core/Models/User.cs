@@ -17,7 +17,7 @@ namespace PhotoChallenge.Core.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public ERole Role { get; set; }
-        public DateTime CreatedAt { get; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
     }
 }

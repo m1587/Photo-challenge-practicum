@@ -20,10 +20,6 @@ namespace PhotoChallenge.Data
                @"Server=btqq5f1cn9nne7cyrqrr-mysql.services.clever-cloud.com;Port=3306;Database=btqq5f1cn9nne7cyrqrr;User=uxwrf8zl2kvyjklr;Password=WsmHc65KprRKxTf928gE",
                 new MySqlServerVersion(new Version(9, 0, 0))
             );
-            //var connectionString = Environment.GetEnvironmentVariable("MYSQL_CONNECTION_STRING");
-
-            //// קביעת הגדרת החיבור למסד הנתונים
-            //optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(9, 0, 0)));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
