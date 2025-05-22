@@ -25,7 +25,7 @@ namespace PhotoChallenge.API.Controllers
         public async Task<IActionResult> RequestResetPassword([FromBody] string email)
         {
             var token = await _resetService.GenerateResetToken(email);
-            var resetLink = $"http://localhost:5173/reset-password?token={token}";
+            var resetLink = $"https://photo-challenge.onrender.com/reset-password?token={token}";
             var result = await _contactService.SendResetPasswordEmailAsync(email, resetLink);
             return Ok(result);
         }
