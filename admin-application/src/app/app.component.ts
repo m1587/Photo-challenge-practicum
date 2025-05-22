@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../components/navbar/navbar.component';
-import { HomeComponent } from "../components/home/home.component";
+import { NavbarComponent } from '../features/navbar/navbar.component';
+import { HomeComponent } from "../features/home/home.component";
 @Component({
   selector: 'app-root',
   standalone: true,

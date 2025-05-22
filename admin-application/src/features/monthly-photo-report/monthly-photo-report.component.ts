@@ -10,12 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-monthly-photo-report',
   standalone: true,
-  imports: [BaseChartDirective,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    CommonModule,],
+  imports: [BaseChartDirective, MatCardModule,MatButtonModule,MatIconModule,MatDividerModule,CommonModule],
   templateUrl: './monthly-photo-report.component.html',
   styleUrl: './monthly-photo-report.component.css'
 })

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ChallengeService } from '../../services/challenge/challenge.service';
-import { Challenge } from '../../moduls/Challenge';
+import { Challenge } from '../../core/moduls/Challenge';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';

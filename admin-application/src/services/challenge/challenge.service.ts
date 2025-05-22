@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Challenge } from '../../moduls/Challenge';
+import { Challenge } from '../../core/moduls/Challenge';
 
 @Injectable({
   providedIn: 'root'
