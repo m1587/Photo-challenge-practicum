@@ -5,7 +5,7 @@ import { AppBar, Toolbar, Button } from "@mui/material"
 import HomeIcon from "@mui/icons-material/Home"
 import HistoryIcon from "@mui/icons-material/History"
 import EmailIcon from "@mui/icons-material/Email"
-import Logo from "../../features/home/components/logo"
+import Logo from "../pages/logo"
 const Navbar = () => {
   return (
     <AppBar
