@@ -1,4 +1,4 @@
-<div class="users-management-container">
+<!-- <div class="users-management-container">
   <div class="header-container">
     <h1 class="mat-h1">User Management</h1>
     <button mat-raised-button color="primary" (click)="openDialog()">
@@ -49,4 +49,244 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+</div> -->
+<div class="users-management-container">
+  <!-- Header with stats -->
+  <div class="dashboard-header">
+    <div class="header-title">
+      <h1 class="mat-h1">User Management</h1>
+      <p class="subtitle">Manage system users and permissions</p>
+    </div>
+    
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-icon admin-icon">
+          <mat-icon>admin_panel_settings</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ getAdminCount() }}</div>
+          <div class="stat-label">Admins</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon user-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ getUserCount() }}</div>
+          <div class="stat-label">Users</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon total-icon">
+          <mat-icon>groups</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ users.length }}</div>
+          <div class="stat-label">Total</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action toolbar -->
+  <div class="action-toolbar">
+    <div class="search-filter">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search users</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by name or email">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by role</mat-label>
+        <mat-select (selectionChange)="filterByRole($event.value)">
+          <mat-option value="all">All Roles</mat-option>
+          <mat-option value="Admin">Admin</mat-option>
+          <mat-option value="User">User</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div class="action-buttons">
+      <button mat-stroked-button color="primary" [matMenuTriggerFor]="exportMenu">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
+      
+      <mat-menu #exportMenu="matMenu">
+        <button mat-menu-item (click)="exportToCsv()">
+          <mat-icon>description</mat-icon>
+          Export as CSV
+        </button>
+        <button mat-menu-item (click)="exportToPdf()">
+          <mat-icon>picture_as_pdf</mat-icon>
+          Export as PDF
+        </button>
+      </mat-menu>
+      
+      <button mat-raised-button color="primary" (click)="openDialog()">
+        <mat-icon>person_add</mat-icon>
+        Add User
+      </button>
+    </div>
+  </div>
+
+  <!-- Table with loading state -->
+  <div class="table-container mat-elevation-z8">
+    <div *ngIf="isLoading" class="loading-overlay">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading users...</p>
+    </div>
+    
+    <table mat-table [dataSource]="dataSource" matSort class="users-table">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let user"> {{user.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let user"> 
+          <div class="user-name-cell">
+            <div class="user-avatar">
+              {{ getUserInitials(user.name) }}
+            </div>
+            <span>{{user.name}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let user"> 
+          <a [href]="'mailto:' + user.email" class="email-link">
+            {{user.email}}
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+        <td mat-cell *matCellDef="let user"> 
+          <span [ngClass]="{'admin-badge': user.role === 'Admin', 'user-badge': user.role === 'User'}">
+            {{user.role}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let user"> 
+          <span class="status-indicator active">
+            <span class="status-dot"></span>
+            Active
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let user">
+          <button mat-icon-button color="primary" (click)="openDialog(user)" matTooltip="Edit User">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(user)" matTooltip="Delete User">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+          [class.selected-row]="selectedUser && selectedUser.id === row.id"
+          (click)="selectUser(row)"></tr>
+          
+      <!-- Row shown when no matching data -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data-cell" [attr.colspan]="displayedColumns.length">
+          No users matching the filter "{{input.value}}"
+        </td>
+      </tr>
+    </table>
+    
+    <!-- Pagination -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" 
+                   showFirstLastButtons 
+                   aria-label="Select page of users">
+    </mat-paginator>
+  </div>
+  
+  <!-- User detail panel (shown when a user is selected) -->
+  <div *ngIf="selectedUser" class="user-detail-panel" @slideInOut>
+    <div class="detail-header">
+      <h2>User Details</h2>
+      <button mat-icon-button (click)="selectedUser = null">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <div class="detail-content">
+      <div class="detail-avatar">
+        {{ getUserInitials(selectedUser.name) }}
+      </div>
+      
+      <div class="detail-info">
+        <div class="detail-row">
+          <span class="detail-label">ID:</span>
+          <span class="detail-value">{{selectedUser.id}}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Name:</span>
+          <span class="detail-value">{{selectedUser.name}}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Email:</span>
+          <span class="detail-value">{{selectedUser.email}}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Role:</span>
+          <span class="detail-value">
+            <span [ngClass]="{'admin-badge': selectedUser.role === 'Admin', 'user-badge': selectedUser.role === 'User'}">
+              {{selectedUser.role}}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="detail-actions">
+      <button mat-stroked-button color="primary" (click)="openDialog(selectedUser)">
+        <mat-icon>edit</mat-icon>
+        Edit User
+      </button>
+      <button mat-stroked-button color="warn" (click)="confirmDelete(selectedUser)">
+        <mat-icon>delete</mat-icon>
+        Delete User
+      </button>
+    </div>
+  </div>
 </div>
+
+<!-- Confirmation Dialog Template -->
+<ng-template #confirmDialog>
+  <h2 mat-dialog-title>Confirm Deletion</h2>
+  <mat-dialog-content>
+    Are you sure you want to delete this user? This action cannot be undone.
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Delete</button>
+  </mat-dialog-actions>
+</ng-template>
