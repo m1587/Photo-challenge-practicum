@@ -1,4 +1,5 @@
 export class Challenge {
+[x: string]: string|Date;
     constructor(
         public id: number,
         public title: string,

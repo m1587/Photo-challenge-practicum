@@ -1,4 +1,4 @@
-<div class="actions-container">
+<!-- <div class="actions-container">
   <button mat-raised-button color="primary" class="action-button" (click)="toggleForm()">
     <mat-icon>add_circle</mat-icon>
     <span>Add New Challenge</span>
@@ -31,8 +31,8 @@
           </mat-error>
         </mat-form-field>
         
-        <!-- AI Topic Generator integrated into the form -->
-        <div class="ai-generator-section">
+        AI Topic Generator integrated into the form -->
+        <!-- <div class="ai-generator-section">
           <mat-form-field appearance="outline" class="topic-input">
             <mat-label>Topic for AI Generation</mat-label>
             <input matInput [(ngModel)]="topicInput" [ngModelOptions]="{standalone: true}" placeholder="Enter a topic (e.g., חורף)">
@@ -77,4 +77,278 @@
       </mat-card-actions>
     </form>
   </mat-card>
+</div> -->
+
+<div class="challenge-management-container">
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <div class="header-title">
+      <h1>Challenge Management</h1>
+      <p class="subtitle">Create and manage photo challenges</p>
+    </div>
+    
+    <div class="challenge-stats">
+      <div class="stat-card">
+        <div class="stat-icon active-icon">
+          <mat-icon>flash_on</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ activeChallenge ? '1' : '0' }}</div>
+          <div class="stat-label">Active Challenge</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon total-icon">
+          <mat-icon>emoji_events</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value">{{ totalChallenges }}</div>
+          <div class="stat-label">Total Challenges</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Challenge Display -->
+  <div *ngIf="activeChallenge" class="active-challenge-card" [@slideInOut]>
+    <mat-card class="challenge-info-card">
+      <mat-card-header>
+        <div class="challenge-header">
+          <div class="challenge-icon">
+            <mat-icon>emoji_events</mat-icon>
+          </div>
+          <div class="challenge-details">
+            <mat-card-title>{{ activeChallenge.title }}</mat-card-title>
+            <mat-card-subtitle>Active Challenge</mat-card-subtitle>
+          </div>
+          <div class="challenge-status">
+            <span class="status-badge active">
+              <span class="status-dot"></span>
+              Active
+            </span>
+          </div>
+        </div>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <p class="challenge-description">{{ activeChallenge.description }}</p>
+        
+        <div class="challenge-meta">
+          <div class="meta-item">
+            <mat-icon>calendar_today</mat-icon>
+            <span>Created: {{ formatDate(activeChallenge['createdAt']) }}</span>
+          </div>
+          <div class="meta-item" *ngIf="activeChallenge.winnerImgId">
+            <mat-icon>star</mat-icon>
+            <span>Winner Selected</span>
+          </div>
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="updateWinner(activeChallenge.id)" 
+                [disabled]="isProcessing">
+          <mat-icon>emoji_events</mat-icon>
+          <span *ngIf="!isProcessing">Calculate Winning Image</span>
+          <span *ngIf="isProcessing">Processing...</span>
+        </button>
+        <button mat-stroked-button color="accent" (click)="viewChallengeDetails()">
+          <mat-icon>visibility</mat-icon>
+          View Details
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- No Active Challenge Message -->
+  <div *ngIf="!activeChallenge && !isLoading" class="no-challenge-message">
+    <mat-card class="empty-state-card">
+      <mat-card-content>
+        <div class="empty-state">
+          <mat-icon class="empty-icon">photo_camera</mat-icon>
+          <h2>No Active Challenge</h2>
+          <p>Create a new challenge to get started with photo competitions</p>
+          <button mat-raised-button color="primary" (click)="toggleForm()">
+            <mat-icon>add_circle</mat-icon>
+            Create First Challenge
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions-container">
+    <button mat-raised-button color="primary" class="action-button" (click)="toggleForm()">
+      <mat-icon>add_circle</mat-icon>
+      <span>Add New Challenge</span>
+    </button>
+    
+    <button mat-stroked-button color="primary" class="action-button" 
+            [disabled]="!activeChallenge || isProcessing"
+            (click)="updateWinner(activeChallenge.id)">
+      <mat-icon>emoji_events</mat-icon>
+      <span>Calculate Winning Image</span>
+    </button>
+    
+    <button mat-stroked-button color="accent" class="action-button" 
+            [matMenuTriggerFor]="moreMenu">
+      <mat-icon>more_horiz</mat-icon>
+      <span>More Actions</span>
+    </button>
+    
+    <mat-menu #moreMenu="matMenu">
+      <button mat-menu-item (click)="exportChallenges()">
+        <mat-icon>download</mat-icon>
+        <span>Export Challenges</span>
+      </button>
+      <button mat-menu-item (click)="viewHistory()">
+        <mat-icon>history</mat-icon>
+        <span>View History</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="refreshData()">
+        <mat-icon>refresh</mat-icon>
+        <span>Refresh Data</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <!-- Challenge Creation Form -->
+  <div [hidden]="!showForm" class="form-container" [@fadeAnimation]>
+    <mat-card class="challenge-card">
+      <mat-card-header>
+        <div class="form-header">
+          <div class="form-icon">
+            <mat-icon>flash_on</mat-icon>
+          </div>
+          <div class="form-title">
+            <mat-card-title>Create New Challenge</mat-card-title>
+            <mat-card-subtitle>Design an engaging photo challenge</mat-card-subtitle>
+          </div>
+          <button mat-icon-button (click)="toggleForm()" class="close-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </mat-card-header>
+      
+      <form [formGroup]="challengeForm" (ngSubmit)="submitChallenge()">
+        <mat-card-content>
+          <!-- Challenge Title -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Challenge Title</mat-label>
+            <input matInput formControlName="title" placeholder="Enter an engaging challenge title">
+            <mat-icon matPrefix>title</mat-icon>
+            <mat-hint>Make it catchy and descriptive</mat-hint>
+            <mat-error *ngIf="challengeForm.get('title')?.hasError('required')">
+              Title is required
+            </mat-error>
+          </mat-form-field>
+          
+          <!-- AI Topic Generator Section -->
+          <div class="ai-generator-section">
+            <div class="ai-header">
+              <mat-icon>auto_awesome</mat-icon>
+              <span>AI Description Generator</span>
+            </div>
+            
+            <div class="ai-controls">
+              <mat-form-field appearance="outline" class="topic-input">
+                <mat-label>Topic for AI Generation</mat-label>
+                <input matInput [(ngModel)]="topicInput" [ngModelOptions]="{standalone: true}" 
+                       placeholder="Enter a topic (e.g., חורף, nature, city)">
+                <mat-icon matPrefix>lightbulb</mat-icon>
+                <mat-hint>Describe the theme or subject</mat-hint>
+              </mat-form-field>
+              
+              <button mat-raised-button color="accent" type="button" 
+                      (click)="generateDescription()" 
+                      [disabled]="!topicInput.trim() || isGenerating"
+                      class="generate-button">
+                <mat-icon *ngIf="!isGenerating">smart_toy</mat-icon>
+                <mat-spinner *ngIf="isGenerating" diameter="20"></mat-spinner>
+                <span *ngIf="!isGenerating">Generate with AI</span>
+                <span *ngIf="isGenerating">Generating...</span>
+              </button>
+            </div>
+            
+            <div *ngIf="generatedDescription" class="generated-preview">
+              <div class="preview-header">
+                <mat-icon>preview</mat-icon>
+                <span>Generated Description Preview</span>
+                <button mat-icon-button (click)="useGeneratedDescription()" 
+                        matTooltip="Use this description">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
+              </div>
+              <p class="preview-text">{{ generatedDescription }}</p>
+            </div>
+          </div>
+          
+          <!-- Challenge Description -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Challenge Description</mat-label>
+            <textarea matInput formControlName="description" 
+                      placeholder="Describe the challenge rules and requirements"
+                      rows="4"></textarea>
+            <mat-icon matPrefix>description</mat-icon>
+            <mat-hint>Provide clear instructions and guidelines</mat-hint>
+            <mat-error *ngIf="challengeForm.get('description')?.hasError('required')">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+          
+          <!-- Challenge Settings -->
+          <div class="challenge-settings">
+            <h3>Challenge Settings</h3>
+            
+            <div class="settings-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Duration (days)</mat-label>
+                <input matInput type="number" formControlName="duration" 
+                       placeholder="7" min="1" max="30">
+                <mat-icon matPrefix>schedule</mat-icon>
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Difficulty Level</mat-label>
+                <mat-select formControlName="difficulty">
+                  <mat-option value="easy">Easy</mat-option>
+                  <mat-option value="medium">Medium</mat-option>
+                  <mat-option value="hard">Hard</mat-option>
+                </mat-select>
+                <mat-icon matPrefix>trending_up</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+        
+        <mat-card-actions>
+          <button mat-button type="button" (click)="toggleForm()">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+          <button mat-button type="button" (click)="saveDraft()" 
+                  [disabled]="!challengeForm.get('title')?.value">
+            <mat-icon>save</mat-icon>
+            Save Draft
+          </button>
+          <button mat-raised-button color="accent" type="submit" 
+                  [disabled]="!challengeForm.valid || isSubmitting">
+            <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+            <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
+            <span *ngIf="!isSubmitting">Submit Challenge</span>
+            <span *ngIf="isSubmitting">Creating...</span>
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading challenge data...</p>
+  </div>
 </div>
