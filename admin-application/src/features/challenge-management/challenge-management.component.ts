@@ -260,8 +260,6 @@ export class ChallengeManagementComponent implements OnInit {
   }
 
   loadChallengeStats() {
-    // This would typically come from your service
-    // For now, using a placeholder
     this.totalChallenges = 12 // Replace with actual service call
   }
 
@@ -336,27 +334,27 @@ export class ChallengeManagementComponent implements OnInit {
     })
   }
 
-  saveDraft() {
-    // Save form data to localStorage or service
-    const draftData = this.challengeForm.value
-    localStorage.setItem("challengeDraft", JSON.stringify(draftData))
-    console.log("Draft saved!")
-  }
+  // saveDraft() {
+  //   // Save form data to localStorage or service
+  //   const draftData = this.challengeForm.value
+  //   localStorage.setItem("challengeDraft", JSON.stringify(draftData))
+  //   console.log("Draft saved!")
+  // }
 
-  exportChallenges() {
-    // Export functionality
-    console.log("Exporting challenges...")
-  }
+  // exportChallenges() {
+  //   // Export functionality
+  //   console.log("Exporting challenges...")
+  // }
 
   viewHistory() {
     // Navigate to history view
     console.log("Viewing challenge history...")
   }
 
-  viewChallengeDetails() {
-    // Show detailed view of active challenge
-    console.log("Viewing challenge details...")
-  }
+  // viewChallengeDetails() {
+  //   // Show detailed view of active challenge
+  //   console.log("Viewing challenge details...")
+  // }
 
   refreshData() {
     this.loadActiveChallenge()
