@@ -3,7 +3,7 @@
   width: 100%;
   box-sizing: border-box;
   min-height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
 }
 
 .home-container {
@@ -13,18 +13,21 @@
   animation: fadeIn 0.8s ease-out;
 }
 
-/* Hero Section */
+/* Hero Section - Inspired by the image */
 .hero-section {
-  background: linear-gradient(135deg, #000000 0%, #2d2d2d 50%, #000000 100%);
-  border: 2px solid #FFD700;
-  color: white;
-  border-radius: 20px;
+  background: linear-gradient(135deg, 
+    rgba(26, 26, 26, 0.95) 0%, 
+    rgba(45, 45, 45, 0.9) 50%, 
+    rgba(26, 26, 26, 0.95) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23D4A574" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23D4A574" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23D4A574" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  border: 2px solid var(--accent-gold);
+  color: var(--text-light);
+  border-radius: var(--radius-large);
   padding: 4rem 2.5rem;
   margin: 2rem 0;
   box-shadow: 
-    0 20px 40px rgba(255, 215, 0, 0.1),
-    0 0 0 1px rgba(255, 215, 0, 0.2),
-    inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    var(--shadow-gold),
+    var(--shadow-inset);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -37,7 +40,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -51,18 +54,20 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 50%, var(--accent-gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  text-shadow: 0 0 30px rgba(212, 165, 116, 0.3);
+  background-size: 200% auto;
+  animation: shimmer 3s ease-in-out infinite;
 }
 
 .hero-content p {
   font-size: 1.25rem;
   margin-bottom: 2rem;
   opacity: 0.9;
-  color: #f5f5f5;
+  color: var(--text-muted);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -76,7 +81,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 3rem;
-  color: #FFD700;
+  color: var(--accent-gold);
   position: relative;
   display: inline-block;
   padding-bottom: 1rem;
@@ -91,7 +96,7 @@
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, transparent 0%, #FFD700 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--accent-gold) 50%, transparent 100%);
   border-radius: 2px;
 }
 
@@ -103,17 +108,16 @@
 }
 
 .feature-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+  background: var(--card-bg);
   border: 2px solid transparent;
-  border-radius: 16px;
+  border-radius: var(--radius);
   padding: 2.5rem 2rem;
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.1),
-    0 1px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-dark);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-align: center;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .feature-card::before {
@@ -123,18 +127,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(145deg, transparent 0%, rgba(255, 215, 0, 0.05) 100%);
+  background: linear-gradient(145deg, transparent 0%, rgba(212, 165, 116, 0.05) 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .feature-card:hover {
   transform: translateY(-10px) scale(1.02);
-  border-color: #FFD700;
+  border-color: var(--accent-gold);
   box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(255, 215, 0, 0.2),
-    0 0 30px rgba(255, 215, 0, 0.1);
+    var(--shadow-gold),
+    var(--shadow-dark);
 }
 
 .feature-card:hover::before {
@@ -148,7 +151,7 @@
   color: #000000;
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -156,7 +159,7 @@
   margin-left: auto;
   margin-right: auto;
   box-shadow: 
-    0 8px 16px rgba(255, 215, 0, 0.3),
+    0 8px 16px rgba(212, 165, 116, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
 }
@@ -164,7 +167,7 @@
 .feature-card:hover mat-icon {
   transform: scale(1.1) rotate(5deg);
   box-shadow: 
-    0 12px 24px rgba(255, 215, 0, 0.4),
+    0 12px 24px rgba(212, 165, 116, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
@@ -172,13 +175,13 @@
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #000000;
+  color: var(--text-light);
   position: relative;
   z-index: 1;
 }
 
 .feature-card p {
-  color: #4a4a4a;
+  color: var(--text-muted);
   line-height: 1.6;
   font-size: 1rem;
   position: relative;
@@ -204,11 +207,6 @@
   100% {
     background-position: 200% 0;
   }
-}
-
-.hero-content h1 {
-  background-size: 200% auto;
-  animation: shimmer 3s ease-in-out infinite;
 }
 
 /* Responsive Styles */
@@ -258,19 +256,19 @@
   }
 }
 
-/* Additional luxury touches */
+/* Individual card icon variations */
 .feature-card:nth-child(1) mat-icon {
-  background: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #DAA520 100%);
 }
 
 .feature-card:nth-child(2) mat-icon {
-  background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+  background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 100%);
 }
 
 .feature-card:nth-child(3) mat-icon {
-  background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+  background: linear-gradient(135deg, #DAA520 0%, var(--accent-gold-dark) 100%);
 }
 
 .feature-card:nth-child(4) mat-icon {
-  background: linear-gradient(135deg, #DAA520 0%, #CD853F 100%);
+  background: linear-gradient(135deg, var(--accent-gold-dark) 0%, #CD853F 100%);
 }
