@@ -147,6 +147,8 @@ import { MatMenuModule } from "@angular/material/menu"
 import { MatTooltipModule } from "@angular/material/tooltip"
 import { MatDividerModule } from "@angular/material/divider"
 import { trigger, transition, style, animate } from "@angular/animations"
+import { User } from "../../core/moduls/User"
+import { AuthService } from "../../services/auth/auth.service"
 
 @Component({
   selector: "app-challenge-management",
@@ -188,18 +190,22 @@ import { trigger, transition, style, animate } from "@angular/animations"
 export class ChallengeManagementComponent implements OnInit {
   challengeForm: FormGroup
   showForm = false
+  showHistory = false
   activeChallenge!: Challenge
+  finishedChallenges: Challenge[] = []
   topicInput = ""
   generatedDescription = ""
+  isLoadingHistory = false
   isLoading = true
   isGenerating = false
   isSubmitting = false
   isProcessing = false
   totalChallenges = 0
-
+  userWinnerName: string | null = null;
   constructor(
     private http: HttpClient,
     private challengeService: ChallengeService,
+    private authService: AuthService,
     private fb: FormBuilder,
   ) {
     this.challengeForm = this.fb.group({
@@ -334,28 +340,33 @@ export class ChallengeManagementComponent implements OnInit {
     })
   }
 
-  // saveDraft() {
-  //   // Save form data to localStorage or service
-  //   const draftData = this.challengeForm.value
-  //   localStorage.setItem("challengeDraft", JSON.stringify(draftData))
-  //   console.log("Draft saved!")
-  // }
-
-  // exportChallenges() {
-  //   // Export functionality
-  //   console.log("Exporting challenges...")
-  // }
-
-  viewHistory() {
-    // Navigate to history view
-    console.log("Viewing challenge history...")
+ viewHistory() {
+    this.showHistory = !this.showHistory
+    
+    if (this.showHistory && this.finishedChallenges.length === 0) {
+      this.loadFinishedChallenges()
+    }
   }
 
-  // viewChallengeDetails() {
-  //   // Show detailed view of active challenge
-  //   console.log("Viewing challenge details...")
-  // }
+  loadFinishedChallenges() {
+    this.isLoadingHistory = true
+    this.challengeService.getPreviousChallenges().subscribe({
+      next: (challenges) => {
+        this.finishedChallenges = challenges
+        this.isLoadingHistory = false
+        console.log('Loaded finished challenges:', challenges)
+      },
+      error: (err) => {
+        console.error('Error loading finished challenges:', err)
+        this.isLoadingHistory = false
+        this.finishedChallenges = []
+      }
+    })
+  }
 
+ trackByChallenge(index: number, challenge: Challenge): number {
+  return challenge.id;
+}
   refreshData() {
     this.loadActiveChallenge()
     this.loadChallengeStats()
@@ -368,5 +379,23 @@ export class ChallengeManagementComponent implements OnInit {
       month: "short",
       day: "numeric",
     })
+  }
+    getWinnerInfo(challenge: Challenge): string {
+    if (challenge.winnerUserId) {
+       this.authService.getUserById(challenge.winnerUserId).subscribe({
+      next: (user: User) => {
+        this.userWinnerName = user.name;
+      },
+      error: (err:any) => {
+        console.error('שגיאה בשליפת המשתמש:', err);
+      }
+    });
+      return `${this.userWinnerName}`
+    }
+    return challenge.winnerImgId ? 'Winner Selected' : 'No Winner'
+  }
+
+  closeHistory() {
+    this.showHistory = false
   }
 }
