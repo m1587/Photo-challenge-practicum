@@ -1,48 +1,155 @@
 .app-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background: linear-gradient(90deg, #ffffff 0%, var(--primary-light) 100%) !important;
+  border-bottom: 2px solid var(--accent-gold) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-title {
+  margin-left: 16px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent-gold-dark) !important;
+}
+
+/* Home Icon Button */
+.toolbar-left button {
+  background: rgba(212, 165, 116, 0.1) !important;
+  border: 1px solid var(--accent-gold) !important;
+  color: var(--accent-gold-dark) !important;
+  transition: all 0.3s ease;
+}
+
+.toolbar-left button:hover {
+  background: rgba(212, 165, 116, 0.2) !important;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+}
+
+/* Login Button */
+.login-button {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius) !important;
+  padding: 0.5rem 1.5rem !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3) !important;
+}
+
+.login-button:hover {
+  background: linear-gradient(135deg, var(--accent-gold-dark) 0%, var(--accent-gold) 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4) !important;
+}
+
+/* Management Menu Button */
+.toolbar-right button:not(.login-button) {
+  background: rgba(212, 165, 116, 0.1) !important;
+  border: 1px solid var(--accent-gold) !important;
+  color: var(--accent-gold-dark) !important;
+  font-weight: 500 !important;
+  border-radius: var(--radius) !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.3s ease;
+}
+
+.toolbar-right button:not(.login-button):hover {
+  background: rgba(212, 165, 116, 0.2) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+}
+
+/* Menu Dropdown Styling */
+.mat-mdc-menu-panel {
+  background: var(--card-bg) !important;
+  border: 1px solid rgba(212, 165, 116, 0.3) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-medium) !important;
+}
+
+.mat-mdc-menu-item {
+  color: var(--text-dark) !important;
+  transition: all 0.2s ease;
+}
+
+.mat-mdc-menu-item:hover {
+  background: rgba(212, 165, 116, 0.1) !important;
+  color: var(--accent-gold-dark) !important;
+}
+
+.mat-mdc-menu-item mat-icon {
+  color: var(--accent-gold) !important;
+  margin-right: 0.5rem;
+}
+
+/* Divider */
+.mat-mdc-menu-item .mat-divider {
+  border-color: rgba(212, 165, 116, 0.3) !important;
+}
+
+.app-content {
+  min-height: calc(100vh - 64px);
+  padding-bottom: 40px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f1f3f4 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 599px) {
+  .app-content {
+    min-height: calc(100vh - 56px);
   }
-  
+
+  .app-title {
+    font-size: 1rem;
+    margin-left: 8px;
+  }
+
   .toolbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 16px;
+    padding: 0 8px;
   }
-  
+
   .toolbar-left,
   .toolbar-right {
-    display: flex;
-    align-items: center;
+    gap: 0.5rem;
   }
-  
-  .app-title {
-    margin-left: 16px;
-    font-weight: 500;
-  }
-  
+
   .login-button {
-    background-color: #ff4081;
-    color: white;
+    padding: 0.4rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    display: none;
   }
   
-  .app-content {
-    min-height: calc(100vh - 64px);
-    padding-bottom: 40px;
+  .login-button span {
+    display: none;
   }
   
-  @media (max-width: 599px) {
-    .app-content {
-      min-height: calc(100vh - 56px);
-    }
-  
-    .app-title {
-      font-size: 1rem;
-    }
+  .toolbar-right button:not(.login-button) span {
+    display: none;
   }
-  
+}
