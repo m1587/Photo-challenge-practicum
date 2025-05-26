@@ -7,30 +7,6 @@
       <h1>Challenge Management</h1>
       <p class="subtitle">Create and manage photo challenges</p>
     </div>
-    
-    <div class="challenge-stats">
-      <div class="stat-card">
-        <div class="stat-icon active-icon">
-          <mat-icon>flash_on</mat-icon>
-        </div>
-        <div class="stat-content">
-          <div class="stat-value">{{ activeChallenge ? '1' : '0' }}</div>
-          <div class="stat-label">Active Challenge</div>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon total-icon">
-          <mat-icon>emoji_events</mat-icon>
-        </div>
-        <div class="stat-content">
-          <div class="stat-value">{{ totalChallenges }}</div>
-          <div class="stat-label">Total Challenges</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Active Challenge Display -->
   <div *ngIf="activeChallenge" class="active-challenge-card" [@slideInOut]>
     <mat-card class="challenge-info-card">
