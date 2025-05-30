@@ -1,0 +1,107 @@
+<div class="challenge-management-container">
+  <div class="dashboard-header">
+    <div class="header-title">
+      <h1>Challenge Management</h1>
+      <p class="subtitle">Create and manage photo challenges</p>
+    </div>
+    <!-- Active Challenge Display -->
+    <div *ngIf="activeChallenge" class="active-challenge-card" [@slideInOut]>
+      <mat-card class="challenge-info-card">
+        <mat-card-header>
+          <div class="challenge-header">
+            <div class="challenge-icon">
+              <mat-icon>emoji_events</mat-icon>
+            </div>
+            <div class="challenge-details">
+              <mat-card-title>{{ activeChallenge.title }}</mat-card-title>
+              <mat-card-subtitle>Active Challenge</mat-card-subtitle>
+            </div>
+            <div class="challenge-status">
+              <span class="status-badge active">
+                <span class="status-dot"></span>
+                Active
+              </span>
+            </div>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p class="challenge-description">{{ activeChallenge.description }}</p>
+
+          <div class="challenge-meta">
+            <div class="meta-item">
+              <mat-icon>calendar_today</mat-icon>
+            </div>
+            <div class="meta-item" *ngIf="activeChallenge.winnerImgId">
+              <mat-icon>star</mat-icon>
+              <span>Winner Selected</span>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-stroked-button color="primary" (click)="updateWinner(activeChallenge.id)"
+            [disabled]="isProcessing">
+            <mat-icon>emoji_events</mat-icon>
+            <span *ngIf="!isProcessing">Calculate Winning Image</span>
+            <span *ngIf="isProcessing">Processing...</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <!-- No Active Challenge Message -->
+    <div *ngIf="!activeChallenge && !isLoading" class="no-challenge-message">
+      <mat-card class="empty-state-card">
+        <mat-card-content>
+          <div class="empty-state">
+            <mat-icon class="empty-icon">photo_camera</mat-icon>
+            <h2>No Active Challenge</h2>
+            <p>Start your first photo competition by creating a new challenge</p>
+            <button mat-raised-button color="primary" (click)="toggleForm()">
+              <mat-icon>add_circle</mat-icon>
+              Create First Challenge
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions-container">
+      <button mat-raised-button color="primary" class="action-button" (click)="toggleForm()">
+        <mat-icon>add_circle</mat-icon>
+        <span>Add New Challenge</span>
+      </button>
+
+      <button mat-stroked-button color="accent" class="action-button" [matMenuTriggerFor]="moreMenu">
+        <mat-icon>more_horiz</mat-icon>
+        <span>More Actions</span>
+      </button>
+
+      <mat-menu #moreMenu="matMenu">
+        <button mat-menu-item (click)="viewHistory()">
+          <mat-icon>history</mat-icon>
+          <span>View History</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+          <span>Refresh Data</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- *** הוסף את זה כאן - Challenge History Section *** -->
+    <app-challenge-history *ngIf="showHistory" (closeHistory)="closeHistory()" @fadeAnimation />
+    <!-- *** סוף החלק שצריך להוסיף *** -->
+    <!-- Loading Overlay -->
+    <div *ngIf="isLoading" class="loading-overlay">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading challenge data...</p>
+    </div>
+    <app-challenge-create
+  *ngIf="showForm"
+  (challengeCreated)="onChallengeCreated()"
+  (closeForm)="closeCreateForm()"
+></app-challenge-create>

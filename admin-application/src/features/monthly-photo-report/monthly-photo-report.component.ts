@@ -15,6 +15,7 @@ import { MatTooltipModule } from "@angular/material/tooltip"
 import { FormsModule } from "@angular/forms"
 import html2canvas from "html2canvas"
 import { jsPDF } from "jspdf"
+import { ChallengeService } from "../../services/challenge/challenge.service"
 
 @Component({
   selector: "app-monthly-photo-report",
@@ -38,7 +39,6 @@ import { jsPDF } from "jspdf"
 export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
   @ViewChild("chartContainer") chartContainer!: ElementRef
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective
-
   public barChartType: ChartType = "bar"
   public isLoading = true
   public selectedTimeRange = "12"
@@ -180,11 +180,10 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
   private rawPhotoData: { [key: string]: number } = {}
   private rawRegistrationData: { [key: string]: number } = {}
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private challengeService: ChallengeService) {
     // Register chart.js components
     Chart.register(...registerables)
   }
-
   ngOnInit(): void {
     this.loadData()
   }
@@ -195,40 +194,31 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
   }
 
   loadData(): void {
-    this.isLoading = true
+    this.isLoading = true;
 
-    // Load photo data
-    this.http
-      .get<{ [key: string]: number }>(
-        "https://photo-challenge-practicum-1.onrender.com/api/Challenge/monthly-photo-report",
-      )
-      .subscribe({
-        next: (report) => {
-          this.rawPhotoData = report
+    this.challengeService.getMonthlyPhotoReport().subscribe({
+      next: (report) => {
+        this.rawPhotoData = report;
 
-          // Load registration data
-          this.http
-            .get<{ [key: string]: number }>(
-              "https://photo-challenge-practicum-1.onrender.com/api/Challenge/monthly-registration-report",
-            )
-            .subscribe({
-              next: (registrationReport) => {
-                this.rawRegistrationData = registrationReport
-                this.filterDataByTimeRange()
-                this.isLoading = false
-              },
-              error: (error) => {
-                console.error("Error loading registration data:", error)
-                this.isLoading = false
-              },
-            })
-        },
-        error: (error) => {
-          console.error("Error loading photo data:", error)
-          this.isLoading = false
-        },
-      })
+        this.challengeService.getMonthlyRegistrationReport().subscribe({
+          next: (registrationReport) => {
+            this.rawRegistrationData = registrationReport;
+            this.filterDataByTimeRange();
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error("Error loading registration data:", error);
+            this.isLoading = false;
+          },
+        });
+      },
+      error: (error) => {
+        console.error("Error loading photo data:", error);
+        this.isLoading = false;
+      },
+    });
   }
+
 
   filterDataByTimeRange(): void {
     const months = Object.keys(this.rawPhotoData)
@@ -267,6 +257,7 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
 
   setFontFamily(fontFamily: string): void {
     this.currentFontFamily = fontFamily
+    console.log("Font family set to:", this.currentFontFamily)
     this.updateFontSettings()
   }
 
@@ -277,7 +268,7 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
 
   updateFontSettings(): void {
     if (!this.barChartOptions || !this.barChartOptions.plugins || !this.barChartOptions.scales) return
-
+    console.log("Updating font settings:", this.currentFontFamily, this.currentFontSize)
     // Update font size multiplier
     const fontSizeMultiplier = this.currentFontSize === "small" ? 0.9 : this.currentFontSize === "large" ? 1.1 : 1
 
@@ -326,8 +317,10 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
 
     // Apply changes to chart
     if (this.chart) {
-      this.chart.update()
+      this.chart.options = this.barChartOptions as ChartConfiguration["options"];
+      this.chart.update();
     }
+
   }
 
   setChartTheme(theme: string): void {
@@ -420,7 +413,7 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
     if (data.length < 2) return "0"
 
     const currentMonth = data[data.length - 1] || 0
-    const previousMonth = data[data.length - 2] || 1 // Avoid division by zero
+    const previousMonth = data[data.length - 2] || 1
 
     const growthRate = ((currentMonth - previousMonth) / previousMonth) * 100
     return growthRate.toFixed(1)

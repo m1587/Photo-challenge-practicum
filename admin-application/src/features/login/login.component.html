@@ -6,10 +6,10 @@
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" placeholder="Email" />
-          <mat-error *ngIf="formControls.get('email')?.hasError('required')">
+          <mat-error *ngIf="emailControl?.hasError('required')">
             Email is required
           </mat-error>
-          <mat-error *ngIf="formControls.get('email')?.hasError('email')">
+          <mat-error *ngIf="emailControl?.hasError('email')">
             Please enter a valid email
           </mat-error>
         </mat-form-field>
@@ -32,10 +32,10 @@
           >
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          <mat-error *ngIf="formControls.get('password')?.hasError('required')">
+          <mat-error *ngIf="passwordControl?.hasError('required')">
             Password is required
           </mat-error>
-          <mat-error *ngIf="formControls.get('password')?.hasError('minlength')">
+          <mat-error *ngIf="passwordControl?.hasError('minlength')">
             Password must be at least 6 characters
           </mat-error>
         </mat-form-field>

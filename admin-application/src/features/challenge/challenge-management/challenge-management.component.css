@@ -1,0 +1,780 @@
+/* Corporate Challenge Management */
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--gray-50);
+}
+.form-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.challenge-management-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4);
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Page Header */
+.dashboard-header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.header-title h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: var(--space-2);
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: var(--gray-600);
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+}
+
+/* Cards */
+.challenge-info-card,
+.empty-state-card,
+.challenge-card,
+.history-card {
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.challenge-info-card:hover,
+.empty-state-card:hover,
+.challenge-card:hover,
+.history-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--primary-blue-200);
+}
+
+/* Active Challenge Card */
+.active-challenge-card {
+  margin-bottom: var(--space-8);
+}
+
+.challenge-header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-6);
+  background-color: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.challenge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background-color: var(--primary-blue);
+  color: var(--white);
+  margin-right: var(--space-4);
+}
+
+.challenge-details {
+  flex: 1;
+}
+
+.challenge-details mat-card-title {
+  color: var(--gray-900) !important;
+  font-weight: 600;
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-1);
+}
+
+.challenge-details mat-card-subtitle {
+  color: var(--gray-600) !important;
+  font-size: var(--font-size-sm);
+}
+
+.challenge-status {
+  margin-left: auto;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+  background-color: var(--success-bg);
+  color: var(--success);
+}
+
+.status-badge.completed {
+  background-color: var(--primary-blue-50);
+  color: var(--primary-blue);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  margin-right: var(--space-1);
+}
+
+
+/* Challenge Description */
+.challenge-description {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.challenge-meta {
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--gray-600);
+  font-size: var(--font-size-sm);
+}
+
+.meta-item mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary-blue);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: var(--gray-400);
+  margin-bottom: var(--space-4);
+}
+
+.empty-state h2 {
+  color: var(--gray-900);
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+  font-size: var(--font-size-xl);
+}
+
+.empty-state p {
+  color: var(--gray-600);
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-base);
+}
+
+/* Action Buttons */
+.actions-container {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin: var(--space-8) 0;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  transition: var(--transition);
+  text-transform: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border-color: var(--primary-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-blue-dark);
+  border-color: var(--primary-blue-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--gray-700);
+  border-color: var(--gray-300);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-50);
+  border-color: var(--gray-400);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+/* Form Container */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto var(--space-8);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-6);
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.form-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: var(--space-4);
+}
+
+
+.form-title mat-card-title,
+.form-title mat-card-subtitle {
+  white-space: normal;
+  word-break: break-word;
+}
+
+
+.close-button {
+  color: var(--white) !important;
+}
+
+/* Form Fields */
+.full-width {
+  width: 100%;
+  margin-bottom: var(--space-5);
+}
+
+.half-width {
+  width: calc(50% - var(--space-3));
+}
+
+/* Material Form Field Overrides */
+::ng-deep .mat-mdc-form-field {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline-thick {
+  border-color: var(--primary-blue) !important;
+  box-shadow: 0 0 0 3px var(--primary-blue-50);
+}
+
+::ng-deep .mat-mdc-form-field-prefix {
+  color: var(--primary-blue) !important;
+  margin-right: var(--space-2);
+}
+
+/* AI Generator Section */
+.ai-generator-section {
+  background-color: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+.ai-controls {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.topic-input {
+  flex: 1;
+  min-width: 250px;
+}
+
+.generate-button {
+  margin-top: var(--space-1);
+  min-width: 160px;
+}
+
+.generated-preview {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+.preview-text {
+  color: var(--gray-900);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Challenge Settings */
+.challenge-settings {
+  margin-top: var(--space-6);
+}
+
+.challenge-settings h3 {
+  color: var(--gray-900);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.settings-row {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* History Section */
+.history-container {
+  margin-top: var(--space-8);
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-6);
+  background-color: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.history-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background-color: var(--primary-blue-50);
+  color: var(--primary-blue);
+  margin-right: var(--space-4);
+}
+
+.history-title {
+  flex: 1;
+}
+
+.history-title mat-card-title {
+  color: var(--gray-900) !important;
+  font-weight: 600;
+  font-size: var(--font-size-xl);
+}
+
+.history-title mat-card-subtitle {
+  color: var(--gray-600) !important;
+}
+
+.loading-state,
+.empty-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+}
+
+.loading-state p,
+.empty-history p {
+  margin-top: var(--space-4);
+  color: var(--gray-600);
+}
+
+.empty-history h3 {
+  color: var(--gray-900);
+  margin-bottom: var(--space-2);
+}
+
+.history-list {
+  padding: var(--space-4) 0;
+}
+
+.history-item {
+  margin-bottom: var(--space-4);
+}
+
+.challenge-history-card {
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+  transition: var(--transition);
+}
+
+.challenge-history-card:hover {
+  background-color: var(--gray-50);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.challenge-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--space-4) var(--space-6);
+}
+
+.challenge-title-section h3 {
+  color: var(--gray-900);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.challenge-details {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-3);
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--gray-600);
+  font-size: var(--font-size-sm);
+}
+
+.detail-item mat-icon {
+  color: var(--primary-blue);
+  font-size: 0.875rem;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(4px);
+}
+
+.loading-overlay p {
+  margin-top: var(--space-4);
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+/* Card Content and Actions */
+::ng-deep mat-card-content {
+  padding: var(--space-6) !important;
+  color: var(--gray-900);
+}
+
+::ng-deep mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-4) var(--space-6) var(--space-6) !important;
+  gap: var(--space-3);
+  background-color: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+}
+
+/* Menu Styling */
+::ng-deep .mat-mdc-menu-panel {
+  background-color: var(--white) !important;
+  border: 1px solid var(--gray-200) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+::ng-deep .mat-mdc-menu-item {
+  color: var(--gray-900) !important;
+  transition: var(--transition);
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  background-color: var(--gray-50) !important;
+  color: var(--primary-blue) !important;
+}
+
+::ng-deep .mat-mdc-menu-item mat-icon {
+  color: var(--primary-blue) !important;
+  margin-right: var(--space-2);
+}
+
+/* Material Button Overrides */
+::ng-deep .mat-mdc-raised-button.mat-primary {
+  background-color: var(--primary-blue) !important;
+  color: var(--white) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+::ng-deep .mat-mdc-raised-button.mat-primary:hover {
+  background-color: var(--primary-blue-dark) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+::ng-deep .mat-mdc-outlined-button {
+  border: 1px solid var(--gray-300) !important;
+  color: var(--gray-700) !important;
+  background-color: var(--white) !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+::ng-deep .mat-mdc-outlined-button:hover {
+  background-color: var(--gray-50) !important;
+  border-color: var(--gray-400) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow) !important;
+}
+::ng-deep .mat-mdc-form-field .mdc-notched-outline {
+  border-width: 1px;
+  border-color: var(--gray-300); /* אפור בהיר כברירת מחדל */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline {
+  border-color: var(--primary-blue) !important;
+  box-shadow: 0 0 0 3px var(--primary-blue-50);
+}
+
+::ng-deep .mat-mdc-form-field .mdc-notched-outline {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .challenge-management-container {
+    padding: var(--space-6) var(--space-3);
+  }
+
+  .dashboard-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .header-title h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .actions-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-button {
+    width: 100%;
+  }
+
+  .ai-controls {
+    flex-direction: column;
+  }
+
+  .topic-input {
+    width: 100%;
+  }
+
+  .settings-row {
+    flex-direction: column;
+  }
+
+  .half-width {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .challenge-management-container {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .header-title h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .challenge-header {
+    flex-wrap: wrap;
+    padding: var(--space-4);
+  }
+
+  .challenge-status {
+    margin-left: 0;
+    margin-top: var(--space-3);
+  }
+
+  .form-header {
+    flex-wrap: wrap;
+    padding: var(--space-4);
+  }
+
+  .close-button {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+  }
+
+  ::ng-deep mat-card-content {
+    padding: var(--space-4) !important;
+  }
+
+  ::ng-deep mat-card-actions {
+    flex-wrap: wrap;
+    padding: var(--space-3) var(--space-4) var(--space-4) !important;
+  }
+
+  ::ng-deep mat-card-actions button {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  padding: 1rem; /* מאפשר רווח בצדדים במסכים קטנים */
+  box-sizing: border-box;
+}
+
+.popup-container {
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.3s ease-out;
+  padding-bottom: var(--space-4); /* קצת רווח בתחתית */
+}
+
+.popup-container::-webkit-scrollbar {
+  width: 6px;
+}
+.popup-container::-webkit-scrollbar-thumb {
+  background-color: var(--gray-300);
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .challenge-management-container {
+    padding: var(--space-3);
+  }
+
+  .header-title h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .challenge-meta {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .ai-generator-section {
+    padding: var(--space-4);
+  }
+
+  ::ng-deep mat-card-content {
+    padding: var(--space-3) !important;
+  }
+
+  ::ng-deep mat-card-actions {
+    padding: var(--space-3) !important;
+    flex-direction: column;
+  }
+
+  ::ng-deep mat-card-actions button {
+    width: 100%;
+  }
+}

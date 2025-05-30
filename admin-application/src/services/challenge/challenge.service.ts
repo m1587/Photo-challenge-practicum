@@ -38,6 +38,20 @@ export class ChallengeService {
   getPreviousChallenges(): Observable<Challenge[]> {
     return this.http.get<Challenge[]>(`${this.apiUrl}/previous-challenges`);
   }
+  // קבלת דוח חודשי של תמונות
+getMonthlyPhotoReport(): Observable<{ [key: string]: number }> {
+  return this.http.get<{ [key: string]: number }>(
+    `${this.apiUrl}/monthly-photo-report`
+  );
+}
+
+// קבלת דוח חודשי של הרשמות
+getMonthlyRegistrationReport(): Observable<{ [key: string]: number }> {
+  return this.http.get<{ [key: string]: number }>(
+    `${this.apiUrl}/monthly-registration-report`
+  );
+}
+
   // קריאה לעדכון תמונה מנצחת לפי challengeId
   updateWinnerImage(challengeId: number): Observable<Challenge> {
     return this.http.post<Challenge>(`${this.apiUrl}/${challengeId}/calculate-winner`, {});

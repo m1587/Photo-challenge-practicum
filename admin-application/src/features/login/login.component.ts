@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ import { CommonModule } from '@angular/common';
     MatSelectModule,
     MatToolbarModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -32,12 +34,27 @@ export class LoginComponent {
   loginForm!: FormGroup;
   submitted = false;
   errorMessage!: string;
-  hide = false
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-  }
+  hide = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
+
   get formControls() {
     return this.loginForm.get('userDetails') as FormGroup;
   }
+
+  get emailControl() {
+    return this.formControls.get('email');
+  }
+
+  get passwordControl() {
+    return this.formControls.get('password');
+  }
+
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       userDetails: this.fb.group({
@@ -48,7 +65,12 @@ export class LoginComponent {
   }
   onSubmit() {
     this.submitted = true;
+
     if (this.loginForm.invalid) {
+       this.snackBar.open("Please fill in all required fields correctly.", "OK", {
+      duration: 4000,
+      panelClass: ['snackbar-error']
+    });
       return;
     }
     console.log('Submitted:', this.loginForm.value);
@@ -57,22 +79,31 @@ export class LoginComponent {
       this.formControls.get('password')?.value,
     ).subscribe(
       response => {
-      console.log(response);
+        console.log(response);
         if (response.user.role === 'Admin') {
-        alert("login successful 😝😁😊");
-        this.authService.signIn();
-        this.authService.storeToken(response.token);
-        this.authService.storeUserId(response.userId);
-        this.authService.storeUserRole(response.role);
-        this.router.navigate(['/home']);
-      } else {
-        this.errorMessage = 'גישה מיועדת רק למנהלים';
-        alert(this.errorMessage);
-      }
+           this.snackBar.open("Successfully logged in! Welcome to the admin panel.", "Continue", {
+          duration: 4000,
+          panelClass: ['snackbar-success']
+        });
+          this.authService.signIn();
+          this.authService.storeToken(response.token);
+          this.authService.storeUserId(response.userId);
+          this.authService.storeUserRole(response.role);
+          this.router.navigate(['/home']);
+        } else {
+          this.errorMessage = 'Access restricted to administrators only';
+           this.snackBar.open(this.errorMessage, "OK", {
+          duration: 5000,
+          panelClass: ['snackbar-error']
+        });
+        }
       },
       error => {
-        this.errorMessage = error.error.message + 'Login error, please try again.';
-        alert(this.errorMessage)
+        this.errorMessage = error.error.message + ' Login error, please try again.';
+        this.snackBar.open(this.errorMessage, "Retry", {
+        duration: 6000,
+        panelClass: ['snackbar-error']
+      });
       }
     );
   }

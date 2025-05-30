@@ -1,34 +1,87 @@
 <div class="home-container">
-  <div class="hero-section">
+  <!-- Hero Section -->
+  <mat-card class="hero-section">
     <div class="hero-content">
-      <h1>Welcome to the Management System</h1>
-      <p>An advanced system for managing users and challenges</p>
-    </div>
-  </div>
+      <h1>
+        Advanced <span class="highlight">Management</span> System
+      </h1>
+      <p>
+        A professional and efficient platform for managing users, challenges,
+        and generating comprehensive reports with advanced analytics tools.
+      </p>
 
+      <div class="actions-grid">
+        <button mat-raised-button color="primary" (click)="handleClick('/challenge-management')">
+          <mat-icon class="blue-icon">add_task</mat-icon>
+          &nbsp;Create New Challenge
+        </button>
+        <button mat-stroked-button color="accent" (click)="handleClick('/users-management')">
+          <mat-icon class="blue-icon">people_outline</mat-icon>
+          &nbsp;Manage Users
+        </button>
+        <button mat-stroked-button color="accent" (click)="handleClick('/monthly-photo-report')">
+          <mat-icon class="blue-icon">bar_chart</mat-icon>
+          &nbsp;View Reports
+        </button>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Features Section -->
   <div class="features-section">
     <h2>System Features</h2>
     <div class="features-grid">
-      <div class="feature-card">
-        <mat-icon>people</mat-icon>
-        <h3>User Management</h3>
-        <p>Simple and easy management of system users, roles, and permissions</p>
-      </div>
-      <div class="feature-card">
-        <mat-icon>flag</mat-icon>
-        <h3>Challenge Management</h3>
-        <p>Create and manage new challenges in the system</p>
-      </div>
-      <div class="feature-card">
-        <mat-icon>assessment</mat-icon>
-        <h3>Monthly Reports</h3>
-        <p>Generate monthly reports and display data visually</p>
-      </div>
-      <div class="feature-card">
-        <mat-icon>security</mat-icon>
-        <h3>Advanced Security</h3>
-        <p>Advanced security system to protect user data</p>
-      </div>
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-icon class="feature-icon">people_outline</mat-icon>
+        </mat-card-header>
+        <mat-card-title>User Management</mat-card-title>
+        <mat-card-content>
+          <p>
+            Comprehensive user management with role-based access control,
+            detailed user profiles, and advanced administration tools.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-icon class="feature-icon">flag</mat-icon>
+        </mat-card-header>
+        <mat-card-title>Challenge Management</mat-card-title>
+        <mat-card-content>
+          <p>
+            Create, manage, and track photography challenges with AI-based
+            description generation and powerful admin tools.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-icon class="feature-icon">analytics</mat-icon>
+        </mat-card-header>
+        <mat-card-title>Analytics & Reports</mat-card-title>
+        <mat-card-content>
+          <p>
+            Generate detailed monthly reports with interactive charts,
+            advanced data analysis, and versatile export options.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-icon class="feature-icon">security</mat-icon>
+        </mat-card-header>
+        <mat-card-title>Advanced Security</mat-card-title>
+        <mat-card-content>
+          <p>
+            Enterprise-grade security features including data encryption,
+            two-factor authentication, and a robust permissions system.
+          </p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

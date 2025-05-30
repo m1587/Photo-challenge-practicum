@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-user-dialog',
   imports: [
@@ -21,11 +21,12 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     MatDialogModule,
     MatIconModule,
+    MatSnackBarModule
   ],
   templateUrl: './user-dialog.component.html',
   styleUrl: './user-dialog.component.css'
 })
-export class UserDialogComponent implements OnInit{
+export class UserDialogComponent implements OnInit {
   userForm!: FormGroup;
   isEditMode = false;
   hidePassword = true
@@ -33,8 +34,9 @@ export class UserDialogComponent implements OnInit{
     private fb: FormBuilder,
     private userService: AuthService,
     private dialogRef: MatDialogRef<UserDialogComponent>,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: User
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isEditMode = !!this.data;
@@ -48,22 +50,45 @@ export class UserDialogComponent implements OnInit{
   }
 
   onSubmit() {
-    if (this.userForm.invalid) return;
+  if (this.userForm.invalid) return;
 
-    const formValue = this.userForm.value;
+  const formValue = this.userForm.value;
 
-    if (this.isEditMode) {
-      this.userService.updateUser(this.data.id, formValue).subscribe(() => {
-        alert("משתמש עודכן בהצלחה ✅");
+  if (this.isEditMode) {
+    this.userService.updateUser(this.data.id, formValue).subscribe(
+      () => {
+        this.snackBar.open("User updated successfully", "Close", {
+          duration: 4000,
+          panelClass: ['snackbar-success']
+        });
         this.dialogRef.close(true);
-      });
-    } else {
-      this.userService.addUser(formValue).subscribe(() => {
-        alert("משתמש נוסף בהצלחה 🎉");
+      },
+      () => {
+        this.snackBar.open("Failed to update user", "Close", {
+          duration: 4000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    );
+  } else {
+    this.userService.addUser(formValue).subscribe(
+      () => {
+        this.snackBar.open("User added successfully", "Close", {
+          duration: 4000,
+          panelClass: ['snackbar-success']
+        });
         this.dialogRef.close(true);
-      });
-    }
+      },
+      () => {
+        this.snackBar.open("Failed to add user", "Close", {
+          duration: 4000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    );
   }
+}
+
 
   cancel() {
     this.dialogRef.close();

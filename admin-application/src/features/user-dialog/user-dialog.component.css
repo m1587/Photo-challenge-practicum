@@ -1,254 +1,262 @@
-/* :host {
-  display: block;
-  direction: rtl;
-  overflow: hidden; /* מונע גלילה */
-/* } */
-
-/* h2 {
-  text-align: center;
-  margin-bottom: 16px;
-  color: #3f51b5;
-  font-weight: 500;
-  position: relative;
-  padding-bottom: 10px;
-} */
-/* 
-h2:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background-color: #ff4081;
-}
-
-.form-container {
-  width: 100%;
-  padding: 0;
-  animation: fadeIn 0.4s ease-out;
-} */
-
-/* Enhanced form field styling */
-/* .full-width {
-  width: 100%;
-  margin-bottom: 16px;
-}
-
-.icon-rtl {
-  position: absolute;
-  right: 12px;
-  top: 36px;
-  color: gray;
-  pointer-events: none;
-}
-
-
-::ng-deep .mat-form-field-label {
-  left: auto !important;
-  right: 0 !important;
-  transform-origin: top right !important;
-  text-align: right !important;
-}
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgba(0, 0, 0, 0.3);
-}
-
-::ng-deep .mat-form-field-appearance-outline:hover .mat-form-field-outline {
-  color: #3f51b5;
-}
-
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
-  color: #3f51b5;
-}
-
-
-::ng-deep .mat-form-field-prefix {
-  margin-right: 0;
-  margin-left: 8px;
-  color: gray;
-} */
-/* Fix dialog content padding */
-/* ::ng-deep .mat-dialog-content {
-  padding: 0 24px;
-  max-height: none;
-  overflow: visible;
-} */
-
-/* Fix dialog actions alignment */
-/* ::ng-deep .mat-dialog-actions {
-  padding: 12px 24px 24px;
-  margin-bottom: 0;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
-  border-radius: 0 5px 5px 0 !important;
-  border-right-style: solid !important;
-  border-left-style: none !important;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
-  border-radius: 5px 0 0 5px !important;
-  border-left-style: solid !important;
-  border-right-style: none !important;
-} */
-
-/* תיקון ליישור התווית והתוכן */
-/* ::ng-deep .mat-form-field-wrapper {
-  padding-bottom: 0;
-}
-
-::ng-deep .mat-form-field-infix {
-  text-align: right;
-  width: 100% !important;
-}
-
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-  direction: rtl;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (max-width: 600px) {
-  .form-container {
-    width: 100%;
-  }
-
-  ::ng-deep .mat-dialog-content {
-    padding: 0 16px;
-  }
-
-  ::ng-deep .mat-dialog-actions {
-    padding: 8px 16px 16px;
-    flex-direction: row-reverse;
-    justify-content: center;
-  }
-
-  ::ng-deep .mat-dialog-actions button {
-    flex: 1;
-  }
-} */
 :host {
   display: block;
   direction: rtl;
   overflow: hidden;
 }
+.feature-card,
+.summary-card,
+.stat-card {
+  background: var(--card-background) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  transition: all 0.3s ease;
+}
 
-h2 {
+.feature-card:hover,
+.summary-card:hover,
+.stat-card:hover {
+  background: var(--card-background-hover) !important;
+  transform: translateY(-5px);
+}
+
+/* טקסט כהה יותר לקריאות */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #2c3e50 !important; /* כחול כהה אלגנטי */
+  text-shadow: none !important;
+  font-weight: 700;
+}
+
+/* טקסט על רקע כהה
+.header-title h1,
+.hero-content h1 {
+  color: var(--primary-gold) !important;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+} */
+
+/* פסקאות */
+p {
+  color: var(--text-dark) !important;
+  font-weight: 500;
+}
+
+/* טקסט על רקע כהה */
+.subtitle,
+.hero-content p {
+  color: var(--text-light) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+/* Dialog Styling */
+::ng-deep .mat-mdc-dialog-container {
+  background: var(--glass-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: var(--radius-large) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  overflow: hidden;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Header Styling */
+h2[mat-dialog-title] {
+  color: #2c3e50 !important;
   text-align: center;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-  font-weight: 600;
-  position: relative;
-  padding-bottom: 0.625rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-shadow: none !important;
 }
-
-h2:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3.75rem;
-  height: 0.1875rem;
-  background-color: var(--accent-color);
-}
-
+/* Form Container */
 .form-container {
   width: 100%;
   padding: 0;
-  animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.6s ease-out;
 }
 
-/* Enhanced form field styling */
+/* Form Fields */
 .full-width {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+::ng-deep h2[mat-dialog-title] {
+  color: #2c3e50 !important;
+  text-shadow: none !important;
 }
 
-.icon-rtl {
-  position: absolute;
-  right: 0.75rem;
-  top: 2.25rem;
-  color: var(--text-secondary);
-  pointer-events: none;
+/* Material Form Field Overrides */
+::ng-deep .mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: rgba(196, 163, 109, 0.3);
+  --mdc-outlined-text-field-focus-outline-color: var(--primary-gold);
+  --mdc-outlined-text-field-label-text-color: var(--text-dark);
+  --mdc-outlined-text-field-input-text-color: var(--text-dark);
+  --mdc-outlined-text-field-container-shape: 8px;
 }
 
-::ng-deep .mat-form-field-label {
-  left: auto !important;
-  right: 0 !important;
-  transform-origin: top right !important;
-  text-align: right !important;
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline-thick {
+  border-color: var(--primary-gold) !important;
+  box-shadow: 0 0 0 2px rgba(196, 163, 109, 0.2);
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: var(--border-color);
+::ng-deep .mat-mdc-form-field:hover .mat-mdc-form-field-outline {
+  border-color: rgba(196, 163, 109, 0.6) !important;
 }
 
-::ng-deep .mat-form-field-appearance-outline:hover .mat-form-field-outline {
-  color: var(--primary-color);
+::ng-deep .mat-mdc-input-element {
+  color: var(--text-dark) !important;
+  font-weight: 500;
 }
 
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
-  color: var(--primary-color);
+::ng-deep .mat-mdc-input-element::placeholder {
+  color: rgba(51, 51, 51, 0.6) !important;
 }
 
-::ng-deep .mat-form-field-prefix {
+/* Form Field Icons */
+::ng-deep .mat-mdc-form-field-prefix {
   margin-right: 0;
-  margin-left: 0.5rem;
-  color: var(--text-secondary);
+  margin-left: 0.75rem;
+  color: var(--primary-gold) !important;
 }
 
-/* Fix dialog content padding */
-::ng-deep .mat-dialog-content {
-  padding: 0 1.5rem;
+::ng-deep .mat-mdc-form-field-suffix {
+  margin-left: 0;
+  margin-right: 0.75rem;
+}
+
+/* Select Dropdown */
+::ng-deep .mat-mdc-select-value {
+  color: var(--text-dark) !important;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: var(--primary-gold) !important;
+}
+
+/* Password Toggle Button */
+::ng-deep .mat-mdc-icon-button {
+  color: var(--primary-gold) !important;
+}
+
+::ng-deep .mat-mdc-icon-button:hover {
+  background-color: rgba(196, 163, 109, 0.1) !important;
+}
+
+/* Error Messages */
+::ng-deep .mat-mdc-form-field-error {
+  color: #e53e3e !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Dialog Content */
+::ng-deep .mat-mdc-dialog-content {
+  padding: 0 2rem !important;
   max-height: none;
   overflow: visible;
 }
 
-/* Fix dialog actions alignment */
-::ng-deep .mat-dialog-actions {
-  padding: 0.75rem 1.5rem 1.5rem;
+/* Dialog Actions */
+::ng-deep .mat-mdc-dialog-actions {
+  padding: 1.5rem 2rem 2rem !important;
   margin-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
-  border-radius: 0 var(--radius) var(--radius) 0 !important;
+/* Buttons */
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-button {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: all 0.3s ease !important;
+  text-transform: none !important;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-button:not(.mat-mdc-raised-button) {
+  color: var(--text-dark) !important;
+  border: 1px solid rgba(196, 163, 109, 0.3) !important;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-button:not(.mat-mdc-raised-button):hover {
+  background-color: rgba(196, 163, 109, 0.1) !important;
+  border-color: var(--primary-gold) !important;
+}
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button {
+  background-color: #1e88e5 !important; /* כחול */
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(30, 136, 229, 0.4) !important;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button:hover:not(:disabled) {
+  background-color: #1565c0 !important; /* כחול כהה */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.5) !important;
+}
+.snackbar-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.snackbar-error {
+  background-color: #f44336;
+  color: white;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button:disabled {
+   background-color: #90a4ae !important; 
+  color: rgba(0, 0, 0, 0.4) !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* RTL Support */
+::ng-deep .mat-mdc-form-field-outline-start {
+  border-radius: 0 8px 8px 0 !important;
   border-right-style: solid !important;
   border-left-style: none !important;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
-  border-radius: var(--radius) 0 0 var(--radius) !important;
+::ng-deep .mat-mdc-form-field-outline-end {
+  border-radius: 8px 0 0 8px !important;
   border-left-style: solid !important;
   border-right-style: none !important;
 }
 
-/* תיקון ליישור התווית והתוכן */
-::ng-deep .mat-form-field-wrapper {
+::ng-deep .mat-mdc-form-field-wrapper {
   padding-bottom: 0;
 }
 
-::ng-deep .mat-form-field-infix {
+::ng-deep .mat-mdc-form-field-infix {
   text-align: right;
   width: 100% !important;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+::ng-deep .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-flex {
   direction: rtl;
 }
+::ng-deep .mat-mdc-dialog-content {
+  background-color: white !important;
+  border-radius: 0 0 var(--radius-large) var(--radius-large);
+  padding-bottom: 2rem !important;
+}
+.white-bg {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0 0 var(--radius-large) var(--radius-large);
+}
 
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -256,22 +264,41 @@ h2:after {
   }
 }
 
+/* Responsive Design */
 @media (max-width: 600px) {
   .form-container {
     width: 100%;
   }
 
-  ::ng-deep .mat-dialog-content {
-    padding: 0 1rem;
+  ::ng-deep .mat-mdc-dialog-content {
+    padding: 0 1.5rem !important;
   }
 
-  ::ng-deep .mat-dialog-actions {
-    padding: 0.5rem 1rem 1rem;
-    flex-direction: row-reverse;
-    justify-content: center;
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 1rem 1.5rem 1.5rem !important;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  ::ng-deep .mat-dialog-actions button {
-    flex: 1;
+  ::ng-deep .mat-mdc-dialog-actions .mat-mdc-button {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .mat-mdc-dialog-content {
+    padding: 0 1rem !important;
+  }
+
+  ::ng-deep .mat-mdc-dialog-actions {
+    padding: 1rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem;
   }
 }

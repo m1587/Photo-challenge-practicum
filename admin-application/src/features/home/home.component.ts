@@ -1,19 +1,31 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
-  imports: [MatIconModule],
+  imports: [
+    MatIconModule,
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
-  userCount: number | null = null
-  challengeCount: number | null = null
-  completionRate: string | null = null
+export class HomeComponent  {
 
-  constructor() {}
-
-  ngOnInit(): void {
+  constructor(private userService: AuthService,private router: Router) {}
+   handleClick(path: string) {
+    if (this.userService.isSignedIn()) {
+      this.router.navigate([path]);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
+
 }

@@ -1,11 +1,11 @@
+/* Corporate Navbar */
 .app-toolbar {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background: var(--glass-white-light) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-  box-shadow: var(--glass-shadow) !important;
-  backdrop-filter: var(--glass-blur) !important;
+  background: var(--white) !important;
+  border-bottom: 1px solid var(--gray-200) !important;
+  box-shadow: var(--shadow-sm) !important;
 }
 
 .toolbar-container {
@@ -15,155 +15,120 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 var(--space-4);
+  height: 64px;
 }
 
 .toolbar-left,
 .toolbar-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .app-title {
-  margin-left: 16px;
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: var(--primary-gold) !important;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  margin-left: var(--space-4);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  color: var(--gray-900) !important;
+  letter-spacing: -0.025em;
 }
 
 /* Home Icon Button */
 .toolbar-left button {
-  background: rgba(196, 163, 109, 0.2) !important;
-  border: 1px solid var(--primary-gold) !important;
-  color: var(--primary-gold) !important;
-  transition: all 0.3s ease;
-  border-radius: 8px !important;
+  background: var(--primary-blue-50) !important;
+  border: 1px solid var(--primary-blue-200) !important;
+  color: var(--primary-blue) !important;
+  transition: var(--transition);
+  border-radius: var(--radius-md) !important;
 }
 
 .toolbar-left button:hover {
-  background: rgba(196, 163, 109, 0.3) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(196, 163, 109, 0.3);
+  background: var(--primary-blue-100) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
 }
 
 /* Login Button */
 .login-button {
-  background: var(--primary-gold) !important;
-  color: var(--text-light) !important;
+  background: var(--primary-blue) !important;
+  color: var(--white) !important;
   font-weight: 600 !important;
-  border-radius: 8px !important;
-  padding: 0.5rem 1.5rem !important;
-  transition: all 0.3s ease !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-2) var(--space-6) !important;
+  transition: var(--transition) !important;
   border: none !important;
-  box-shadow: 0 4px 15px rgba(196, 163, 109, 0.3) !important;
+  box-shadow: var(--shadow) !important;
   text-transform: none !important;
 }
 
 .login-button:hover {
-  background: var(--primary-gold-hover) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(196, 163, 109, 0.4) !important;
+  background: var(--primary-blue-dark) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md) !important;
 }
 
 /* Management Menu Button */
 .toolbar-right button:not(.login-button) {
-  background: rgba(196, 163, 109, 0.2) !important;
-  border: 1px solid var(--primary-gold) !important;
-  color: var(--primary-gold) !important;
+  background: var(--white) !important;
+  border: 1px solid var(--gray-300) !important;
+  color: var(--gray-700) !important;
   font-weight: 500 !important;
-  border-radius: 8px !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 0.3s ease;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-2) var(--space-4) !important;
+  transition: var(--transition);
   text-transform: none !important;
 }
 
 .toolbar-right button:not(.login-button):hover {
-  background: rgba(196, 163, 109, 0.3) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(196, 163, 109, 0.3);
+  background: var(--gray-50) !important;
+  border-color: var(--gray-400) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
 }
 
 /* Menu Dropdown Styling */
-.mat-mdc-menu-panel {
-  background: var(--glass-white) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: var(--glass-shadow) !important;
-  backdrop-filter: var(--glass-blur) !important;
+::ng-deep .mat-mdc-menu-panel {
+  background: var(--white) !important;
+  border: 1px solid var(--gray-200) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
 }
 
-.mat-mdc-menu-item {
-  color: var(--text-dark) !important;
-  transition: all 0.2s ease;
+::ng-deep .mat-mdc-menu-item {
+  color: var(--gray-900) !important;
+  transition: var(--transition);
 }
 
-.mat-mdc-menu-item:hover {
-  background: rgba(196, 163, 109, 0.1) !important;
-  color: var(--primary-gold) !important;
+::ng-deep .mat-mdc-menu-item:hover {
+  background: var(--gray-50) !important;
+  color: var(--primary-blue) !important;
 }
 
-.mat-mdc-menu-item mat-icon {
-  color: var(--primary-gold) !important;
-  margin-right: 0.5rem;
-}
-
-/* Divider */
-.mat-mdc-menu-item .mat-divider {
-  border-color: var(--border-light) !important;
-}
-
-.app-content {
-  min-height: calc(100vh - 64px);
-  padding-bottom: 40px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
-  background-image: url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2074');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  position: relative;
-}
-
-.app-content::before {
-  content: '';
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--background-dark);
-  backdrop-filter: blur(2px);
-  z-index: -1;
+::ng-deep .mat-mdc-menu-item mat-icon {
+  color: var(--primary-blue) !important;
+  margin-right: var(--space-2);
 }
 
 /* Responsive Design */
 @media (max-width: 599px) {
-  .app-content {
-    min-height: calc(100vh - 56px);
-  }
-
-  .app-content::before {
-    top: 56px;
-  }
-
   .app-title {
-    font-size: 1rem;
-    margin-left: 8px;
+    font-size: var(--font-size-base);
+    margin-left: var(--space-2);
   }
 
   .toolbar-container {
-    padding: 0 8px;
+    padding: 0 var(--space-2);
   }
 
   .toolbar-left,
   .toolbar-right {
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .login-button {
-    padding: 0.4rem 1rem !important;
-    font-size: 0.9rem !important;
+    padding: var(--space-2) var(--space-4) !important;
+    font-size: var(--font-size-sm) !important;
   }
 }
 
@@ -171,11 +136,11 @@
   .app-title {
     display: none;
   }
-  
+
   .login-button span {
     display: none;
   }
-  
+
   .toolbar-right button:not(.login-button) span {
     display: none;
   }
