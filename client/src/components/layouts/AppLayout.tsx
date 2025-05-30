@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Navbar from './Navbar';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
@@ -10,7 +10,12 @@ const AppLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // יצירת רפרנס לקומפוננטת Login
   const loginRef = useRef<LoginRef>(null);
-
+ useEffect(() => {
+    const token = sessionStorage.getItem('user'); // או localStorage אם את שומרת שם
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };

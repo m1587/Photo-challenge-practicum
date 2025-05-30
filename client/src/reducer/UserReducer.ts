@@ -21,13 +21,15 @@ export const initialState: User = {
 export const userReducer = (state: User, action: UserAction): User => {
   switch (action.type) {
     case 'CREATE_USER':
+      sessionStorage.setItem("user", JSON.stringify(action.payload))
       return { ...state, ...action.payload };
     case 'UPDATE_USER':
       return { ...state, ...action.payload };
     case 'RESET_USER':
       return initialState;
-    case 'LOGOUT':  // הוספתי את טיפול ב־LOGOUT
-      return initialState; // מחזיר את ה־state למצב התחלתי
+    case 'LOGOUT': 
+     sessionStorage.removeItem("user"); 
+      return initialState; 
     default:
       return state;
   }

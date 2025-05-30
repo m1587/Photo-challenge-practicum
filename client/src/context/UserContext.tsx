@@ -13,10 +13,18 @@ export const UserContext = createContext<UserContextProps | undefined>(undefined
 interface UserProviderProps {
   children: ReactNode
 }
-
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(userReducer, initialState)
+  const storedUser = sessionStorage.getItem("user");
+  const parsedUser = storedUser ? JSON.parse(storedUser) : initialState;
 
-  return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>
-}
+  const [state, dispatch] = useReducer(userReducer, parsedUser);
+
+  return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
+};
+
+// export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+//   const [state, dispatch] = useReducer(userReducer, initialState)
+
+//   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>
+// }
 
