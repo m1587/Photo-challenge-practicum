@@ -39,18 +39,18 @@ export class ChallengeService {
     return this.http.get<Challenge[]>(`${this.apiUrl}/previous-challenges`);
   }
   // קבלת דוח חודשי של תמונות
-getMonthlyPhotoReport(): Observable<{ [key: string]: number }> {
-  return this.http.get<{ [key: string]: number }>(
-    `${this.apiUrl}/monthly-photo-report`
-  );
-}
+  getMonthlyPhotoReport(): Observable<{ [key: string]: number }> {
+    return this.http.get<{ [key: string]: number }>(
+      `${this.apiUrl}/monthly-photo-report`
+    );
+  }
 
-// קבלת דוח חודשי של הרשמות
-getMonthlyRegistrationReport(): Observable<{ [key: string]: number }> {
-  return this.http.get<{ [key: string]: number }>(
-    `${this.apiUrl}/monthly-registration-report`
-  );
-}
+  // קבלת דוח חודשי של הרשמות
+  getMonthlyRegistrationReport(): Observable<{ [key: string]: number }> {
+    return this.http.get<{ [key: string]: number }>(
+      `${this.apiUrl}/monthly-registration-report`
+    );
+  }
 
   // קריאה לעדכון תמונה מנצחת לפי challengeId
   updateWinnerImage(challengeId: number): Observable<Challenge> {
@@ -67,5 +67,14 @@ getMonthlyRegistrationReport(): Observable<{ [key: string]: number }> {
     };
     return this.http.post<any>(`https://photo-challenge-practicum-1.onrender.com/api/Contact/send-email-to-user/${userId}`, emailData);
   }
+
+  generateChallengeDescription(topic: string): Observable<{ description: string }> {
+    const url = 'https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description';
+    const body = { GeneratedText: topic };
+    return this.http.post<{ description: string }>(url, body, {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
 
 }

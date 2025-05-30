@@ -126,7 +126,7 @@ export class ChallengeManagementComponent implements OnInit {
         // Send email if winner exists
         if (updatedChallenge.winnerUserId) {
           console.log("Sending email to user with ID:", updatedChallenge.winnerUserId)
-          const subject = "Congratulations! You won the weekly challenge 🎉"
+          const subject = "Congratulations! You won the weekly challenge"
           const message = `Your image was selected as the winner for the challenge "${updatedChallenge.title}"!`
 
           this.challengeService.sendEmailToWinner(updatedChallenge.winnerUserId, subject, message).subscribe({

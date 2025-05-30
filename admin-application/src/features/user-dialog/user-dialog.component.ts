@@ -44,7 +44,12 @@ export class UserDialogComponent implements OnInit {
     this.userForm = this.fb.group({
       name: [this.data?.name || '', Validators.required],
       email: [this.data?.email || '', [Validators.required, Validators.email]],
-      password: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]],
+    password: ['', this.isEditMode ? [] : [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}\\[\\]:;"\'<>,.?/~`]).{8,}$')
+      ]
+],
       role: [this.data?.role || '', Validators.required]
     });
   }

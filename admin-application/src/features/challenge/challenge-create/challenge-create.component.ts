@@ -55,7 +55,6 @@ export class ChallengeCreateComponent {
   isSubmitting = false
 
   constructor(
-    private http: HttpClient,
     private challengeService: ChallengeService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
@@ -68,30 +67,24 @@ export class ChallengeCreateComponent {
     })
   }
 
-  generateDescription() {
-    if (!this.topicInput.trim()) return
+generateDescription() {
+  if (!this.topicInput.trim()) return;
 
-    this.isGenerating = true
-    const body = { GeneratedText: this.topicInput }
+  this.isGenerating = true;
 
-    this.http
-      .post("https://photo-challenge-practicum-1.onrender.com/api/huggingface/generate-description", body, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .subscribe({
-        next: (res: any) => {
-          this.generatedDescription = res.description
-          this.isGenerating = false
-          console.log("Generated description:", res.description)
-        },
-        error: (err) => {
-          console.error("Error generating description:", err)
-          this.generatedDescription = "Failed to generate description. Please try again."
-          
-          this.isGenerating = false
-        },
-      })
-  }
+  this.challengeService.generateChallengeDescription(this.topicInput).subscribe({
+    next: (res) => {
+      this.generatedDescription = res.description;
+      this.isGenerating = false;
+      console.log("Generated description:", res.description);
+    },
+    error: (err) => {
+      console.error("Error generating description:", err);
+      this.generatedDescription = "Failed to generate description. Please try again.";
+      this.isGenerating = false;
+    }
+  });
+}
 
   useGeneratedDescription() {
     this.challengeForm.get("description")?.setValue(this.generatedDescription)

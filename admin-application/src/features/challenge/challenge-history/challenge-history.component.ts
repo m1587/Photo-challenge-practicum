@@ -82,7 +82,7 @@ export class ChallengeHistoryComponent implements OnInit {
           this.userWinnerName = user.name
         },
         error: (err: any) => {
-          console.error('שגיאה בשליפת המשתמש:', err)
+          console.error('Error retrieving user:', err)
         }
       })
       return `${this.userWinnerName}`
