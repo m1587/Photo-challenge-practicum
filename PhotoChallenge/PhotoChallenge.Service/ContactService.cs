@@ -24,6 +24,33 @@ namespace PhotoChallenge.Service
             _userService = userService;
         }
 
+        //public async Task<ContactResponseDto> SendEmailAsync(ContactDto emailRequest)
+        //{
+        //    if (emailRequest == null)
+        //    {
+        //        return new ContactResponseDto { Success = false, Message = "Invalid request" };
+        //    }
+
+        //    // כאן אתה שולח מכתובת מאומתת ב-SendGrid
+        //    var from = new EmailAddress("nechami3142@gmail.com");
+        //    var to = new EmailAddress("m0556721587@gmail.com"); // כתובת הנמען
+
+        //    // צור את המייל
+        //    var msg = MailHelper.CreateSingleEmail(from, to, emailRequest.Subject, emailRequest.Message, $"<p>{emailRequest.Message}</p>");
+
+        //    // הגדר את ה-Reply-To לכתובת המשתמש
+        //    msg.ReplyTo = new EmailAddress("nechami3142@gmail.com");
+
+        //    // שלח את המייל
+        //    var response = await _sendGridClient.SendEmailAsync(msg);
+        //    var responseBody = await response.Body.ReadAsStringAsync();
+
+        //    return new ContactResponseDto
+        //    {
+        //        Success = response.IsSuccessStatusCode,
+        //        Message = response.IsSuccessStatusCode ? "Email sent successfully." : $"Failed to send email: {responseBody}"
+        //    };
+        //}
         public async Task<ContactResponseDto> SendEmailAsync(ContactDto emailRequest)
         {
             if (emailRequest == null)
@@ -32,14 +59,14 @@ namespace PhotoChallenge.Service
             }
 
             // כאן אתה שולח מכתובת מאומתת ב-SendGrid
-            var from = new EmailAddress("nechami3142@gmail.com");
-            var to = new EmailAddress("m0556721587@gmail.com"); // כתובת הנמען
+            var from = new EmailAddress("potochallenge@gmail.com");
+            var to = new EmailAddress("potochallenge@gmail.com"); // כתובת הנמען
 
             // צור את המייל
             var msg = MailHelper.CreateSingleEmail(from, to, emailRequest.Subject, emailRequest.Message, $"<p>{emailRequest.Message}</p>");
 
             // הגדר את ה-Reply-To לכתובת המשתמש
-            msg.ReplyTo = new EmailAddress("nechami3142@gmail.com");
+            msg.ReplyTo = new EmailAddress("potochallenge@gmail.com");
 
             // שלח את המייל
             var response = await _sendGridClient.SendEmailAsync(msg);
@@ -51,6 +78,7 @@ namespace PhotoChallenge.Service
                 Message = response.IsSuccessStatusCode ? "Email sent successfully." : $"Failed to send email: {responseBody}"
             };
         }
+
 
         public async Task<ContactResponseDto> SendResetPasswordEmailAsync(string email, string resetLink)
         {
