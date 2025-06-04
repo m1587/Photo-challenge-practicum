@@ -1,3 +1,238 @@
+// import type React from "react"
+// import { useEffect, useState } from "react"
+// import { Box, Typography, Container, Button, Paper } from "@mui/material"
+// import { motion } from "framer-motion"
+// import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+// import FileUploader from "../../upload/components/FileUploader"
+// import ImageGallery from "../../gallery/components/ImageGallery"
+// import ThemeCardWithGenerator from "./ThemeCardWithGenerator"
+// import { fetchActiveChallengeId } from "../../../services/challenge"
+// import ErrorSnackbar from "../../../components/pages/Error"
+// import SuccessSnackbar from "../../../components/pages/Success"
+
+// interface WeeklyThemeSectionProps {
+//   isLoggedIn: boolean
+//   showUploader: boolean
+//   showVoting: boolean
+//   uploadedFiles: { fileName: string; url: string }[]
+//   onBack: () => void
+//   onShowUploader: () => void
+//   onShowVoting: () => void
+//   onHideUploader: () => void
+//   onHideVoting: () => void
+// }
+
+// export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> = ({
+//   isLoggedIn,
+//   showUploader,
+//   showVoting,
+//   uploadedFiles,
+//   onBack,
+//   onShowUploader,
+//   onShowVoting,
+//   onHideUploader,
+//   onHideVoting,
+// }) => {
+//   const [theme, setTheme] = useState<any>(null)
+//   const [loading, setLoading] = useState<boolean>(true)
+//   const [error, setError] = useState<any>(null)
+//   const [snackOpen, setSnackOpen] = useState(false);
+//   const [successMessage, setSuccessMessage] = useState("");
+//   const [isError, setIsError] = useState(false);
+//   const handleCloseSnackbar = () => {
+//     setSnackOpen(false);
+//     setIsError(false);
+//     setError(null);
+//     setSuccessMessage("");
+//   };
+//   const getToken = () => localStorage.getItem("token")
+//   useEffect(() => {
+//     const fetchTheme = async () => {
+//       try {
+
+//         // const response = await api.get("Challenge/active-challenge")
+//         const token = getToken()
+//         if (!token) return
+//         const response = await fetchActiveChallengeId(token);
+//         const themeData = response.data
+//         setTheme(themeData)
+//         setLoading(false)
+//         setSuccessMessage("Theme loaded successfully!");
+//         setIsError(false);
+//         setSnackOpen(true);
+
+//       } catch (err) {
+//         setError(err);
+//         setIsError(true);
+//         setSnackOpen(true);
+//         setLoading(false);
+//       }
+//     }
+
+//     fetchTheme()
+//   }, [])
+
+//   if (loading) return <div>Loading...</div>
+//   if (error) return <div>Error: {error.message}</div>
+
+//   return (
+//     <Box
+//       sx={{
+//         minHeight: "100vh",
+//         width: "100%",
+//         position: "relative",
+//         overflow: "hidden",
+//         pt: { xs: 10, md: 4 },
+//         pb: 6,
+//         backgroundImage: "url(https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2074)",
+//         backgroundSize: "cover",
+//         "&::before": {
+//           content: '""',
+//           position: "absolute",
+//           top: 0,
+//           left: 0,
+//           right: 0,
+//           bottom: 0,
+//           backgroundColor: "rgba(0, 0, 0, 0.6)",
+//           backdropFilter: "blur(2px)",
+//           zIndex: 0,
+//         },
+//       }}
+//     >
+//       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
+//         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+//           <Button
+//             startIcon={<ArrowBackIcon />}
+//             onClick={onBack}
+//             sx={{
+//               color: "white",
+//               mb: 4,
+//               "&:hover": {
+//                 bgcolor: "rgba(255,255,255,0.1)",
+//               },
+//             }}
+//           >
+//             Back to Home
+//           </Button>
+//         </motion.div>
+
+//         <Paper
+//           component={motion.div}
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.7 }}
+//           elevation={0}
+//           sx={{
+//             p: 4,
+//             bgcolor: "rgba(255,255,255,0.1)",
+//             backdropFilter: "blur(10px)",
+//             borderRadius: 4,
+//             boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+//             border: "1px solid rgba(255,255,255,0.2)",
+//             mb: 4,
+//           }}
+//         >
+//           <ThemeHeader />
+//           <ThemeCardWithGenerator
+//             theme={theme}
+//             isLoggedIn={isLoggedIn}
+//             showUploader={showUploader}
+//             showVoting={showVoting}
+//             onShowUploader={onShowUploader}
+//             onShowVoting={onShowVoting}
+//           />
+
+//           {isLoggedIn && showUploader && (
+//             <Box
+//               component={motion.div}
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ duration: 0.5 }}
+//               sx={{ mt: 4 }}
+//             >
+//               <FileUploader />
+//               <Button
+//                 variant="text"
+//                 onClick={onHideUploader}
+//                 sx={{
+//                   color: "white",
+//                   mt: 2,
+//                   "&:hover": {
+//                     bgcolor: "rgba(255,255,255,0.1)",
+//                   },
+//                 }}
+//               >
+//                 Cancel Upload
+//               </Button>
+//             </Box>
+//           )}
+
+//           {isLoggedIn && showVoting && (
+//             <Box
+//               component={motion.div}
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ duration: 0.5 }}
+//               sx={{ mt: 4 }}
+//             >
+//               <ImageGallery uploadedFiles={uploadedFiles} />
+//               <Button
+//                 variant="text"
+//                 onClick={onHideVoting}
+//                 sx={{
+//                   color: "white",
+//                   mt: 2,
+//                   "&:hover": {
+//                     bgcolor: "rgba(255,255,255,0.1)",
+//                   },
+//                 }}
+//               >
+//                 Back to Theme
+//               </Button>
+//             </Box>
+//           )}
+//         </Paper>
+//       </Container>
+//       {isError ? (
+//         <ErrorSnackbar open={snackOpen} onClose={handleCloseSnackbar} error={error} />
+//       ) : (
+//         <SuccessSnackbar open={snackOpen} onClose={handleCloseSnackbar} message={successMessage} />
+//       )}
+
+//     </Box>
+//   )
+// }
+
+// const ThemeHeader = () => (
+//   <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+//     <Box
+//       sx={{
+//         display: "flex",
+//         alignItems: "center",
+//         justifyContent: "center",
+//         p: 2,
+//         borderRadius: "50%",
+//         bgcolor: "rgba(196, 163, 109, 0.2)",
+//         mr: 2,
+//       }}
+//     >
+//       <CalendarTodayIcon sx={{ fontSize: 28, color: "#C4A36D" }} />
+//     </Box>
+//     <Typography
+//       variant="h4"
+//       sx={{
+//         color: "#C4A36D",
+//         fontWeight: 700,
+//         textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+//       }}
+//     >
+//       This Week's Theme
+//     </Typography>
+//   </Box>
+// )
+"use client"
+
 import type React from "react"
 import { useEffect, useState } from "react"
 import { Box, Typography, Container, Button, Paper } from "@mui/material"
@@ -10,6 +245,8 @@ import ThemeCardWithGenerator from "./ThemeCardWithGenerator"
 import { fetchActiveChallengeId } from "../../../services/challenge"
 import ErrorSnackbar from "../../../components/pages/Error"
 import SuccessSnackbar from "../../../components/pages/Success"
+import { LoadingSpinner } from "../../../components/ui/LoadingSpinner"
+import { Breadcrumbs } from "../../../components/ui/Breadcrumbs"
 
 interface WeeklyThemeSectionProps {
   isLoggedIn: boolean
@@ -37,44 +274,96 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
   const [theme, setTheme] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>(null)
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("")
+  const [isError, setIsError] = useState(false)
+  const [loadingProgress, setLoadingProgress] = useState(0)
+
   const handleCloseSnackbar = () => {
-    setSnackOpen(false);
-    setIsError(false);
-    setError(null);
-    setSuccessMessage("");
-  };
+    setSnackOpen(false)
+    setIsError(false)
+    setError(null)
+    setSuccessMessage("")
+  }
+
   const getToken = () => localStorage.getItem("token")
+
   useEffect(() => {
     const fetchTheme = async () => {
       try {
-
-        // const response = await api.get("Challenge/active-challenge")
+        setLoadingProgress(20)
         const token = getToken()
         if (!token) return
-        const response = await fetchActiveChallengeId(token);
+
+        setLoadingProgress(50)
+        const response = await fetchActiveChallengeId(token)
+        setLoadingProgress(80)
+
         const themeData = response.data
         setTheme(themeData)
-        setLoading(false)
-        setSuccessMessage("Theme loaded successfully!");
-        setIsError(false);
-        setSnackOpen(true);
+        setLoadingProgress(100)
 
+        setTimeout(() => {
+          setLoading(false)
+          setSuccessMessage("Theme loaded successfully! 🎉")
+          setIsError(false)
+          setSnackOpen(true)
+        }, 500)
       } catch (err) {
-        setError(err);
-        setIsError(true);
-        setSnackOpen(true);
-        setLoading(false);
+        setError(err)
+        setIsError(true)
+        setSnackOpen(true)
+        setLoading(false)
       }
     }
 
     fetchTheme()
   }, [])
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 4,
+        }}
+      >
+        <LoadingSpinner message="Loading this week's theme..." variant="linear" progress={loadingProgress} />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
+          <Typography variant="body2" sx={{ color: "#64748b", textAlign: "center" }}>
+            Preparing an amazing photography challenge for you...
+          </Typography>
+        </motion.div>
+      </Box>
+    )
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Paper sx={{ p: 4, textAlign: "center", maxWidth: 400 }}>
+          <Typography variant="h6" color="error" gutterBottom>
+            Oops! Something went wrong
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {error.message || "Failed to load the theme"}
+          </Typography>
+          <Button variant="contained" onClick={() => window.location.reload()}>
+            Try Again
+          </Button>
+        </Paper>
+      </Box>
+    )
+  }
+
+  const breadcrumbItems = [
+    { label: "Home", path: "/" },
+    { label: "Weekly Theme", path: "/weekly-theme" },
+  ]
 
   return (
     <Box
@@ -85,7 +374,7 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
         overflow: "hidden",
         pt: { xs: 10, md: 4 },
         pb: 6,
-        backgroundImage: "url(https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070)",
+        backgroundImage: "url(https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2074)",
         backgroundSize: "cover",
         "&::before": {
           content: '""',
@@ -107,7 +396,7 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
             onClick={onBack}
             sx={{
               color: "white",
-              mb: 4,
+              mb: 2,
               "&:hover": {
                 bgcolor: "rgba(255,255,255,0.1)",
               },
@@ -115,13 +404,15 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
           >
             Back to Home
           </Button>
+
+          <Breadcrumbs items={breadcrumbItems} />
         </motion.div>
 
         <Paper
           component={motion.div}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
           elevation={0}
           sx={{
             p: 4,
@@ -133,7 +424,7 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
             mb: 4,
           }}
         >
-          <ThemeHeader />
+          <ThemeHeader theme={theme} />
           <ThemeCardWithGenerator
             theme={theme}
             isLoggedIn={isLoggedIn}
@@ -194,40 +485,51 @@ export const WeeklyThemeSectionWithGenerator: React.FC<WeeklyThemeSectionProps> 
           )}
         </Paper>
       </Container>
+
       {isError ? (
         <ErrorSnackbar open={snackOpen} onClose={handleCloseSnackbar} error={error} />
       ) : (
         <SuccessSnackbar open={snackOpen} onClose={handleCloseSnackbar} message={successMessage} />
       )}
-
     </Box>
   )
 }
 
-const ThemeHeader = () => (
-  <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        p: 2,
-        borderRadius: "50%",
-        bgcolor: "rgba(196, 163, 109, 0.2)",
-        mr: 2,
-      }}
-    >
-      <CalendarTodayIcon sx={{ fontSize: 28, color: "#C4A36D" }} />
+const ThemeHeader = ({ theme }: { theme: any }) => {
+
+  return (
+    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 3 }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            p: 2,
+            borderRadius: "50%",
+            bgcolor: "rgba(196, 163, 109, 0.2)",
+            mr: 2,
+          }}
+        >
+          <CalendarTodayIcon sx={{ fontSize: 28, color: "#C4A36D" }} />
+        </Box>
+        <Box>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "#C4A36D",
+              fontWeight: 700,
+              textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+            }}
+          >
+            This Week's Theme
+          </Typography>
+          <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.8)", mt: 0.5 }}>
+            {theme?.title || "Loading theme..."}
+          </Typography>
+        </Box>
+      </Box>
+
     </Box>
-    <Typography
-      variant="h4"
-      sx={{
-        color: "#C4A36D",
-        fontWeight: 700,
-        textShadow: "0 2px 4px rgba(0,0,0,0.3)",
-      }}
-    >
-      This Week's Theme
-    </Typography>
-  </Box>
-)
+  )
+}

@@ -1,7 +1,7 @@
 import api from "../lib/axiosConfig"
 
 export const fetchImageName = async (token: string, fileName: string) => {
-    const imageResponse = await api.get("Image/Name", {
+    const imageResponse = await api.get("Image/name", {
         params: { imageName: fileName },
         headers: { Authorization: `Bearer ${token}` },
     })

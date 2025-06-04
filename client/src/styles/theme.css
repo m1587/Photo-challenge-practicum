@@ -1,0 +1,124 @@
+/* Theme Variables */
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: rgba(196, 163, 109, 0.2);
+  --gold-primary: #c4a36d;
+  --gold-secondary: #d4a574;
+
+  /* Dark theme variables */
+  --dark-bg-start: #0b0b0d;
+  --dark-bg-middle: #1a1a1d;
+  --dark-bg-end: #2b2b2f;
+  --dark-text: #f1f5f9;
+  --dark-placeholder: #9ca3af;
+  --dark-navbar: rgba(20, 20, 20, 0.95);
+  --dark-scrollbar-track: #1a1a1d;
+  --dark-scrollbar-thumb: #999999;
+}
+
+/* Light Theme */
+body.light {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, #f1f5f9 50%, #e2e8f0 100%);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+body.light .app-layout {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+}
+
+body.light .app-layout::before {
+  background: radial-gradient(circle at 20% 80%, rgba(212, 165, 116, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212, 165, 116, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.02) 0%, transparent 50%);
+}
+
+/* Dark Theme */
+body.dark {
+  background: linear-gradient(135deg, var(--dark-bg-start) 0%, var(--dark-bg-middle) 50%, var(--dark-bg-end) 100%);
+  color: var(--dark-text);
+  transition: all 0.3s ease;
+}
+
+body.dark .app-layout {
+  background: linear-gradient(135deg, var(--dark-bg-start) 0%, var(--dark-bg-middle) 50%, var(--dark-bg-end) 100%);
+}
+
+body.dark .app-layout::before {
+  background: radial-gradient(circle at 20% 80%, rgba(100, 100, 100, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(150, 150, 150, 0.08) 0%, transparent 50%);
+}
+
+/* Card Styles */
+body.light .card {
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e293b;
+  border: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+body.dark .card {
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--dark-text);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+/* Form Inputs */
+body.light .form-input,
+body.light .form-textarea {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
+  border: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+body.dark .form-input,
+body.dark .form-textarea {
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--dark-text);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+body.light .form-input::placeholder,
+body.light .form-textarea::placeholder {
+  color: #64748b;
+}
+
+body.dark .form-input::placeholder,
+body.dark .form-textarea::placeholder {
+  color: var(--dark-placeholder);
+}
+
+/* Navbar */
+/* body.light .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+body.dark .navbar {
+  background: var(--dark-navbar);
+  border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+} */
+
+/* Smooth transitions for all theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Scrollbar theming */
+body.light::-webkit-scrollbar-track {
+  background: #dee4e9;
+}
+
+body.dark::-webkit-scrollbar-track {
+  background: var(--dark-scrollbar-track);
+}
+
+body.light::-webkit-scrollbar-thumb {
+  background: #c4a36d;
+}
+
+body.dark::-webkit-scrollbar-thumb {
+  background: var(--dark-scrollbar-thumb);
+}

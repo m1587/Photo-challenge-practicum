@@ -41,7 +41,6 @@ const Contact = () => {
     setLoading(true);
     setSnackbarMessage("");
     setOpenSnackbar(false);
-
     try {
       console.log(formData);
       // שליחה לשרת דרך axios
@@ -51,7 +50,6 @@ const Contact = () => {
         setSnackbarSeverity("success");
         setSnackbarMessage("Message sent successfully!");
         setOpenSnackbar(true);
-
         setFormData({ name: "", email: "", subject: "", message: "" }); // איפוס השדות
       }
     } catch (err) {
@@ -317,7 +315,7 @@ const Contact = () => {
                     Email
                   </Typography>
                   <Typography variant="body1" sx={{ color: "white" }}>
-                    contact@photoimages.com
+                    potochallenge@gmail.com
                   </Typography>
                 </Box>
               </Box>

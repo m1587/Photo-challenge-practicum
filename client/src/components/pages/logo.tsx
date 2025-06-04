@@ -1,13 +1,13 @@
 
 import { Box, type BoxProps } from "@mui/material"
-import  LogoSvg  from '../../assets/logos/logo.svg';
+import LogoGraphic from "./LogoGraphic";
 interface LogoProps extends BoxProps {
   width?: number
   height?: number
   showText?: boolean
 }
 
-export default function Logo({ width = 120, height = 120, showText = true, ...props }: LogoProps) {
+export default function Logo({ width = 200, height = 200, showText = true, ...props }: LogoProps) {
   return (
     <Box
       component="div"
@@ -20,7 +20,7 @@ export default function Logo({ width = 120, height = 120, showText = true, ...pr
       }}
       {...props}
     >
-    <img src={LogoSvg} width={width} height={height} alt="Logo" />
+       <LogoGraphic style={{ width: "50%", height: "auto" }} />
     </Box>
   );
 }

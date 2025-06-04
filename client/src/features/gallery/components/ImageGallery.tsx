@@ -167,13 +167,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
     if (showFiles) {
       fetchAllImageData()
     }
-  }, [showFiles, fetchAllImageData, fetchAllImageData])
+  }, [showFiles, fetchAllImageData])
 
   useEffect(() => {
     if (uploadedFiles.length) {
       fetchAllImageData()
     }
-  }, [uploadedFiles, fetchAllImageData, fetchAllImageData])
+  }, [uploadedFiles, fetchAllImageData])
 
   // if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
   //   return (
@@ -206,6 +206,7 @@ if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
         handleLike={handleLike}
         isLoading={isLoading}
       />
+
       {isError ? (
         <ErrorSnackbar open={snackOpen} onClose={handleCloseSnackbar} error={error} />
       ) : (
