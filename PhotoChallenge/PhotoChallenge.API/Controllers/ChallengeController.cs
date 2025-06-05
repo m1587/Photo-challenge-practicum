@@ -70,7 +70,7 @@ namespace PhotoChallenge.API.Controllers
                 Title = challengeDto.Title,
                 Description = challengeDto.Description,
                 StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddDays(7)
+                EndDate = DateTime.Now.AddDays(challengeDto.Duration)
             };
             Console.WriteLine(challengeDto.Description + " "+ challengeDto.Title);
             var addedChallenge = await _challengeService.AddChallengeAsync(newChallenge);
