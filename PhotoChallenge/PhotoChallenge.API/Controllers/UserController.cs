@@ -90,8 +90,7 @@ namespace PhotoChallenge.API.Controllers
             var userToUpdate = new User
             {
                 Name = userDto.Name,
-                Email = userDto.Email,
-                Password = userDto.Password
+                Email = userDto.Email
             };
 
             var updatedUser = await _userService.UpdateUserAsync(id, userToUpdate);
