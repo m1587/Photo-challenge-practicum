@@ -53,7 +53,7 @@ namespace PhotoChallenge.Data.Repositories
 
             existingUser.Name = user.Name;
             existingUser.Email = user.Email;
-            existingUser.Password = user.Password;
+            existingUser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             existingUser.Role = user.Role;
             existingUser.IsDeleted = user.IsDeleted;
             _dataContext.Users.Update(existingUser);
