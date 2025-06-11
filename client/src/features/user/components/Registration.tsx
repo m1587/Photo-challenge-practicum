@@ -208,11 +208,6 @@ export const Register = ({ onSwitchToLogin }: RegisterProps) => {
     setIsLoading(true)
 
     try {
-      // const response = await api.post("User", {
-      //   email: formData.email,
-      //   password: formData.password,
-      //   name: formData.name,
-      // })
       const response =await fetchUserRegister(formData.email, formData.password, formData.name)
       dispatch({ type: "CREATE_USER", payload: response.data })
       setFormData({ name: "", email: "", password: "" })

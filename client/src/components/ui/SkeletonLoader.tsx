@@ -1,5 +1,3 @@
-"use client"
-
 import { Box, Skeleton, Card, CardContent } from "@mui/material"
 import { motion } from "framer-motion"
 

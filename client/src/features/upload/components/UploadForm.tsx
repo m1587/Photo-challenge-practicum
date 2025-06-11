@@ -1,152 +1,3 @@
-// import { Button, LinearProgress, TextField, Box, Card, CardContent, CardActions, Typography } from "@mui/material"
-// import CloudUploadIcon from "@mui/icons-material/CloudUpload"
-// import type React from "react"
-
-// interface UploadFormProps {
-//   file: File | null
-//   progress: number
-//   currentCaption: string
-//   isCaptionUpdated: boolean
-//   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-//   setCurrentCaption: (caption: string) => void
-//   handleUpload: () => Promise<void>
-// }
-
-// export const UploadForm: React.FC<UploadFormProps> = ({
-//   file,
-//   progress,
-//   currentCaption,
-//   isCaptionUpdated,
-//   handleFileChange,
-//   setCurrentCaption,
-//   handleUpload,
-// }) => {
-
-//   return (
-//     <Card
-//       sx={{
-//         bgcolor: "rgba(255,255,255,0.9)",
-//         backdropFilter: "blur(10px)",
-//         borderRadius: 2,
-//         boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-//         border: "1px solid rgba(255,255,255,0.2)",
-//         height: "100%",
-//       }}
-//     >
-//       <CardContent>
-//         <Typography variant="h6" sx={{ mb: 2, color: "#333", fontWeight: 500 }}>
-//           Upload a Photo
-//         </Typography>
-//         <input type="file" onChange={handleFileChange} style={{ display: "none" }} id="upload-button" />
-//         <label htmlFor="upload-button">
-//           <Button
-//             variant="outlined"
-//             component="span"
-//             fullWidth
-//             startIcon={<CloudUploadIcon />}
-//             sx={{
-//               borderColor: "#C4A36D",
-//               color: "#333",
-//               py: 1,
-//               borderRadius: 1.5,
-//               fontWeight: 500,
-//               "&:hover": {
-//                 borderColor: "#b3926a",
-//                 bgcolor: "rgba(196, 163, 109, 0.05)",
-//               },
-//             }}
-//           >
-//             Select Image
-//           </Button>
-//         </label>
-//         {file && !isCaptionUpdated && (
-//           <TextField
-//             label="Add caption"
-//             variant="outlined"
-//             fullWidth
-//             size="small"
-//             sx={{
-//               mt: 2,
-//               "& .MuiOutlinedInput-root": {
-//                 borderRadius: 1.5,
-//                 "& fieldset": {
-//                   borderColor: "rgba(0,0,0,0.2)",
-//                 },
-//                 "&:hover fieldset": {
-//                   borderColor: "#C4A36D",
-//                 },
-//                 "&.Mui-focused fieldset": {
-//                   borderColor: "#C4A36D",
-//                 },
-//               },
-//             }}
-//             value={currentCaption}
-//             onChange={(e) => setCurrentCaption(e.target.value)}
-//           />
-//         )}
-//         {progress > 0 && <ProgressIndicator progress={progress} />}
-//       </CardContent>
-//       <CardActions sx={{ px: 2, pb: 2 }}>
-//         <Button
-//           variant="contained"
-//           fullWidth
-//           onClick={handleUpload}
-//           disabled={!file || !currentCaption}
-//           size="small"
-//           sx={{
-//             bgcolor: "#C4A36D",
-//             color: "white",
-//             py: 1,
-//             borderRadius: 1.5,
-//             fontWeight: 500,
-//             "&:hover": {
-//               bgcolor: "#b3926a",
-//             },
-//             "&.Mui-disabled": {
-//               bgcolor: "rgba(0,0,0,0.12)",
-//               color: "rgba(0,0,0,0.26)",
-//             },
-//           }}
-//         >
-//           Upload Photo
-//         </Button>
-//       </CardActions>
-//     </Card>
-
-//   )
-// }
-
-// interface ProgressIndicatorProps {
-//   progress: number
-// }
-
-// const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ progress }) => {
-//   return (
-//     <Box sx={{ mt: 2 }}>
-//       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-//         <Typography variant="body2" sx={{ color: "rgba(0,0,0,0.6)", fontSize: "0.75rem" }}>
-//           Uploading...
-//         </Typography>
-//         <Typography variant="body2" sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 500, fontSize: "0.75rem" }}>
-//           {progress}%
-//         </Typography>
-//       </Box>
-//       <LinearProgress
-//         variant="determinate"
-//         value={progress}
-//         sx={{
-//           height: 6,
-//           borderRadius: 3,
-//           bgcolor: "rgba(196, 163, 109, 0.1)",
-//           "& .MuiLinearProgress-bar": {
-//             bgcolor: "#C4A36D",
-//           },
-//         }}
-//       />
-//     </Box>
-//   )
-// }
-"use client"
 
 import {
   Button,
@@ -168,6 +19,8 @@ import ImageIcon from "@mui/icons-material/Image"
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
 import type React from "react"
 import { useState, useRef } from "react"
+import ErrorSnackbar from "../../../components/pages/Error"
+import SuccessSnackbar from "../../../components/pages/Success"
 
 interface UploadFormProps {
   file: File | null
@@ -193,7 +46,9 @@ export const UploadForm: React.FC<UploadFormProps> = ({
   const [isDragOver, setIsDragOver] = useState(false)
   const [dragCounter, setDragCounter] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [isError, setIsError] = useState(false)
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return "0 Bytes"
     const k = 1024
@@ -201,18 +56,24 @@ export const UploadForm: React.FC<UploadFormProps> = ({
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
   }
-
+  const showSnackbar = (message: string, severity: "success" | "error" | "info" | "warning" = "success") => {
+    setSnackbarMessage(message)
+    setIsError(severity === "error" || severity === "warning")
+    setSnackbarOpen(true)
+  }
   const validateFile = (file: File) => {
     const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"]
     const maxSize = 10 * 1024 * 1024 // 10MB
 
     if (!validTypes.includes(file.type)) {
-      alert("Please select a valid image file (JPG, PNG, GIF, WebP)")
+      showSnackbar("Please select a valid image file (JPG, PNG, GIF, WebP)", "warning")
+      // alert("Please select a valid image file (JPG, PNG, GIF, WebP)")
       return false
     }
 
     if (file.size > maxSize) {
-      alert("File size must be less than 10MB")
+      showSnackbar("File size must be less than 10MB", "warning")
+      // alert("File size must be less than 10MB")
       return false
     }
 
@@ -677,6 +538,20 @@ export const UploadForm: React.FC<UploadFormProps> = ({
           )}
         </Button>
       </CardActions>
+      {isError ? (
+        <ErrorSnackbar
+          open={snackbarOpen}
+          onClose={() => setSnackbarOpen(false)}
+          error={{ response: { status: 400 } }}
+        />
+      ) : (
+        <SuccessSnackbar
+          open={snackbarOpen}
+          onClose={() => setSnackbarOpen(false)}
+          message={snackbarMessage}
+        />
+      )}
+
     </Card>
   )
 }

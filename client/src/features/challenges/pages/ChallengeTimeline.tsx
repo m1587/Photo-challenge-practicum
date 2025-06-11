@@ -1,4 +1,3 @@
-"use client"
 
 import { Box, Paper, Typography, Chip } from "@mui/material"
 import { motion } from "framer-motion"

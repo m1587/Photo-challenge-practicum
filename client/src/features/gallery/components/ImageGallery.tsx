@@ -89,13 +89,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
           updatedImageData[file.fileName] = image
           updatedCaptions[file.fileName] = image.caption || "No caption available"
 
-          // const votesResponse = await api.get(`Vote/Count/${image.id}`, {
-          //   headers: { Authorization: `Bearer ${token}` },
-          // })
           const votesResponse = await fetchVoteImage(token, image.id);
           updatedLikes[file.fileName] = votesResponse.data?.voteCount || 0
         } catch (error) {
-          console.error(`Error fetching data for ${file.fileName}:`, error)
           updatedCaptions[file.fileName] = file.caption || "No caption available"
           updatedLikes[file.fileName] = 0
         }

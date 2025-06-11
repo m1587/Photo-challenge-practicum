@@ -1,7 +1,4 @@
-"use client"
-
 import type React from "react"
-
 import { Box, Typography, Breadcrumbs as MuiBreadcrumbs, Link } from "@mui/material"
 import { motion } from "framer-motion"
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"

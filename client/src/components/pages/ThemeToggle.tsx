@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { IconButton, Tooltip } from "@mui/material"
 import { motion } from "framer-motion"

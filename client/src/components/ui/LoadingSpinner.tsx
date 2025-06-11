@@ -1,4 +1,3 @@
-"use client"
 
 import { Box, CircularProgress, Typography, LinearProgress } from "@mui/material"
 import { motion } from "framer-motion"

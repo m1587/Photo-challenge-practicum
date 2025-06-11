@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useContext } from "react"
 import { Box, Button } from "@mui/material"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
@@ -8,6 +7,7 @@ import { UserContext } from "../../../context/UserContext"
 import { WeeklyThemeSectionWithGenerator } from "../components/WeeklyThemeSection"
 import PreviousChallenges from "../../challenges/pages/PreviousChallenges"
 import { fetchImageUpload } from "../../../services/image"
+
 const Home = () => {
   const [showPreviousChallenges, setShowPreviousChallenges] = useState(false)
   const [showWeeklyTheme, setShowWeeklyTheme] = useState(false)
@@ -31,7 +31,7 @@ const Home = () => {
 
   const getToken = () => localStorage.getItem("token")
 
-  // פונקציה לשליפת הקבצים שהועלו
+  // Function to fetch uploaded files
   const fetchUploadedFiles = async () => {
     try {
       const token = getToken()
@@ -39,10 +39,7 @@ const Home = () => {
 
       console.log("Fetching uploaded files...")
 
-      // const response = await api.get("upload", {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // })
-      const response = await fetchImageUpload(token);
+      const response = await fetchImageUpload(token)
       if (!response.data || !Array.isArray(response.data)) {
         console.error("Invalid response data:", response.data)
         return
@@ -50,7 +47,6 @@ const Home = () => {
 
       console.log("Files received:", response.data)
 
-      // מכין מערך של אובייקטים עם שם הקובץ
       const files = response.data.map((fileName: string) => ({
         fileName,
         url: "",
@@ -58,7 +54,7 @@ const Home = () => {
 
       setUploadedFiles(files)
     } catch (error) {
-      console.error("שגיאה בהבאת רשימת הקבצים:", error)
+      console.error("Error fetching file list:", error)
     }
   }
 
@@ -140,9 +136,9 @@ const Home = () => {
         onShowWeeklyTheme={() => setShowWeeklyTheme(true)}
         onShowPreviousChallenges={() => setShowPreviousChallenges(true)}
       />
+
     </Box>
   )
 }
 
 export default Home
-

@@ -1,7 +1,5 @@
-"use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { TextField, Button, Typography, Paper, Alert, CircularProgress, InputAdornment, Box } from "@mui/material"
