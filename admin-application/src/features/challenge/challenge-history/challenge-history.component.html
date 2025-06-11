@@ -1,78 +1,91 @@
-
 <div class="history-container" [@fadeAnimation]>
-  <mat-card class="history-card">
-    <mat-card-header>
-      <div class="history-header">
-        <div class="history-icon">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="header-icon">
           <mat-icon>history</mat-icon>
         </div>
-        <div class="history-title">
-          <mat-card-title>Challenge History</mat-card-title>
-          <mat-card-subtitle>Previous completed challenges</mat-card-subtitle>
+        <h1>Challenge History</h1>
+      </div>
+      <button mat-icon-button (click)="onClose()" class="close-button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Title Section -->
+    <div class="title-section">
+      <h2>Previous <span class="highlight">Challenges</span></h2>
+      <p class="subtitle">
+        A comprehensive overview of completed photography challenges with detailed results and winner information.
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoadingHistory" class="loading-section">
+      <mat-spinner diameter="40" color="primary"></mat-spinner>
+      <p>Loading challenge history...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoadingHistory && finishedChallenges.length === 0" class="empty-section">
+      <mat-icon class="empty-icon">photo_library</mat-icon>
+      <h3>No Completed Challenges</h3>
+      <p>Completed challenges will appear here once they finish. Start creating challenges to build your history!</p>
+    </div>
+
+    <!-- Challenges Grid -->
+    <div *ngIf="!isLoadingHistory && finishedChallenges.length > 0" 
+         class="challenges-grid" 
+         [@staggerAnimation]="finishedChallenges.length">
+      <div *ngFor="let challenge of finishedChallenges; trackBy: trackByChallenge" 
+           class="challenge-card" [@slideInOut]>
+        
+        <div class="card-header">
+          <div class="challenge-title">
+            <h3>{{ challenge.title }}</h3>
+            <span class="status-indicator completed">
+              <mat-icon>check_circle_outline</mat-icon>
+              Completed
+            </span>
+          </div>
         </div>
-        <button mat-icon-button (click)="onClose()" class="close-button">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
-    </mat-card-header>
 
-    <mat-card-content>
-      <!-- Loading State -->
-      <div *ngIf="isLoadingHistory" class="loading-state">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p>Loading challenge history...</p>
-      </div>
+        <div class="card-content">
+          <p class="challenge-description">
+            {{ challenge.description.length > 150 ? (challenge.description | slice:0:150) + '...' : challenge.description }}
+          </p>
 
-      <!-- Empty State -->
-      <div *ngIf="!isLoadingHistory && finishedChallenges.length === 0" class="empty-history">
-        <mat-icon class="empty-icon">photo_library</mat-icon>
-        <h3>No Completed Challenges</h3>
-        <p>Completed challenges will appear here once they finish</p>
-      </div>
-
-      <!-- History List -->
-      <div *ngIf="!isLoadingHistory && finishedChallenges.length > 0" class="history-list">
-        <div *ngFor="let challenge of finishedChallenges; trackBy: trackByChallenge" 
-             class="history-item" [@slideInOut]>
-          <mat-card class="challenge-history-card">
-            <mat-card-header>
-              <div class="challenge-info">
-                <div class="challenge-title-section">
-                  <h3>{{ challenge.title }}</h3>
-                </div>
-                <div class="challenge-status-section">
-                  <span class="status-badge completed">
-                    <mat-icon>check_circle</mat-icon>
-                    Completed
-                  </span>
-                </div>
-              </div>
-            </mat-card-header>
-
-            <mat-card-content>
-              <p class="challenge-description">{{ challenge.description | slice:0:150 }}...</p>
-
-              <div class="challenge-details">
-                <div class="detail-item">
-                  <mat-icon>schedule</mat-icon>
-                  <span>Duration: 7 days</span>
-                </div>
-                <div class="detail-item" *ngIf="challenge.winnerUserId || challenge.winnerImgId">
-                  <mat-icon>emoji_events</mat-icon>
-                  <span>Winner: {{ getWinnerInfo(challenge) }}</span>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
+          <div class="challenge-meta">
+            <div class="meta-item">
+              <mat-icon>schedule</mat-icon>
+              <span>Duration: 7 days</span>
+            </div>
+            <div class="meta-item" *ngIf="challenge.winnerUserId || challenge.winnerImgId">
+              <mat-icon>emoji_events</mat-icon>
+              <span>Winner: {{ getWinnerInfo(challenge) }}</span>
+            </div>
+            <div class="meta-item" *ngIf="!challenge.winnerUserId && !challenge.winnerImgId">
+              <mat-icon>info_outline</mat-icon>
+              <span>No winner selected</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </mat-card-content>
 
-    <mat-card-actions *ngIf="finishedChallenges.length > 0">
-      <button mat-button (click)="refreshHistory()">
+      </div>
+    </div>
+
+    <!-- Actions Section -->
+    <div *ngIf="finishedChallenges.length > 0" class="actions-section">
+      <button mat-stroked-button color="primary" (click)="refreshHistory()" class="refresh-button">
         <mat-icon>refresh</mat-icon>
         Refresh History
       </button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+
+  </div>
 </div>

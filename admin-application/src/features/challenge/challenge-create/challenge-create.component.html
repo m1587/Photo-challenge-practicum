@@ -4,11 +4,11 @@
       <mat-card-header>
         <div class="form-header">
           <div class="form-icon">
-            <mat-icon>flash_on</mat-icon>
+            <mat-icon>auto_awesome</mat-icon>
           </div>
           <div class="form-title">
             <mat-card-title>Create New Challenge</mat-card-title>
-            <mat-card-subtitle>Design an engaging photo challenge</mat-card-subtitle>
+            <mat-card-subtitle>Design an engaging photography challenge for the community</mat-card-subtitle>
           </div>
           <button mat-icon-button (click)="onClose()" class="close-button">
             <mat-icon>close</mat-icon>
@@ -25,11 +25,14 @@
             <mat-error *ngIf="challengeForm.get('title')?.hasError('required')">
               Title is required
             </mat-error>
+            <mat-error *ngIf="challengeForm.get('title')?.hasError('minlength')">
+              Title must be at least 3 characters
+            </mat-error>
           </mat-form-field>
 
           <div class="ai-generator-section">
             <div class="ai-header">
-              <mat-icon>auto_awesome</mat-icon>
+              <mat-icon>psychology</mat-icon>
               <span>AI Description Generator</span>
             </div>
 
@@ -37,7 +40,7 @@
               <mat-form-field appearance="outline" class="topic-input">
                 <mat-label>Topic for AI Generation</mat-label>
                 <input matInput [(ngModel)]="topicInput" [ngModelOptions]="{standalone: true}"
-                  placeholder="Enter a topic (e.g., חורף, nature, city)">
+                  placeholder="Enter a topic (e.g., winter, nature, city life)">
                 <mat-icon matPrefix>lightbulb</mat-icon>
               </mat-form-field>
 
@@ -52,7 +55,6 @@
 
             <div *ngIf="generatedDescription" class="generated-preview">
               <div class="preview-header">
-                <!-- <mat-icon>preview</mat-icon> -->
                 <span>Generated Description Preview</span>
                 <button mat-icon-button (click)="useGeneratedDescription()" matTooltip="Use this description">
                   <mat-icon>check_circle</mat-icon>
@@ -65,10 +67,13 @@
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Challenge Description</mat-label>
             <textarea matInput formControlName="description"
-              placeholder="Describe the challenge rules and requirements" rows="4"></textarea>
-            <!-- <mat-icon matPrefix>description</mat-icon> -->
+              placeholder="Describe the challenge rules, requirements, and objectives" rows="4"></textarea>
+            <mat-icon matPrefix>description</mat-icon>
             <mat-error *ngIf="challengeForm.get('description')?.hasError('required')">
               Description is required
+            </mat-error>
+            <mat-error *ngIf="challengeForm.get('description')?.hasError('minlength')">
+              Description must be at least 10 characters
             </mat-error>
           </mat-form-field>
 
@@ -80,6 +85,12 @@
                 <mat-label>Duration (days)</mat-label>
                 <input matInput type="number" formControlName="duration" placeholder="7" min="1" max="30">
                 <mat-icon matPrefix>schedule</mat-icon>
+                <mat-error *ngIf="challengeForm.get('duration')?.hasError('min')">
+                  Duration must be at least 1 day
+                </mat-error>
+                <mat-error *ngIf="challengeForm.get('duration')?.hasError('max')">
+                  Duration cannot exceed 30 days
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="half-width">
@@ -103,7 +114,7 @@
           <button mat-raised-button color="accent" type="submit" [disabled]="!challengeForm.valid || isSubmitting">
             <mat-icon *ngIf="!isSubmitting">send</mat-icon>
             <mat-spinner *ngIf="isSubmitting" diameter="20"></mat-spinner>
-            <span *ngIf="!isSubmitting">Submit Challenge</span>
+            <span *ngIf="!isSubmitting">Create Challenge</span>
             <span *ngIf="isSubmitting">Creating...</span>
           </button>
         </mat-card-actions>
@@ -111,3 +122,4 @@
     </mat-card>
   </div>
 </div>
+<div class="app-background"></div>

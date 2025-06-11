@@ -1,48 +1,88 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-  <mat-card>
-    <mat-card-title>SIGN IN</mat-card-title>
-    <mat-card-content>
-      <div formGroupName="userDetails">
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" placeholder="Email" />
-          <mat-error *ngIf="emailControl?.hasError('required')">
-            Email is required
-          </mat-error>
-          <mat-error *ngIf="emailControl?.hasError('email')">
-            Please enter a valid email
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input 
-            matInput 
-            [type]="hide ?'text':'password'"
-            formControlName="password" 
-            placeholder="Password" 
-          />
-          <button 
-            mat-icon-button 
-            matSuffix 
-            (click)="hide = !hide" 
-            [attr.aria-label]="'Hide password'" 
-            [attr.aria-pressed]="hide"
-            type="button"
-          >
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="passwordControl?.hasError('required')">
-            Password is required
-          </mat-error>
-          <mat-error *ngIf="passwordControl?.hasError('minlength')">
-            Password must be at least 6 characters
-          </mat-error>
-        </mat-form-field>
+<div class="login-container">
+  <div class="login-background">
+    <div class="background-pattern"></div>
+  </div>
+  
+  <div class="login-content">
+    <div class="login-header">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <mat-icon>photo_camera</mat-icon>
+        </div>
+        <h1>Management System</h1>
+        <p>Professional Photography Challenge Platform</p>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">SIGN IN</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <mat-card class="login-card">
+        <mat-card-header>
+          <div class="form-header">
+            <div class="form-icon">
+              <mat-icon>login</mat-icon>
+            </div>
+            <div class="form-title">
+              <mat-card-title>Welcome Back</mat-card-title>
+              <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
+            </div>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div formGroupName="userDetails" class="form-fields">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email Address</mat-label>
+              <input matInput formControlName="email" placeholder="Enter your email" type="email" />
+              <mat-icon matPrefix>email</mat-icon>
+              <mat-error *ngIf="emailControl?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="emailControl?.hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Password</mat-label>
+              <input 
+                matInput 
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password" 
+                placeholder="Enter your password" 
+              />
+              <mat-icon matPrefix>lock</mat-icon>
+              <button 
+                mat-icon-button 
+                matSuffix 
+                (click)="hide = !hide" 
+                [attr.aria-label]="'Hide password'" 
+                [attr.aria-pressed]="hide"
+                type="button"
+                class="password-toggle"
+              >
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="passwordControl?.hasError('required')">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="passwordControl?.hasError('minlength')">
+                Password must be at least 6 characters
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="login-button">
+            <mat-icon>login</mat-icon>
+            <span>Sign In</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+
+    <div class="login-footer">
+      <p>Secure access to your management dashboard</p>
+    </div>
+  </div>
+</div>

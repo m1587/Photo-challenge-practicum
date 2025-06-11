@@ -1,11 +1,13 @@
-/* Corporate Navbar */
+/* Enhanced Corporate Navbar with Profile Menu */
 .app-toolbar {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background: var(--white) !important;
-  border-bottom: 1px solid var(--gray-200) !important;
-  box-shadow: var(--shadow-sm) !important;
+  background: var(--bg-primary) !important;
+  border-bottom: 1px solid var(--border-primary) !important;
+  box-shadow: var(--shadow-lg) !important;
+  backdrop-filter: blur(10px);
+  transition: var(--transition) !important;
 }
 
 .toolbar-container {
@@ -13,10 +15,10 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 var(--space-4);
-  height: 64px;
+  padding: 0 var(--space-6);
+  height: 72px;
 }
 
 .toolbar-left,
@@ -29,96 +31,300 @@
 .app-title {
   margin-left: var(--space-4);
   font-weight: 700;
-  font-size: var(--font-size-lg);
-  color: var(--gray-900) !important;
+  font-size: var(--font-size-xl);
+  color: var(--text-primary) !important;
   letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Home Icon Button */
-.toolbar-left button {
+/* Home Button */
+.home-button {
   background: var(--primary-blue-50) !important;
   border: 1px solid var(--primary-blue-200) !important;
   color: var(--primary-blue) !important;
-  transition: var(--transition);
-  border-radius: var(--radius-md) !important;
+  transition: var(--transition) !important;
+  border-radius: var(--radius-lg) !important;
+  width: 48px !important;
+  height: 48px !important;
 }
 
-.toolbar-left button:hover {
+.home-button:hover {
   background: var(--primary-blue-100) !important;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  color: var(--text-secondary) !important;
+  transition: var(--transition) !important;
+  border-radius: var(--radius-lg) !important;
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.theme-toggle:hover {
+  background: var(--border-primary) !important;
+  color: var(--text-primary) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.theme-toggle mat-icon {
+  transition: var(--transition) !important;
+}
+
+.theme-toggle:hover mat-icon {
+  transform: rotate(180deg);
 }
 
 /* Login Button */
 .login-button {
-  background: var(--primary-blue) !important;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light)) !important;
   color: var(--white) !important;
   font-weight: 600 !important;
-  border-radius: var(--radius-md) !important;
-  padding: var(--space-2) var(--space-6) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: var(--space-3) var(--space-8) !important;
   transition: var(--transition) !important;
   border: none !important;
-  box-shadow: var(--shadow) !important;
+  box-shadow: var(--shadow-md) !important;
   text-transform: none !important;
+  height: 48px !important;
 }
 
 .login-button:hover {
-  background: var(--primary-blue-dark) !important;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md) !important;
-}
-
-/* Management Menu Button */
-.toolbar-right button:not(.login-button) {
-  background: var(--white) !important;
-  border: 1px solid var(--gray-300) !important;
-  color: var(--gray-700) !important;
-  font-weight: 500 !important;
-  border-radius: var(--radius-md) !important;
-  padding: var(--space-2) var(--space-4) !important;
-  transition: var(--transition);
-  text-transform: none !important;
-}
-
-.toolbar-right button:not(.login-button):hover {
-  background: var(--gray-50) !important;
-  border-color: var(--gray-400) !important;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
-}
-
-/* Menu Dropdown Styling */
-::ng-deep .mat-mdc-menu-panel {
-  background: var(--white) !important;
-  border: 1px solid var(--gray-200) !important;
-  border-radius: var(--radius-lg) !important;
+  background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue)) !important;
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg) !important;
 }
 
-::ng-deep .mat-mdc-menu-item {
-  color: var(--gray-900) !important;
+.login-button mat-icon {
+  margin-right: var(--space-2) !important;
+}
+
+/* Profile Button */
+.profile-button {
+  background: var(--bg-primary) !important;
+  border: 2px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg) !important;
+  transition: var(--transition) !important;
+  width: 48px !important;
+  height: 48px !important;
+  padding: 0 !important;
+}
+
+.profile-button:hover {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--primary-blue) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+  color: var(--white);
   transition: var(--transition);
 }
 
-::ng-deep .mat-mdc-menu-item:hover {
-  background: var(--gray-50) !important;
-  color: var(--primary-blue) !important;
+.profile-button:hover .profile-avatar {
+  transform: scale(1.1);
 }
 
-::ng-deep .mat-mdc-menu-item mat-icon {
+.profile-avatar mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Profile Menu Styling */
+::ng-deep .profile-menu .mat-mdc-menu-panel {
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-2xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  backdrop-filter: blur(10px);
+  min-width: 280px !important;
+  overflow: hidden;
+}
+
+.profile-header {
+  padding: var(--space-6) var(--space-4);
+  background: linear-gradient(135deg, var(--primary-blue-50), var(--primary-blue-100));
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.profile-avatar-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+  color: var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.profile-avatar-large mat-icon {
+  font-size: 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.profile-name {
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+}
+
+.profile-email {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Profile Menu Items */
+::ng-deep .profile-menu .mat-mdc-menu-item {
+  color: var(--text-primary) !important;
+  transition: var(--transition);
+  border-radius: var(--radius-md) !important;
+  margin: var(--space-1) var(--space-2) !important;
+  padding: var(--space-3) var(--space-4) !important;
+  font-weight: 500;
+}
+
+::ng-deep .profile-menu .mat-mdc-menu-item:hover {
+  background: var(--primary-blue-50) !important;
   color: var(--primary-blue) !important;
-  margin-right: var(--space-2);
+  transform: translateX(4px);
+}
+
+::ng-deep .profile-menu .mat-mdc-menu-item mat-icon {
+  color: var(--primary-blue) !important;
+  margin-right: var(--space-3) !important;
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Profile Settings Button */
+::ng-deep .profile-menu .profile-settings:hover {
+  background: var(--warning-bg) !important;
+  color: var(--warning) !important;
+}
+
+::ng-deep .profile-menu .profile-settings:hover mat-icon {
+  color: var(--warning) !important;
+}
+
+/* Sign Out Button */
+::ng-deep .profile-menu .sign-out-button:hover {
+  background: var(--error-bg) !important;
+  color: var(--error) !important;
+}
+
+::ng-deep .profile-menu .sign-out-button:hover mat-icon {
+  color: var(--error) !important;
+}
+
+/* Dividers */
+::ng-deep .profile-menu .mat-divider {
+  border-color: var(--border-primary) !important;
+  margin: var(--space-2) 0 !important;
+}
+
+/* Management Button */
+.management-button {
+  background: var(--bg-primary) !important;
+  border: 2px solid var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-lg) !important;
+  padding: var(--space-3) var(--space-6) !important;
+  transition: var(--transition) !important;
+  text-transform: none !important;
+  height: 48px !important;
+}
+
+.management-button:hover {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--primary-blue) !important;
+  color: var(--primary-blue) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.management-button mat-icon {
+  margin-right: var(--space-2) !important;
+}
+
+/* Menu Dropdown Styling */
+::ng-deep .management-menu .mat-mdc-menu-panel {
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  backdrop-filter: blur(10px);
+  min-width: 220px !important;
+}
+
+::ng-deep .management-menu .mat-mdc-menu-item {
+  color: var(--text-primary) !important;
+  transition: var(--transition) !important;
+  border-radius: var(--radius-md) !important;
+  margin: var(--space-1) var(--space-2) !important;
+  padding: var(--space-3) var(--space-4) !important;
+}
+
+::ng-deep .management-menu .mat-mdc-menu-item:hover {
+  background: var(--primary-blue-50) !important;
+  color: var(--primary-blue) !important;
+  transform: translateX(4px);
+}
+
+::ng-deep .management-menu .mat-mdc-menu-item mat-icon {
+  color: var(--primary-blue) !important;
+  margin-right: var(--space-3) !important;
+}
+
+/* App Content */
+.app-content {
+  min-height: calc(100vh - 72px);
+  background: transparent;
 }
 
 /* Responsive Design */
-@media (max-width: 599px) {
-  .app-title {
-    font-size: var(--font-size-base);
-    margin-left: var(--space-2);
+@media (max-width: 768px) {
+  .toolbar-container {
+    padding: 0 var(--space-4);
   }
 
-  .toolbar-container {
-    padding: 0 var(--space-2);
+  .app-title {
+    font-size: var(--font-size-lg);
+    margin-left: var(--space-2);
   }
 
   .toolbar-left,
@@ -129,6 +335,10 @@
   .login-button {
     padding: var(--space-2) var(--space-4) !important;
     font-size: var(--font-size-sm) !important;
+  }
+
+  ::ng-deep .profile-menu .mat-mdc-menu-panel {
+    min-width: 260px !important;
   }
 }
 
@@ -141,7 +351,51 @@
     display: none;
   }
 
-  .toolbar-right button:not(.login-button) span {
-    display: none;
+  .home-button,
+  .theme-toggle,
+  .login-button,
+  .profile-button {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
   }
+
+  .profile-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .profile-avatar mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  ::ng-deep .profile-menu .mat-mdc-menu-panel {
+    min-width: 240px !important;
+  }
+
+  .profile-header {
+    padding: var(--space-4);
+  }
+
+  .profile-avatar-large {
+    width: 48px;
+    height: 48px;
+  }
+
+  .profile-avatar-large mat-icon {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Focus States */
+.home-button:focus,
+.theme-toggle:focus,
+.login-button:focus,
+.profile-button:focus {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
 }

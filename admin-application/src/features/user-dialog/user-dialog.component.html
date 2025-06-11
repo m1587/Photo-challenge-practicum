@@ -1,20 +1,28 @@
-<mat-dialog-content>
-  <div class="white-bg">
-    <h2 mat-dialog-title>{{ isEditMode ? 'Edit User' : 'Add User' }}</h2>
-    <form [formGroup]="userForm" class="form-container">
+<div class="dialog-header">
+  <div class="header-icon">
+    <mat-icon>{{ isEditMode ? 'edit' : 'person_add' }}</mat-icon>
+  </div>
+  <div class="header-content">
+    <h2>{{ isEditMode ? 'Edit User' : 'Add New User' }}</h2>
+    <p class="header-subtitle">{{ isEditMode ? 'Update user information and permissions' : 'Create a new user account with role assignment' }}</p>
+  </div>
+</div>
 
-      <mat-form-field appearance="outline" class="full-width" dir="ltr">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Enter user name">
+<mat-dialog-content>
+  <form [formGroup]="userForm" class="form-container">
+    <div class="form-fields">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter user's full name">
         <mat-icon matPrefix>person</mat-icon>
         <mat-error *ngIf="userForm.get('name')?.hasError('required')">
           Name is required
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" dir="ltr">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" placeholder="Enter email address">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" placeholder="Enter email address" type="email">
         <mat-icon matPrefix>email</mat-icon>
         <mat-error *ngIf="userForm.get('email')?.hasError('required')">
           Email is required
@@ -24,13 +32,13 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" *ngIf="!isEditMode" dir="ltr">
+      <mat-form-field appearance="outline" class="full-width" *ngIf="!isEditMode">
         <mat-label>Password</mat-label>
         <input
           matInput
           [type]="hidePassword ? 'password' : 'text'"
           formControlName="password"
-          placeholder="Enter password"
+          placeholder="Enter a secure password"
         >
         <mat-icon matPrefix>lock</mat-icon>
         <button
@@ -38,6 +46,8 @@
           matSuffix
           (click)="hidePassword = !hidePassword"
           type="button"
+          class="password-toggle"
+          [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
         >
           <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
@@ -45,31 +55,48 @@
           Password is required
         </mat-error>
         <mat-error *ngIf="userForm.get('password')?.hasError('minlength')">
-          Password must be at least 6 characters
+          Password must be at least 8 characters
+        </mat-error>
+        <mat-error *ngIf="userForm.get('password')?.hasError('pattern')">
+          Password must contain uppercase, lowercase, number and special character
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width" dir="ltr">
-        <mat-label>Role</mat-label>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>User Role</mat-label>
         <mat-select formControlName="role">
-          <mat-option value="User">User</mat-option>
-          <mat-option value="Admin">Admin</mat-option>
+          <mat-option [value]="1">
+            <mat-icon>person</mat-icon>
+            User - Standard Access
+          </mat-option>
+          <mat-option [value]="0">
+            <mat-icon>admin_panel_settings</mat-icon>
+            Admin - Full Access
+          </mat-option>
         </mat-select>
         <mat-icon matPrefix>admin_panel_settings</mat-icon>
+        <mat-error *ngIf="userForm.get('role')?.hasError('required')">
+          Role selection is required
+        </mat-error>
       </mat-form-field>
-
-    </form>
-  </div>
+    </div>
+  </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="cancel()">Cancel</button>
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()" [disabled]="isSubmitting">
+    <mat-icon>cancel</mat-icon>
+    Cancel
+  </button>
   <button
     mat-raised-button
     color="primary"
     (click)="onSubmit()"
-    [disabled]="userForm.invalid"
+    [disabled]="userForm.invalid || isSubmitting"
   >
-    {{ isEditMode ? 'Update' : 'Add' }}
+    <div class="loading-button">
+      <mat-icon *ngIf="!isSubmitting">{{ isEditMode ? 'save' : 'person_add' }}</mat-icon>
+      <span>{{ isEditMode ? 'Update User' : 'Create User' }}</span>
+    </div>
   </button>
 </mat-dialog-actions>

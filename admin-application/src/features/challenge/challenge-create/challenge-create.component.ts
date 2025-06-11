@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, Output } from "@angular/core"
 import { ChallengeService } from "../../../services/challenge/challenge.service"
 import { FormBuilder, type FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
@@ -8,12 +9,11 @@ import { MatCardModule } from "@angular/material/card"
 import { MatIconModule } from "@angular/material/icon"
 import { MatInputModule } from "@angular/material/input"
 import { FormsModule } from "@angular/forms"
-import { HttpClient } from "@angular/common/http"
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { MatSelectModule } from "@angular/material/select"
 import { MatTooltipModule } from "@angular/material/tooltip"
 import { trigger, transition, style, animate } from "@angular/animations"
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar"
 
 @Component({
   selector: "app-challenge-create",
@@ -38,7 +38,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     trigger("fadeAnimation", [
       transition(":enter", [
         style({ opacity: 0, transform: "translateY(20px)" }),
-        animate("300ms ease-out", style({ opacity: 1, transform: "translateY(0)" })),
+        animate("400ms cubic-bezier(0.25, 0.8, 0.25, 1)", style({ opacity: 1, transform: "translateY(0)" })),
       ]),
       transition(":leave", [animate("300ms ease-in", style({ opacity: 0, transform: "translateY(20px)" }))]),
     ]),
@@ -57,7 +57,7 @@ export class ChallengeCreateComponent {
   constructor(
     private challengeService: ChallengeService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
   ) {
     this.challengeForm = this.fb.group({
       title: ["", [Validators.required, Validators.minLength(3)]],
@@ -67,24 +67,24 @@ export class ChallengeCreateComponent {
     })
   }
 
-generateDescription() {
-  if (!this.topicInput.trim()) return;
+  generateDescription() {
+    if (!this.topicInput.trim()) return
 
-  this.isGenerating = true;
+    this.isGenerating = true
 
-  this.challengeService.generateChallengeDescription(this.topicInput).subscribe({
-    next: (res) => {
-      this.generatedDescription = res.description;
-      this.isGenerating = false;
-      console.log("Generated description:", res.description);
-    },
-    error: (err) => {
-      console.error("Error generating description:", err);
-      this.generatedDescription = "Failed to generate description. Please try again.";
-      this.isGenerating = false;
-    }
-  });
-}
+    this.challengeService.generateChallengeDescription(this.topicInput).subscribe({
+      next: (res) => {
+        this.generatedDescription = res.description
+        this.isGenerating = false
+        console.log("Generated description:", res.description)
+      },
+      error: (err) => {
+        console.error("Error generating description:", err)
+        this.generatedDescription = "Failed to generate description. Please try again."
+        this.isGenerating = false
+      },
+    })
+  }
 
   useGeneratedDescription() {
     this.challengeForm.get("description")?.setValue(this.generatedDescription)
@@ -106,10 +106,10 @@ generateDescription() {
       this.isSubmitting = true
       this.challengeService.addChallenge(this.challengeForm.value).subscribe({
         next: (res) => {
-           this.snackBar.open("Challenge created successfully", "Close", {
-          duration: 4000,
-          panelClass: ['snackbar-success'],
-        });
+          this.snackBar.open("Challenge created successfully", "Close", {
+            duration: 4000,
+            panelClass: ["snackbar-success"],
+          })
           this.challengeForm.reset({
             duration: 7,
             difficulty: "medium",
@@ -121,10 +121,10 @@ generateDescription() {
           this.closeForm.emit()
         },
         error: (err) => {
-         this.snackBar.open("Failed to create challenge", "Close", {
-          duration: 4000,
-          panelClass: ['snackbar-error'],
-        });
+          this.snackBar.open("Failed to create challenge", "Close", {
+            duration: 4000,
+            panelClass: ["snackbar-error"],
+          })
           this.isSubmitting = false
         },
       })

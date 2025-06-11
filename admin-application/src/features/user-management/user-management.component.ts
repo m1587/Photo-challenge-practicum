@@ -1,4 +1,5 @@
-import { Component, type OnInit, ViewChild, type TemplateRef, type AfterViewInit, ElementRef } from "@angular/core"
+
+import { Component, type OnInit, ViewChild, type TemplateRef, type AfterViewInit, type ElementRef } from "@angular/core"
 import type { User } from "../../core/moduls/User"
 import { CommonModule } from "@angular/common"
 import { MatButtonModule } from "@angular/material/button"
@@ -50,9 +51,15 @@ import autoTable from "jspdf-autotable"
     trigger("slideInOut", [
       transition(":enter", [
         style({ transform: "translateX(100%)", opacity: 0 }),
-        animate("300ms ease-out", style({ transform: "translateX(0)", opacity: 1 })),
+        animate("400ms cubic-bezier(0.25, 0.8, 0.25, 1)", style({ transform: "translateX(0)", opacity: 1 })),
       ]),
       transition(":leave", [animate("300ms ease-in", style({ transform: "translateX(100%)", opacity: 0 }))]),
+    ]),
+    trigger("fadeIn", [
+      transition(":enter", [
+        style({ opacity: 0, transform: "translateY(20px)" }),
+        animate("500ms cubic-bezier(0.25, 0.8, 0.25, 1)", style({ opacity: 1, transform: "translateY(0)" })),
+      ]),
     ]),
   ],
 })
@@ -68,11 +75,10 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
   @ViewChild("confirmDialog") confirmDialogRef!: TemplateRef<any>
   @ViewChild("input") input!: ElementRef<HTMLInputElement>
 
-
   constructor(
     private userService: AuthService,
     private dialog: MatDialog,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fetchUsers()
@@ -101,14 +107,14 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
   openDialog(user?: User) {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       data: user,
-      width: "400px",
+      width: "500px",
+      maxWidth: "90vw",
     })
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.fetchUsers()
         if (this.selectedUser && user && this.selectedUser.id === user.id) {
-          // Update selected user if it was edited
           this.selectedUser = this.users.find((u) => u.id === user.id) || null
         }
       }
@@ -210,14 +216,13 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
       head: [["ID", "Name", "Email", "Role"]],
       body: userData.map((user) => [user.id, user.name, user.email, user.role]),
       styles: { fontSize: 10, cellPadding: 3 },
-      headStyles: { fillColor: [99, 102, 241] },
+      headStyles: { fillColor: [30, 64, 175] },
     })
 
     doc.save("users_export.pdf")
   }
 
   private prepareExportData(): any[] {
-    // Use filtered data if available, otherwise use all users
     return this.dataSource.filteredData.length > 0 ? this.dataSource.filteredData : this.users
   }
 

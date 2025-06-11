@@ -1,12 +1,12 @@
-<div class="report-container">
+<div class="report-container" [@fadeIn]>
   <mat-card class="report-card">
     <mat-card-header>
       <div class="header-icon">
-        <mat-icon>insights</mat-icon>
+        <mat-icon>analytics</mat-icon>
       </div>
       <div class="header-content">
-        <mat-card-title>Monthly Report</mat-card-title>
-        <mat-card-subtitle>Photos and Registrations Statistics</mat-card-subtitle>
+        <mat-card-title>Monthly Analytics Report</mat-card-title>
+        <mat-card-subtitle>Comprehensive insights into photos and user registrations</mat-card-subtitle>
       </div>
       <div class="header-actions">
         <button mat-icon-button [matMenuTriggerFor]="optionsMenu" aria-label="Report options">
@@ -75,15 +75,15 @@
         <mat-menu #themeMenu="matMenu">
           <button mat-menu-item (click)="setChartTheme('default')">
             <div class="theme-preview default-theme"></div>
-            <span>Default</span>
+            <span>Corporate Blue</span>
           </button>
           <button mat-menu-item (click)="setChartTheme('pastel')">
             <div class="theme-preview pastel-theme"></div>
-            <span>Pastel</span>
+            <span>Soft Pastels</span>
           </button>
           <button mat-menu-item (click)="setChartTheme('vibrant')">
             <div class="theme-preview vibrant-theme"></div>
-            <span>Vibrant</span>
+            <span>Vibrant Colors</span>
           </button>
           <button mat-menu-item (click)="setChartTheme('monochrome')">
             <div class="theme-preview monochrome-theme"></div>
@@ -119,8 +119,8 @@
 
     <mat-card-content>
       <div *ngIf="isLoading" class="loading-container">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p>Loading report data...</p>
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading analytics data...</p>
       </div>
 
       <div *ngIf="!isLoading" class="chart-container" #chartContainer>
@@ -145,7 +145,7 @@
           </div>
           <div class="summary-content">
             <div class="summary-value">{{ getTotalRegistrations() }}</div>
-            <div class="summary-label">Total Registrations</div>
+            <div class="summary-label">New Registrations</div>
           </div>
         </div>
 
@@ -155,7 +155,7 @@
           </div>
           <div class="summary-content">
             <div class="summary-value">{{ getGrowthRate() }}%</div>
-            <div class="summary-label">Monthly Growth</div>
+            <div class="summary-label">Growth Rate</div>
           </div>
         </div>
       </div>
@@ -166,15 +166,15 @@
     <mat-card-actions>
       <button mat-stroked-button color="primary" (click)="downloadAsPDF()">
         <mat-icon>picture_as_pdf</mat-icon>
-        Export as PDF
+        Export PDF
       </button>
       <button mat-stroked-button color="primary" (click)="downloadAsCSV()">
         <mat-icon>table_chart</mat-icon>
-        Export as CSV
+        Export CSV
       </button>
       <button mat-stroked-button color="primary" (click)="printReport()">
         <mat-icon>print</mat-icon>
-        Print
+        Print Report
       </button>
     </mat-card-actions>
   </mat-card>

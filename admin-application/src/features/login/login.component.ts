@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   submitted = false;
   errorMessage!: string;
@@ -87,8 +87,10 @@ export class LoginComponent {
         });
           this.authService.signIn();
           this.authService.storeToken(response.token);
-          this.authService.storeUserId(response.userId);
-          this.authService.storeUserRole(response.role);
+          console.log('Token stored:', response);
+          this.authService.storeUser(response.user);
+          // this.authService.storeUserId(response.userId);
+          // this.authService.storeUserRole(response.role);
           this.router.navigate(['/home']);
         } else {
           this.errorMessage = 'Access restricted to administrators only';

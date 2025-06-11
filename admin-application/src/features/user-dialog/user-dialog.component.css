@@ -1,62 +1,19 @@
+/* Enhanced User Dialog Component */
 :host {
   display: block;
-  direction: rtl;
-  overflow: hidden;
-}
-.feature-card,
-.summary-card,
-.stat-card {
-  background: var(--card-background) !important;
-  backdrop-filter: var(--glass-blur) !important;
-  transition: all 0.3s ease;
+  font-family: var(--font-family);
 }
 
-.feature-card:hover,
-.summary-card:hover,
-.stat-card:hover {
-  background: var(--card-background-hover) !important;
-  transform: translateY(-5px);
-}
-
-/* טקסט כהה יותר לקריאות */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #2c3e50 !important; /* כחול כהה אלגנטי */
-  text-shadow: none !important;
-  font-weight: 700;
-}
-
-/* טקסט על רקע כהה
-.header-title h1,
-.hero-content h1 {
-  color: var(--primary-gold) !important;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
-} */
-
-/* פסקאות */
-p {
-  color: var(--text-dark) !important;
-  font-weight: 500;
-}
-
-/* טקסט על רקע כהה */
-.subtitle,
-.hero-content p {
-  color: var(--text-light) !important;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-}
-/* Dialog Styling */
+/* Dialog Container Overrides */
 ::ng-deep .mat-mdc-dialog-container {
-  background: var(--glass-white) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-large) !important;
-  box-shadow: var(--glass-shadow) !important;
-  backdrop-filter: var(--glass-blur) !important;
+  background: var(--bg-primary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-2xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  backdrop-filter: blur(10px) !important;
   overflow: hidden;
+  max-width: 500px !important;
+  width: 90vw !important;
 }
 
 ::ng-deep .mat-mdc-dialog-surface {
@@ -64,196 +21,275 @@ p {
   box-shadow: none !important;
 }
 
-/* Header Styling */
-h2[mat-dialog-title] {
-  color: #2c3e50 !important;
-  text-align: center;
+/* Dialog Header */
+.dialog-header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-8);
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.dialog-header::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.2);
+  margin-right: var(--space-5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.header-icon mat-icon {
   font-size: 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.header-content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.header-content h2 {
+  font-size: var(--font-size-2xl);
   font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-shadow: none !important;
-}
-/* Form Container */
-.form-container {
-  width: 100%;
-  padding: 0;
-  animation: fadeIn 0.6s ease-out;
+  margin: 0 0 var(--space-1) 0;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
-/* Form Fields */
-.full-width {
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-::ng-deep h2[mat-dialog-title] {
-  color: #2c3e50 !important;
-  text-shadow: none !important;
-}
-
-/* Material Form Field Overrides */
-::ng-deep .mat-mdc-form-field {
-  --mdc-outlined-text-field-outline-color: rgba(196, 163, 109, 0.3);
-  --mdc-outlined-text-field-focus-outline-color: var(--primary-gold);
-  --mdc-outlined-text-field-label-text-color: var(--text-dark);
-  --mdc-outlined-text-field-input-text-color: var(--text-dark);
-  --mdc-outlined-text-field-container-shape: 8px;
-}
-
-::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline-thick {
-  border-color: var(--primary-gold) !important;
-  box-shadow: 0 0 0 2px rgba(196, 163, 109, 0.2);
-}
-
-::ng-deep .mat-mdc-form-field:hover .mat-mdc-form-field-outline {
-  border-color: rgba(196, 163, 109, 0.6) !important;
-}
-
-::ng-deep .mat-mdc-input-element {
-  color: var(--text-dark) !important;
-  font-weight: 500;
-}
-
-::ng-deep .mat-mdc-input-element::placeholder {
-  color: rgba(51, 51, 51, 0.6) !important;
-}
-
-/* Form Field Icons */
-::ng-deep .mat-mdc-form-field-prefix {
-  margin-right: 0;
-  margin-left: 0.75rem;
-  color: var(--primary-gold) !important;
-}
-
-::ng-deep .mat-mdc-form-field-suffix {
-  margin-left: 0;
-  margin-right: 0.75rem;
-}
-
-/* Select Dropdown */
-::ng-deep .mat-mdc-select-value {
-  color: var(--text-dark) !important;
-}
-
-::ng-deep .mat-mdc-select-arrow {
-  color: var(--primary-gold) !important;
-}
-
-/* Password Toggle Button */
-::ng-deep .mat-mdc-icon-button {
-  color: var(--primary-gold) !important;
-}
-
-::ng-deep .mat-mdc-icon-button:hover {
-  background-color: rgba(196, 163, 109, 0.1) !important;
-}
-
-/* Error Messages */
-::ng-deep .mat-mdc-form-field-error {
-  color: #e53e3e !important;
-  font-size: 0.85rem;
-  font-weight: 500;
+.header-subtitle {
+  font-size: var(--font-size-base);
+  opacity: 0.9;
+  font-weight: 400;
+  margin: 0;
 }
 
 /* Dialog Content */
 ::ng-deep .mat-mdc-dialog-content {
-  padding: 0 2rem !important;
+  padding: var(--space-8) !important;
+  background: var(--bg-primary);
   max-height: none;
   overflow: visible;
 }
 
+/* Form Container */
+.form-container {
+  width: 100%;
+  animation: slideIn 0.4s ease-out;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Material Form Field Overrides */
+::ng-deep .mat-mdc-form-field {
+  transition: var(--transition) !important;
+}
+
+::ng-deep .mat-mdc-form-field .mdc-notched-outline {
+  border-width: 2px;
+  border-color: var(--border-primary);
+  transition: var(--transition);
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline {
+  border-color: var(--primary-blue) !important;
+  box-shadow: 0 0 0 3px var(--primary-blue-50);
+}
+
+::ng-deep .mat-mdc-form-field:hover:not(.mat-focused) .mdc-notched-outline {
+  border-color: var(--border-secondary) !important;
+}
+
+::ng-deep .mat-mdc-form-field-prefix {
+  color: var(--primary-blue) !important;
+  margin-right: var(--space-3);
+}
+
+::ng-deep .mat-mdc-form-field-suffix {
+  color: var(--text-secondary) !important;
+  margin-left: var(--space-2);
+}
+
+::ng-deep .mat-mdc-form-field .mat-mdc-form-field-label {
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-label {
+  color: var(--primary-blue) !important;
+}
+
+::ng-deep .mat-mdc-input-element {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-input-element::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+/* Select Dropdown */
+::ng-deep .mat-mdc-select-value {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: var(--primary-blue) !important;
+}
+
+/* Password Toggle Button */
+.password-toggle {
+  color: var(--text-secondary) !important;
+  transition: var(--transition) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.password-toggle:hover {
+  color: var(--primary-blue) !important;
+  background: var(--primary-blue-50) !important;
+}
+
+/* Error Messages */
+::ng-deep .mat-mdc-form-field-error {
+  color: var(--error) !important;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-top: var(--space-1);
+}
+
 /* Dialog Actions */
 ::ng-deep .mat-mdc-dialog-actions {
-  padding: 1.5rem 2rem 2rem !important;
-  margin-bottom: 0;
+  padding: var(--space-6) var(--space-8) var(--space-8) !important;
+  margin: 0;
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
+  gap: var(--space-4);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-primary);
 }
 
 /* Buttons */
 ::ng-deep .mat-mdc-dialog-actions .mat-mdc-button {
-  border-radius: 8px !important;
+  border-radius: var(--radius-lg) !important;
   font-weight: 600 !important;
-  padding: 0.75rem 1.5rem !important;
-  transition: all 0.3s ease !important;
+  padding: var(--space-3) var(--space-6) !important;
+  transition: var(--transition) !important;
   text-transform: none !important;
+  height: 48px !important;
+  min-width: 120px !important;
 }
 
 ::ng-deep .mat-mdc-dialog-actions .mat-mdc-button:not(.mat-mdc-raised-button) {
-  color: var(--text-dark) !important;
-  border: 1px solid rgba(196, 163, 109, 0.3) !important;
+  color: var(--text-secondary) !important;
+  border: 2px solid var(--border-secondary) !important;
+  background: var(--bg-primary) !important;
 }
 
 ::ng-deep .mat-mdc-dialog-actions .mat-mdc-button:not(.mat-mdc-raised-button):hover {
-  background-color: rgba(196, 163, 109, 0.1) !important;
-  border-color: var(--primary-gold) !important;
+  background: var(--bg-tertiary) !important;
+  border-color: var(--primary-blue) !important;
+  color: var(--primary-blue) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow) !important;
 }
+
 ::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button {
-  background-color: #1e88e5 !important; /* כחול */
-  color: #fff !important;
-  box-shadow: 0 4px 12px rgba(30, 136, 229, 0.4) !important;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light)) !important;
+  color: var(--white) !important;
+  border: none !important;
+  box-shadow: var(--shadow-md) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 ::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button:hover:not(:disabled) {
-  background-color: #1565c0 !important; /* כחול כהה */
+  background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue)) !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.5) !important;
-}
-.snackbar-success {
-  background-color: #4caf50;
-  color: white;
-}
-
-.snackbar-error {
-  background-color: #f44336;
-  color: white;
+  box-shadow: var(--shadow-lg) !important;
 }
 
 ::ng-deep .mat-mdc-dialog-actions .mat-mdc-raised-button:disabled {
-   background-color: #90a4ae !important; 
-  color: rgba(0, 0, 0, 0.4) !important;
+  background: var(--text-tertiary) !important;
+  color: var(--text-secondary) !important;
   cursor: not-allowed;
   transform: none;
+  opacity: 0.6;
 }
 
-/* RTL Support */
-::ng-deep .mat-mdc-form-field-outline-start {
-  border-radius: 0 8px 8px 0 !important;
-  border-right-style: solid !important;
-  border-left-style: none !important;
+/* Loading State */
+.loading-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-::ng-deep .mat-mdc-form-field-outline-end {
-  border-radius: 8px 0 0 8px !important;
-  border-left-style: solid !important;
-  border-right-style: none !important;
+/* Snackbar Styles */
+::ng-deep .snackbar-success {
+  background: var(--success) !important;
+  color: var(--white) !important;
 }
 
-::ng-deep .mat-mdc-form-field-wrapper {
-  padding-bottom: 0;
-}
-
-::ng-deep .mat-mdc-form-field-infix {
-  text-align: right;
-  width: 100% !important;
-}
-
-::ng-deep .mat-mdc-form-field-appearance-outline .mat-mdc-form-field-flex {
-  direction: rtl;
-}
-::ng-deep .mat-mdc-dialog-content {
-  background-color: white !important;
-  border-radius: 0 0 var(--radius-large) var(--radius-large);
-  padding-bottom: 2rem !important;
-}
-.white-bg {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 0 0 var(--radius-large) var(--radius-large);
+::ng-deep .snackbar-error {
+  background: var(--error) !important;
+  color: var(--white) !important;
 }
 
 /* Animations */
-@keyframes fadeIn {
+@keyframes slideIn {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -266,39 +302,70 @@ h2[mat-dialog-title] {
 
 /* Responsive Design */
 @media (max-width: 600px) {
-  .form-container {
-    width: 100%;
+  ::ng-deep .mat-mdc-dialog-container {
+    width: 95vw !important;
+    max-width: none !important;
+  }
+
+  .dialog-header {
+    padding: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .header-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: var(--space-4);
+  }
+
+  .header-content h2 {
+    font-size: var(--font-size-xl);
   }
 
   ::ng-deep .mat-mdc-dialog-content {
-    padding: 0 1.5rem !important;
+    padding: var(--space-6) !important;
   }
 
   ::ng-deep .mat-mdc-dialog-actions {
-    padding: 1rem 1.5rem 1.5rem !important;
     flex-direction: column;
-    gap: 0.75rem;
+    padding: var(--space-4) var(--space-6) var(--space-6) !important;
+    gap: var(--space-3);
   }
 
   ::ng-deep .mat-mdc-dialog-actions .mat-mdc-button {
     width: 100%;
   }
-
-  h2 {
-    font-size: 1.5rem;
-  }
 }
 
 @media (max-width: 480px) {
+  .dialog-header {
+    padding: var(--space-4);
+  }
+
+  .header-content h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .header-subtitle {
+    font-size: var(--font-size-sm);
+  }
+
   ::ng-deep .mat-mdc-dialog-content {
-    padding: 0 1rem !important;
+    padding: var(--space-4) !important;
+  }
+
+  .form-fields {
+    gap: var(--space-4);
   }
 
   ::ng-deep .mat-mdc-dialog-actions {
-    padding: 1rem !important;
+    padding: var(--space-4) !important;
   }
+}
 
-  h2 {
-    font-size: 1.25rem;
-  }
+/* Focus States */
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-button:focus,
+.password-toggle:focus {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
 }

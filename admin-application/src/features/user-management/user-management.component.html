@@ -1,10 +1,9 @@
-
-<div class="users-management-container">
+<div class="users-management-container" [@fadeIn]>
   <!-- Header with stats -->
   <div class="dashboard-header">
     <div class="header-title">
-      <h1 class="mat-h1">User Management</h1>
-      <p class="subtitle">Manage system users and permissions</p>
+      <h1>User Management</h1>
+      <p class="subtitle">Comprehensive user administration with advanced controls and analytics</p>
     </div>
     
     <div class="stats-cards">
@@ -14,7 +13,7 @@
         </div>
         <div class="stat-content">
           <div class="stat-value">{{ getAdminCount() }}</div>
-          <div class="stat-label">Admins</div>
+          <div class="stat-label">Administrators</div>
         </div>
       </div>
       
@@ -24,7 +23,7 @@
         </div>
         <div class="stat-content">
           <div class="stat-value">{{ getUserCount() }}</div>
-          <div class="stat-label">Users</div>
+          <div class="stat-label">Standard Users</div>
         </div>
       </div>
       
@@ -34,7 +33,7 @@
         </div>
         <div class="stat-content">
           <div class="stat-value">{{ users.length }}</div>
-          <div class="stat-label">Total</div>
+          <div class="stat-label">Total Users</div>
         </div>
       </div>
     </div>
@@ -45,7 +44,7 @@
     <div class="search-filter">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search users</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search by name or email">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by name, email, or role">
         <mat-icon matPrefix>search</mat-icon>
       </mat-form-field>
       
@@ -53,16 +52,17 @@
         <mat-label>Filter by role</mat-label>
         <mat-select (selectionChange)="filterByRole($event.value)">
           <mat-option value="all">All Roles</mat-option>
-          <mat-option value="Admin">Admin</mat-option>
-          <mat-option value="User">User</mat-option>
+          <mat-option value="Admin">Administrators</mat-option>
+          <mat-option value="User">Standard Users</mat-option>
         </mat-select>
+        <mat-icon matPrefix>filter_list</mat-icon>
       </mat-form-field>
     </div>
     
     <div class="action-buttons">
       <button mat-stroked-button color="primary" [matMenuTriggerFor]="exportMenu">
         <mat-icon>download</mat-icon>
-        Export
+        Export Data
       </button>
       
       <mat-menu #exportMenu="matMenu">
@@ -78,16 +78,16 @@
       
       <button mat-raised-button color="primary" (click)="openDialog()">
         <mat-icon>person_add</mat-icon>
-        Add User
+        Add New User
       </button>
     </div>
   </div>
 
   <!-- Table with loading state -->
-  <div class="table-container mat-elevation-z8">
+  <div class="table-container">
     <div *ngIf="isLoading" class="loading-overlay">
-      <mat-spinner diameter="40"></mat-spinner>
-      <p>Loading users...</p>
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading user data...</p>
     </div>
     
     <table mat-table [dataSource]="dataSource" matSort class="users-table">
@@ -99,7 +99,7 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
         <td mat-cell *matCellDef="let user"> 
           <div class="user-name-cell">
             <div class="user-avatar">
@@ -162,7 +162,8 @@
       <!-- Row shown when no matching data -->
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell no-data-cell" [attr.colspan]="displayedColumns.length">
-          No users matching the filter
+          <mat-icon>search_off</mat-icon>
+          <p>No users found matching your search criteria</p>
         </td>
       </tr>
     </table>
@@ -230,12 +231,26 @@
 
 <!-- Confirmation Dialog Template -->
 <ng-template #confirmDialog>
-  <h2 mat-dialog-title>Confirm Deletion</h2>
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>warning</mat-icon>
+    </div>
+    <div class="header-content">
+      <h2>Confirm Deletion</h2>
+      <p class="header-subtitle">This action cannot be undone</p>
+    </div>
+  </div>
   <mat-dialog-content>
-    Are you sure you want to delete this user? This action cannot be undone.
+    <p>Are you sure you want to delete this user? All associated data will be permanently removed from the system.</p>
   </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="warn" [mat-dialog-close]="true">Delete</button>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">
+      <mat-icon>delete_forever</mat-icon>
+      Delete User
+    </button>
   </mat-dialog-actions>
 </ng-template>

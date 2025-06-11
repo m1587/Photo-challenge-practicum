@@ -4,12 +4,14 @@ import { MonthlyPhotoReportComponent } from '../features/monthly-photo-report/mo
 import { HomeComponent } from '../features/home/home.component';
 import { ChallengeManagementComponent } from '../features/challenge/challenge-management/challenge-management.component';
 import { UserManagementComponent } from '../features/user-management/user-management.component';
+import { ProfileComponent } from '../features/profile/profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-     { path: 'users-management', component: UserManagementComponent },
-     { path: 'challenge-management', component: ChallengeManagementComponent },
+    { path: 'users-management', component: UserManagementComponent },
+    { path: 'challenge-management', component: ChallengeManagementComponent },
     { path: 'monthly-photo-report', component: MonthlyPhotoReportComponent },
     { path: 'home', component: HomeComponent },
+    { path: 'profile', component: ProfileComponent }
 ];

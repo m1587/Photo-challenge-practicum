@@ -1,24 +1,35 @@
 <mat-toolbar color="primary" class="app-toolbar">
   <div class="toolbar-container">
     <div class="toolbar-left">
-      <button mat-icon-button routerLink="home" aria-label="Home">
+      <button mat-icon-button routerLink="home" aria-label="Home" class="home-button">
         <mat-icon>home</mat-icon>
       </button>
       <span class="app-title">Management System</span>
     </div>
     
     <div class="toolbar-right">
+      <!-- Theme Toggle Button -->
+      <button 
+        mat-icon-button 
+        (click)="toggleTheme()" 
+        class="theme-toggle"
+        [matTooltip]="themeService.isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+        aria-label="Toggle theme">
+        <mat-icon>{{ themeService.isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
       @if (!authService.isSignedIn()) {
         <button mat-raised-button class="login-button" routerLink="login">
           <mat-icon>login</mat-icon>
-          SIGN IN
+          <span>SIGN IN</span>
         </button>
       } @else {
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>menu</mat-icon>
-          Management
+        <!-- Management Menu -->
+        <button mat-stroked-button [matMenuTriggerFor]="menu" class="management-button">
+          <mat-icon>dashboard</mat-icon>
+          <span>Management</span>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menu="matMenu" class="management-menu">
           <button mat-menu-item routerLink="users-management">
             <mat-icon>people</mat-icon>
             <span>Users Management</span>
@@ -31,7 +42,40 @@
             <mat-icon>assessment</mat-icon>
             <span>Monthly Report</span>
           </button>
+        </mat-menu>
+        
+        <!-- User Profile Button -->
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+          <div class="profile-avatar">
+           <span class="avatar-initial">{{ getUserInitial() }}</span>
+
+          </div>
+        </button>
+        
+        <mat-menu #profileMenu="matMenu" class="profile-menu" xPosition="before">
+          <div class="profile-header">
+            <div class="profile-info">
+              <div class="profile-avatar-large">
+                <span class="avatar-initial">{{ getUserInitial() }}</span>
+              </div>
+              <div class="profile-details">
+                <span class="profile-name">{{ getUserName() }}</span>
+                <span class="profile-email">{{ getUserEmail() }}</span>
+              </div>
+            </div>
+          </div>
+          
           <mat-divider></mat-divider>
+          
+          <button mat-menu-item routerLink="profile" class="profile-link">
+            <mat-icon>account_circle</mat-icon>
+            <span>My Profile</span>
+          </button>
+          
+          <button mat-menu-item (click)="signOut()" class="sign-out-button">
+            <mat-icon>logout</mat-icon>
+            <span>Sign Out</span>
+          </button>
         </mat-menu>
       }
     </div>

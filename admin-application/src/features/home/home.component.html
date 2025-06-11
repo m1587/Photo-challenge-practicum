@@ -1,5 +1,5 @@
-<div class="home-container">
-  <!-- Hero Section -->
+<div class="home-container fade-in">
+  <!-- Enhanced Hero Section -->
   <mat-card class="hero-section">
     <div class="hero-content">
       <h1>
@@ -7,78 +7,86 @@
       </h1>
       <p>
         A professional and efficient platform for managing users, challenges,
-        and generating comprehensive reports with advanced analytics tools.
+        and generating comprehensive reports with advanced analytics tools and modern design.
       </p>
 
       <div class="actions-grid">
         <button mat-raised-button color="primary" (click)="handleClick('/challenge-management')">
-          <mat-icon class="blue-icon">add_task</mat-icon>
-          &nbsp;Create New Challenge
+          <mat-icon>add_task</mat-icon>
+          Create New Challenge
         </button>
         <button mat-stroked-button color="accent" (click)="handleClick('/users-management')">
-          <mat-icon class="blue-icon">people_outline</mat-icon>
-          &nbsp;Manage Users
+          <mat-icon>people_outline</mat-icon>
+          Manage Users
         </button>
         <button mat-stroked-button color="accent" (click)="handleClick('/monthly-photo-report')">
-          <mat-icon class="blue-icon">bar_chart</mat-icon>
-          &nbsp;View Reports
+          <mat-icon>bar_chart</mat-icon>
+          View Reports
         </button>
       </div>
     </div>
   </mat-card>
 
-  <!-- Features Section -->
+  <!-- Enhanced Features Section -->
   <div class="features-section">
     <h2>System Features</h2>
     <div class="features-grid">
       <mat-card class="feature-card">
         <mat-card-header>
-          <mat-icon class="feature-icon">people_outline</mat-icon>
+          <div class="feature-icon">
+            <mat-icon>people_outline</mat-icon>
+          </div>
         </mat-card-header>
         <mat-card-title>User Management</mat-card-title>
         <mat-card-content>
           <p>
             Comprehensive user management with role-based access control,
-            detailed user profiles, and advanced administration tools.
+            detailed user profiles, and advanced administration tools for seamless operations.
           </p>
         </mat-card-content>
       </mat-card>
 
       <mat-card class="feature-card">
         <mat-card-header>
-          <mat-icon class="feature-icon">flag</mat-icon>
+          <div class="feature-icon">
+            <mat-icon>flag</mat-icon>
+          </div>
         </mat-card-header>
         <mat-card-title>Challenge Management</mat-card-title>
         <mat-card-content>
           <p>
             Create, manage, and track photography challenges with AI-based
-            description generation and powerful admin tools.
+            description generation and powerful admin tools for enhanced productivity.
           </p>
         </mat-card-content>
       </mat-card>
 
       <mat-card class="feature-card">
         <mat-card-header>
-          <mat-icon class="feature-icon">analytics</mat-icon>
+          <div class="feature-icon">
+            <mat-icon>analytics</mat-icon>
+          </div>
         </mat-card-header>
         <mat-card-title>Analytics & Reports</mat-card-title>
         <mat-card-content>
           <p>
             Generate detailed monthly reports with interactive charts,
-            advanced data analysis, and versatile export options.
+            advanced data analysis, and versatile export options for informed decision-making.
           </p>
         </mat-card-content>
       </mat-card>
 
       <mat-card class="feature-card">
         <mat-card-header>
-          <mat-icon class="feature-icon">security</mat-icon>
+          <div class="feature-icon">
+            <mat-icon>security</mat-icon>
+          </div>
         </mat-card-header>
         <mat-card-title>Advanced Security</mat-card-title>
         <mat-card-content>
           <p>
             Enterprise-grade security features including data encryption,
-            two-factor authentication, and a robust permissions system.
+            two-factor authentication, and a robust permissions system for maximum protection.
           </p>
         </mat-card-content>
       </mat-card>

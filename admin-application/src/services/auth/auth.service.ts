@@ -7,15 +7,36 @@ import { User } from '../../core/moduls/User';
   providedIn: 'root'
 })
 export class AuthService {
-
+  private currentUser: User | null = null;
   private apiUrl = 'https://photo-challenge-practicum-1.onrender.com/api/User';
-  private userId: string | null = null;
-  private userRole: string | null = null;
   constructor(private http: HttpClient) { }
   private signedIn = false;
 
+  storeUser(user: User): void {
+    this.currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  getUser(): User | null {
+    if (this.currentUser) {
+      return this.currentUser;
+    }
+
+    const saved = localStorage.getItem('currentUser');
+    if (saved) {
+      this.currentUser = JSON.parse(saved);
+      return this.currentUser;
+    }
+
+    return null;
+  }
+  clearUser(): void {
+    this.currentUser = null;
+    localStorage.removeItem('currentUser');
+  }
+
   isSignedIn(): boolean {
-     return this.signedIn || !!sessionStorage.getItem('token');
+    return this.signedIn || !!sessionStorage.getItem('token');
   }
 
   signIn(): void {
@@ -23,12 +44,13 @@ export class AuthService {
   }
 
   signOut(): void {
-    this.signedIn = false;
-  }
+  this.signedIn = false;
+  this.clearUser();
+  sessionStorage.removeItem('token'); // מוחק את הטוקן
+}
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
-// --- CRUD למשתמשים ---
 
   // קבלת כל המשתמשים (Admin)
   getAllUsers(): Observable<User[]> {
@@ -43,35 +65,22 @@ export class AuthService {
   }
 
   updateUser(id: number, user: Partial<User>): Observable<any> {
+    console.log(`Updating user with ID: ${id}`, user);
     return this.http.put(`${this.apiUrl}/${id}`, user);
   }
 
   deleteUser(id: number): Observable<any> {
-    console.log(id);
-    // Check if the userId is null or undefined before making the request
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
   // --- ניהול טוקן וזהות משתמש ---
   storeToken(token: string) {
     sessionStorage.setItem('token', token);
   }
-
-  storeUserId(userId: string): void {
-    this.userId = userId;
-    localStorage.setItem('userId', userId);
-  }
-
   getUserId(): string | null {
-    return localStorage.getItem('userId');
-  }
-
-  storeUserRole(userRole: string): void {
-    this.userRole = userRole;
-    localStorage.setItem('userRole', userRole);
+    return this.getUser()?.id?.toString() ?? null;
   }
 
   getUserRole(): string | null {
-    return localStorage.getItem('userRole');
+    return this.getUser()?.role ?? null;
   }
-  
 }
