@@ -1,3 +1,4 @@
+
 import type React from "react"
 import { Box, Container, Typography, Button } from "@mui/material"
 import { motion } from "framer-motion"
@@ -55,11 +56,27 @@ export const HomeContent: React.FC<HomeContentProps> = ({ onShowWeeklyTheme, onS
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           sx={{
-            color: "#C4A36D",
-            fontWeight: 700,
+            background: "linear-gradient(135deg, #C4A36D 0%, #d4a574 50%, #f59e0b 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            fontWeight: 800,
             mb: 2,
-            textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+            textShadow: "0 4px 20px rgba(196, 163, 109, 0.3)",
             fontSize: { xs: "2.5rem", md: "3.5rem" },
+            letterSpacing: "-0.02em",
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              bottom: "-8px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "80px",
+              height: "3px",
+              background: "linear-gradient(90deg, transparent, #C4A36D, transparent)",
+              borderRadius: "2px",
+            },
           }}
         >
           Weekly Photo Contest
@@ -75,8 +92,23 @@ export const HomeContent: React.FC<HomeContentProps> = ({ onShowWeeklyTheme, onS
             color: "white",
             mb: 4,
             maxWidth: 600,
-            lineHeight: 1.6,
-            textShadow: "0 1px 3px rgba(0,0,0,0.3)",
+            lineHeight: 1.7,
+            textShadow: "0 2px 8px rgba(0,0,0,0.4)",
+            fontSize: { xs: "1.1rem", md: "1.3rem" },
+            fontWeight: 400,
+            letterSpacing: "0.01em",
+            position: "relative",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: "-20px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "40px",
+              height: "2px",
+              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
+              borderRadius: "1px",
+            },
           }}
         >
           Join our exciting weekly themed photography contests! Each week features a new creative challenge for you to
@@ -144,4 +176,3 @@ export const HomeContent: React.FC<HomeContentProps> = ({ onShowWeeklyTheme, onS
     </Container>
   )
 }
-

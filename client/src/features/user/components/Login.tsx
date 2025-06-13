@@ -148,10 +148,6 @@ export const Login = forwardRef<LoginRef, LoginProps>(({ onLoginSuccess }, ref) 
 
     setIsLoading(true)
     try {
-      // const res = await api.post<{ token: string; user: any }>("User/login", {
-      //   email: userEmail,
-      //   password: password,
-      // })
       const res = await fetchUserLogin(userEmail, password);
       // Handle remember me
       if (rememberMe) {

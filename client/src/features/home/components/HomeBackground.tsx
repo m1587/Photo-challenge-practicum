@@ -9,7 +9,6 @@ export const HomeBackground = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        // תמונת רקע חדשה
         background: `url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?q=80&w=2074') no-repeat center center`,
         backgroundSize: "cover",
         "&::after": {
