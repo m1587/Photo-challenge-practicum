@@ -9,10 +9,10 @@ import "../../styles/theme.css"
 
 const AppLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  // יצירת רפרנס לקומפוננטת Login
+
   const loginRef = useRef<LoginRef>(null)
   useEffect(() => {
-    const token = sessionStorage.getItem("user") // או localStorage אם את שומרת שם
+    const token = sessionStorage.getItem("user") 
     if (token) {
       setIsLoggedIn(true)
     }
@@ -21,7 +21,7 @@ const AppLayout = () => {
     setIsLoggedIn(true)
   }
 
-  // פונקציה שתעבור לקומפוננטת Register
+
   const handleSwitchToLogin = () => {
     if (loginRef.current) {
       loginRef.current.openLoginModal()

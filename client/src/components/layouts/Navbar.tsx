@@ -109,9 +109,9 @@ const Navbar = ({ isLoggedIn, loginRef, onLoginSuccess, onSwitchToLogin }: Navba
                 border: "1px solid rgba(212, 165, 116, 0.2)",
               }}
             >
-              {/* העברת הרפרנס לקומפוננטת Login */}
+             
               <Login ref={loginRef} onLoginSuccess={onLoginSuccess} />
-              {/* העברת פונקציית המעבר לקומפוננטת Register */}
+             
               <Register onSwitchToLogin={onSwitchToLogin} />
             </Box>
           )}

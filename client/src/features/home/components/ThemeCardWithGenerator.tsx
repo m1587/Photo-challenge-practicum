@@ -151,7 +151,9 @@ import { Box, Typography, Card, CardMedia, CardContent, Button } from "@mui/mate
 import UploadIcon from "@mui/icons-material/Upload"
 import HowToVoteIcon from "@mui/icons-material/HowToVote"
 import LoginIcon from "@mui/icons-material/Login"
-import { Login, LoginRef } from "../../user/components/Login"
+import {
+  //  Login, 
+   LoginRef } from "../../user/components/Login"
 import Register from "../../user/components/Registration"
 
 
@@ -181,10 +183,10 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   const loginRef = useRef<LoginRef>(null)
 
   // Function to handle login success
-  const handleLoginSuccess = () => {
-    // You can add any additional logic here after successful login
-    window.location.reload() // Refresh to update isLoggedIn state
-  }
+  // const handleLoginSuccess = () => {
+  //   // You can add any additional logic here after successful login
+  //   window.location.reload() // Refresh to update isLoggedIn state
+  // }
 
   useEffect(() => {
     const fetchPixabayImage = async () => {
@@ -201,7 +203,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
           console.warn("No image found for", theme.title)
           setImageSrc("/assets/logo.svg")
         }
-      } catch (error) {
+       } catch (error) {
         console.error("Pixabay error:", error)
         setImageSrc("/assets/logo.svg")
       }
@@ -335,7 +337,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
       </CardContent>
 
       {/* Login component with ref */}
-      <Login ref={loginRef} onLoginSuccess={handleLoginSuccess} />
+      {/* <Login ref={loginRef} onLoginSuccess={handleLoginSuccess} /> */}
     </Card>
   )
 }

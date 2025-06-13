@@ -121,12 +121,6 @@ export const ResetPassword = ({ open, onClose, onBackToLogin }: ResetPasswordPro
     setSuccess(false)
     
     try {
-      // API call to request password reset
-      // await api.post("PasswordReset/request", email, {
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   }
-      // })
       await fetchPasswordResetRequest(email)
       // Show success message
       setSuccess(true)

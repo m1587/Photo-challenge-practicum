@@ -149,11 +149,6 @@ const ResetPasswordPage = () => {
     setError(null)
 
     try {
-      // await api.post("/PasswordReset/reset", {
-      //   token,
-      //   email,
-      //   newPassword: password,
-      // })
       await fetchPasswordReset(token, email, password)
       setSuccess(true)
 
