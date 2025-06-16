@@ -143,7 +143,6 @@
 // }
 
 // export default ThemeCardWithGenerator
-"use client"
 
 import type React from "react"
 import { useEffect, useState } from "react"
@@ -152,7 +151,6 @@ import UploadIcon from "@mui/icons-material/Upload"
 import HowToVoteIcon from "@mui/icons-material/HowToVote"
 import LoginIcon from "@mui/icons-material/Login"
 import Register from "../../user/components/Registration"
-
 
 interface ThemeCardProps {
   theme: {
@@ -166,6 +164,7 @@ interface ThemeCardProps {
   showVoting: boolean
   onShowUploader: () => void
   onShowVoting: () => void
+  onOpenLogin?: () => void // Add this new prop
 }
 
 const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
@@ -175,6 +174,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   showVoting,
   onShowUploader,
   onShowVoting,
+  onOpenLogin, // Add this to destructuring
 }) => {
   const [imageSrc, setImageSrc] = useState<string>("/assets/logo.svg")
 
@@ -256,9 +256,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
                 variant="contained"
                 startIcon={<LoginIcon />}
                 onClick={() => {
-                  // Just call your existing login function directly
-                  // Replace this with whatever opens your login modal
-                  console.log("Open login modal")
+                  onOpenLogin?.()
                 }}
                 sx={{
                   bgcolor: "#C4A36D",
@@ -278,7 +276,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
                 Sign In
               </Button>
 
-              <Register onSwitchToLogin={() => console.log("Switch to login")} />
+              <Register onSwitchToLogin={() => onOpenLogin?.()} />
             </Box>
           </Box>
         ) : (
