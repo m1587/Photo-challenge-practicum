@@ -143,23 +143,16 @@
 // }
 
 // export default ThemeCardWithGenerator
-
-
-"use client"
-
 "use client"
 
 import type React from "react"
-import { useEffect, useState, useRef, lazy, Suspense } from "react"
-import { Box, Typography, Card, CardMedia, CardContent, Button, CircularProgress } from "@mui/material"
+import { useEffect, useState } from "react"
+import { Box, Typography, Card, CardMedia, CardContent, Button } from "@mui/material"
 import UploadIcon from "@mui/icons-material/Upload"
 import HowToVoteIcon from "@mui/icons-material/HowToVote"
 import LoginIcon from "@mui/icons-material/Login"
 import Register from "../../user/components/Registration"
-import { LoginRef } from "../../user/components/Login"
-// Lazy load Login component to prevent immediate loading issues
-// Update the import path to the correct location of your Login component
-const Login = lazy(() => import("../../user/components/Login").then((module) => ({ default: module.Login })))
+
 
 interface ThemeCardProps {
   theme: {
@@ -184,14 +177,6 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   onShowVoting,
 }) => {
   const [imageSrc, setImageSrc] = useState<string>("/assets/logo.svg")
-  const [shouldLoadLogin, setShouldLoadLogin] = useState(false)
-  const loginRef = useRef<LoginRef>(null)
-
-  // Function to handle login success
-  const handleLoginSuccess = () => {
-    setShouldLoadLogin(false) // Hide login after success
-    window.location.reload() // Refresh to update isLoggedIn state
-  }
 
   useEffect(() => {
     const fetchPixabayImage = async () => {
@@ -216,17 +201,6 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
 
     fetchPixabayImage()
   }, [theme.title])
-
-  // Function to open login modal
-  const handleOpenLogin = () => {
-    setShouldLoadLogin(true)
-    // Small delay to ensure component is loaded before calling ref
-    setTimeout(() => {
-      if (loginRef.current) {
-        loginRef.current.openLoginModal()
-      }
-    }, 100)
-  }
 
   return (
     <Card
@@ -281,7 +255,11 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
               <Button
                 variant="contained"
                 startIcon={<LoginIcon />}
-                onClick={handleOpenLogin}
+                onClick={() => {
+                  // Just call your existing login function directly
+                  // Replace this with whatever opens your login modal
+                  console.log("Open login modal")
+                }}
                 sx={{
                   bgcolor: "#C4A36D",
                   color: "white",
@@ -300,7 +278,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
                 Sign In
               </Button>
 
-              <Register onSwitchToLogin={handleOpenLogin} />
+              <Register onSwitchToLogin={() => console.log("Switch to login")} />
             </Box>
           </Box>
         ) : (
@@ -343,16 +321,8 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
           </Box>
         )}
       </CardContent>
-
-      {/* Only load Login component when needed */}
-      {shouldLoadLogin && (
-        <Suspense fallback={<CircularProgress size={20} />}>
-          <Login ref={loginRef} onLoginSuccess={handleLoginSuccess} />
-        </Suspense>
-      )}
     </Card>
   )
 }
 
 export default ThemeCardWithGenerator
-
