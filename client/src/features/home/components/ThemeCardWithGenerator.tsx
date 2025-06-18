@@ -177,7 +177,6 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   showVoting,
   onShowUploader,
   onShowVoting,
-  onOpenLogin,
 }) => {
   const [imageSrc, setImageSrc] = useState<string>("/assets/logo.svg")
   const [showLoginModal, setShowLoginModal] = useState(false)
