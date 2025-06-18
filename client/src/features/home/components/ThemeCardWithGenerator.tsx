@@ -144,6 +144,8 @@
 
 // export default ThemeCardWithGenerator
 
+"use client"
+
 import type React from "react"
 import { useEffect, useState } from "react"
 import { Box, Typography, Card, CardMedia, CardContent, Button } from "@mui/material"
@@ -151,6 +153,7 @@ import UploadIcon from "@mui/icons-material/Upload"
 import HowToVoteIcon from "@mui/icons-material/HowToVote"
 import LoginIcon from "@mui/icons-material/Login"
 import Register from "../../user/components/Registration"
+import { Login } from "../../user/components/Login"
 
 interface ThemeCardProps {
   theme: {
@@ -177,6 +180,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   onOpenLogin, // Add this to destructuring
 }) => {
   const [imageSrc, setImageSrc] = useState<string>("/assets/logo.svg")
+  const [showLoginModal, setShowLoginModal] = useState(false)
 
   useEffect(() => {
     const fetchPixabayImage = async () => {
@@ -255,9 +259,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
               <Button
                 variant="contained"
                 startIcon={<LoginIcon />}
-                onClick={() => {
-                  onOpenLogin?.()
-                }}
+                onClick={() => setShowLoginModal(true)}
                 sx={{
                   bgcolor: "#C4A36D",
                   color: "white",
@@ -318,9 +320,18 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
             )}
           </Box>
         )}
+        {showLoginModal && (
+          <Login
+            onLoginSuccess={() => {
+              setShowLoginModal(false)
+              window.location.reload() // or your preferred way to update login state
+            }}
+          />
+        )}
       </CardContent>
     </Card>
   )
 }
 
 export default ThemeCardWithGenerator
+
