@@ -167,7 +167,7 @@ interface ThemeCardProps {
   showVoting: boolean
   onShowUploader: () => void
   onShowVoting: () => void
-  onOpenLogin?: () => void // Add this new prop
+  onOpenLogin?: () => void
 }
 
 const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
@@ -177,7 +177,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   showVoting,
   onShowUploader,
   onShowVoting,
-  onOpenLogin, // Add this to destructuring
+  onOpenLogin,
 }) => {
   const [imageSrc, setImageSrc] = useState<string>("/assets/logo.svg")
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -206,132 +206,136 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
     fetchPixabayImage()
   }, [theme.title])
 
+  // Function to handle successful login
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false)
+    window.location.reload() // or your preferred way to update login state
+  }
+
   return (
-    <Card
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        overflow: "hidden",
-        bgcolor: "rgba(255,255,255,0.95)",
-        borderRadius: 3,
-        boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-      }}
-    >
-      <CardMedia
-        component="img"
-        image={imageSrc}
-        alt={theme.title}
+    <>
+      <Card
         sx={{
-          width: { xs: "100%", md: "40%" },
-          height: { xs: 200, md: "auto" },
-          objectFit: "cover",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          overflow: "hidden",
+          bgcolor: "rgba(255,255,255,0.95)",
+          borderRadius: 3,
+          boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
         }}
-      />
+      >
+        <CardMedia
+          component="img"
+          image={imageSrc}
+          alt={theme.title}
+          sx={{
+            width: { xs: "100%", md: "40%" },
+            height: { xs: 200, md: "auto" },
+            objectFit: "cover",
+          }}
+        />
 
-      <CardContent sx={{ p: 4, flex: 1 }}>
-        <Typography variant="h4" sx={{ mb: 2, color: "#333", fontWeight: 600 }}>
-          {theme.title}
-        </Typography>
-        <Typography variant="body1" sx={{ mb: 3, color: "#555", fontSize: "1.1rem" }}>
-          {theme.description}
-        </Typography>
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333" }}>
-            Contest Details:
+        <CardContent sx={{ p: 4, flex: 1 }}>
+          <Typography variant="h4" sx={{ mb: 2, color: "#333", fontWeight: 600 }}>
+            {theme.title}
           </Typography>
-          <Typography variant="body2" sx={{ color: "#555", mb: 1 }}>
-            • Submissions close: {theme.endDate}
+          <Typography variant="body1" sx={{ mb: 3, color: "#555", fontSize: "1.1rem" }}>
+            {theme.description}
           </Typography>
-          <Typography variant="body2" sx={{ color: "#555", mb: 1 }}>
-            • Voting period: Saturday & Sunday
-          </Typography>
-          <Typography variant="body2" sx={{ color: "#555" }}>
-            • Winner announced: Monday
-          </Typography>
-        </Box>
-
-        {!isLoggedIn ? (
           <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333", mb: 2 }}>
-              Join our photography community to participate!
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333" }}>
+              Contest Details:
             </Typography>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-              <Button
-                variant="contained"
-                startIcon={<LoginIcon />}
-                onClick={() => setShowLoginModal(true)}
-                sx={{
-                  bgcolor: "#C4A36D",
-                  color: "white",
-                  fontWeight: 500,
-                  px: 3,
-                  py: 1,
-                  borderRadius: 2,
-                  "&:hover": {
-                    bgcolor: "#b3926a",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 6px 16px rgba(196, 163, 109, 0.4)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Sign In
-              </Button>
-
-              <Register onSwitchToLogin={() => onOpenLogin?.()} />
-            </Box>
+            <Typography variant="body2" sx={{ color: "#555", mb: 1 }}>
+              • Submissions close: {theme.endDate}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "#555", mb: 1 }}>
+              • Voting period: Saturday & Sunday
+            </Typography>
+            <Typography variant="body2" sx={{ color: "#555" }}>
+              • Winner announced: Monday
+            </Typography>
           </Box>
-        ) : (
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-            {!showUploader && !showVoting && (
-              <>
+
+          {!isLoggedIn ? (
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333", mb: 2 }}>
+                Join our photography community to participate!
+              </Typography>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
                 <Button
                   variant="contained"
-                  startIcon={<UploadIcon />}
-                  onClick={onShowUploader}
+                  startIcon={<LoginIcon />}
+                  onClick={() => setShowLoginModal(true)}
                   sx={{
                     bgcolor: "#C4A36D",
                     color: "white",
                     fontWeight: 500,
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
                     "&:hover": {
                       bgcolor: "#b3926a",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 6px 16px rgba(196, 163, 109, 0.4)",
                     },
+                    transition: "all 0.3s ease",
                   }}
                 >
-                  Upload Your Photo
+                  Sign In
                 </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<HowToVoteIcon />}
-                  onClick={onShowVoting}
-                  sx={{
-                    borderColor: "#C4A36D",
-                    color: "#C4A36D",
-                    fontWeight: 500,
-                    "&:hover": {
-                      borderColor: "#b3926a",
-                      bgcolor: "rgba(196, 163, 109, 0.05)",
-                    },
-                  }}
-                >
-                  Vote on Submissions
-                </Button>
-              </>
-            )}
-          </Box>
-        )}
-        {showLoginModal && (
-          <Login
-            onLoginSuccess={() => {
-              setShowLoginModal(false)
-              window.location.reload() // or your preferred way to update login state
-            }}
-          />
-        )}
-      </CardContent>
-    </Card>
+
+                <Register onSwitchToLogin={() => setShowLoginModal(true)} />
+              </Box>
+            </Box>
+          ) : (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+              {!showUploader && !showVoting && (
+                <>
+                  <Button
+                    variant="contained"
+                    startIcon={<UploadIcon />}
+                    onClick={onShowUploader}
+                    sx={{
+                      bgcolor: "#C4A36D",
+                      color: "white",
+                      fontWeight: 500,
+                      "&:hover": {
+                        bgcolor: "#b3926a",
+                      },
+                    }}
+                  >
+                    Upload Your Photo
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    startIcon={<HowToVoteIcon />}
+                    onClick={onShowVoting}
+                    sx={{
+                      borderColor: "#C4A36D",
+                      color: "#C4A36D",
+                      fontWeight: 500,
+                      "&:hover": {
+                        borderColor: "#b3926a",
+                        bgcolor: "rgba(196, 163, 109, 0.05)",
+                      },
+                    }}
+                  >
+                    Vote on Submissions
+                  </Button>
+                </>
+              )}
+            </Box>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Login Modal - outside the card */}
+      {showLoginModal && (
+        <Login onLoginSuccess={handleLoginSuccess} />
+      )}
+    </>
   )
 }
 
 export default ThemeCardWithGenerator
-
