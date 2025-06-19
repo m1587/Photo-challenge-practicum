@@ -143,7 +143,6 @@
 // }
 
 // export default ThemeCardWithGenerator
-
 "use client"
 
 import type React from "react"
@@ -170,6 +169,9 @@ interface ThemeCardProps {
   onOpenLogin?: () => void
 }
 
+// מטמון פשוט לשמירת תמונות לפי כותרת
+const imageCache: Record<string, string> = {}
+
 const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   theme,
   isLoggedIn,
@@ -182,6 +184,11 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
   const [showLoginModal, setShowLoginModal] = useState(false)
 
   useEffect(() => {
+    if (imageCache[theme.title]) {
+      setImageSrc(imageCache[theme.title])
+      return
+    }
+
     const fetchPixabayImage = async () => {
       const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY
       const query = encodeURIComponent(theme.title)
@@ -191,13 +198,15 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
         const res = await fetch(url)
         const data = await res.json()
         if (data.hits && data.hits.length > 0) {
+          imageCache[theme.title] = data.hits[0].webformatURL
           setImageSrc(data.hits[0].webformatURL)
         } else {
-          console.warn("No image found for", theme.title)
+          imageCache[theme.title] = "/assets/logo.svg"
           setImageSrc("/assets/logo.svg")
         }
       } catch (error) {
         console.error("Pixabay error:", error)
+        imageCache[theme.title] = "/assets/logo.svg"
         setImageSrc("/assets/logo.svg")
       }
     }
@@ -330,9 +339,7 @@ const ThemeCardWithGenerator: React.FC<ThemeCardProps> = ({
       </Card>
 
       {/* Login Modal - outside the card */}
-      {showLoginModal && (
-        <Login onLoginSuccess={handleLoginSuccess} />
-      )}
+      {showLoginModal && <Login onLoginSuccess={handleLoginSuccess} />}
     </>
   )
 }
