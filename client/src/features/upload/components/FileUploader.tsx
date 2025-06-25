@@ -112,7 +112,6 @@ const FileUploader = () => {
         setProgress(0)
       }, 1000)
     } catch (error) {
-      console.error("Upload error:", error)
       showSnackbar("Upload failed. Please try again.", "warning")
     } finally {
       setIsUploading(false)
@@ -232,7 +231,7 @@ const FileUploader = () => {
             <ErrorSnackbar
               open={snackbarOpen}
               onClose={() => setSnackbarOpen(false)}
-              error={{ response: { status: 400 } }} // את יכולה לשנות את זה בהתאם לצורך
+              error={{ response: { status: 400 } }}
             />
           ) : (
             <SuccessSnackbar

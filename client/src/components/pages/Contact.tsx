@@ -42,7 +42,6 @@ const Contact = () => {
     setSnackbarMessage("");
     setOpenSnackbar(false);
     try {
-      console.log(formData);
       // שליחה לשרת דרך axios
       // const response = await api.post("Contact/send-email", formData);
       const response = await fetchSendEmail(formData);

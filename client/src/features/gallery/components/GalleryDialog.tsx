@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react"
 import {
   Dialog,
@@ -329,11 +328,57 @@ interface ImageCardProps {
   imageData?: any
 }
 
+interface FloatingHeart {
+  id: number
+  x: number
+  y: number
+}
+
 const ImageCard: React.FC<ImageCardProps> = ({ file, imageUrl, caption, likes, onLike, imageData }) => {
   const [hasError, setHasError] = React.useState(false)
+  const [isLiking, setIsLiking] = React.useState(false)
+  const [floatingHearts, setFloatingHearts] = React.useState<FloatingHeart[]>([])
+  const [heartCounter, setHeartCounter] = React.useState(0)
+  const likeButtonRef = useRef<HTMLButtonElement>(null)
 
   const handleImageError = () => {
     setHasError(true)
+  }
+
+  const createFloatingHearts = () => {
+    const numberOfHearts = 2 // מספר קבוע של אלמנטים
+    const newHearts: FloatingHeart[] = []
+    
+    for (let i = 0; i < numberOfHearts; i++) {
+      newHearts.push({
+        id: heartCounter + i,
+        x: Math.random() * 40 - 20, // -20px to +20px from center
+        y: 0,
+      })
+    }
+    
+    setFloatingHearts(prev => [...prev, ...newHearts])
+    setHeartCounter(prev => prev + numberOfHearts)
+    
+    // Remove hearts after animation
+    setTimeout(() => {
+      setFloatingHearts(prev => prev.filter(heart => !newHearts.find(newHeart => newHeart.id === heart.id)))
+    }, 1500)
+  }
+
+  const handleLikeClick = async () => {
+    if (isLiking) return
+    
+    setIsLiking(true)
+    createFloatingHearts()
+    
+    try {
+      await onLike()
+    } catch (error) {
+      console.error('Like error:', error)
+    } finally {
+      setTimeout(() => setIsLiking(false), 600)
+    }
   }
 
   return (
@@ -408,6 +453,8 @@ const ImageCard: React.FC<ImageCardProps> = ({ file, imageUrl, caption, likes, o
         >
           {caption}
         </Typography>
+        
+        {/* Like Section with Floating Hearts */}
         <Box
           sx={{
             display: "flex",
@@ -419,35 +466,118 @@ const ImageCard: React.FC<ImageCardProps> = ({ file, imageUrl, caption, likes, o
             bgcolor: "rgba(196, 163, 109, 0.1)",
             mt: "auto",
             mb: 2,
+            position: "relative",
+            overflow: "visible",
           }}
         >
+          {/* Floating Hearts Container */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: -10,
+              left: "50%",
+              transform: "translateX(-50%)",
+              pointerEvents: "none",
+              zIndex: 10,
+            }}
+          >
+            {floatingHearts.map((heart) => (
+              <Box
+                key={heart.id}
+                sx={{
+                  position: "absolute",
+                  left: heart.x,
+                  animation: "gentleFloat 1.5s ease-out forwards",
+                  "@keyframes gentleFloat": {
+                    "0%": {
+                      transform: "translateY(0) scale(0.8)",
+                      opacity: 0.9,
+                    },
+                    "30%": {
+                      transform: "translateY(-15px) scale(1)",
+                      opacity: 1,
+                    },
+                    "100%": {
+                      transform: "translateY(-35px) scale(0.9)",
+                      opacity: 0,
+                    },
+                  },
+                }}
+              >
+                <ThumbUpIcon 
+                  sx={{ 
+                    color: "#C4A36D", 
+                    fontSize: "1rem",
+                    filter: "drop-shadow(0 1px 3px rgba(196, 163, 109, 0.3))"
+                  }} 
+                />
+              </Box>
+            ))}
+          </Box>
+
           <IconButton
-            onClick={onLike}
+            ref={likeButtonRef}
+            onClick={handleLikeClick}
+            disabled={isLiking}
             size="small"
             sx={{
               color: "#C4A36D",
               p: 0.5,
+              position: "relative",
+              transform: isLiking ? "scale(1.1)" : "scale(1)",
+              transition: "all 0.3s ease",
               "&:hover": {
-                bgcolor: "rgba(196, 163, 109, 0.2)",
+                bgcolor: "rgba(196, 163, 109, 0.15)",
+                transform: "scale(1.05)",
               },
+              "&:active": {
+                transform: "scale(0.98)",
+              },
+              "&:disabled": {
+                color: "#C4A36D",
+                transform: "scale(1.1)",
+                bgcolor: "rgba(196, 163, 109, 0.1)",
+              },
+              // גלו עדין כשלוחצים
+              ...(isLiking && {
+                boxShadow: "0 0 15px rgba(196, 163, 109, 0.3)",
+                bgcolor: "rgba(196, 163, 109, 0.15)",
+              }),
             }}
           >
-            <ThumbUpIcon fontSize="small" />
+            <ThumbUpIcon 
+              fontSize="small" 
+              sx={{
+                transition: "transform 0.3s ease",
+                ...(isLiking && {
+                  animation: "gentlePulse 0.6s ease-in-out",
+                  "@keyframes gentlePulse": {
+                    "0%, 100%": { transform: "scale(1)" },
+                    "50%": { transform: "scale(1.15)" },
+                  },
+                }),
+              }}
+            />
           </IconButton>
+          
           <Typography
             variant="body2"
             sx={{
               color: "#333",
               fontWeight: 500,
               fontSize: "0.75rem",
+              transform: isLiking ? "scale(1.1)" : "scale(1)",
+              transition: "transform 0.2s ease",
             }}
           >
             {likes}
           </Typography>
         </Box>
-          <Box sx={{ mt: 1 }}>
+
+        <Box sx={{ mt: 1 }}>
           <ImageShare imageUrl={imageUrl} />
         </Box>
+        
         {/* Comments Section */}
         {imageData && (
           <ImageComments

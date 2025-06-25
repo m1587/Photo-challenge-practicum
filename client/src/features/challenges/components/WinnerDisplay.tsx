@@ -232,7 +232,6 @@ export const WinnerDisplay: React.FC<WinnerDisplayProps> = ({ challenge }) => {
             },
           }}
           onError={(e) => {
-            console.error("Error loading winner image")
             ;(e.target as HTMLImageElement).src = "https://via.placeholder.com/400?text=Winner+Image+Not+Found"
             setSnackOpen(true)
           }}

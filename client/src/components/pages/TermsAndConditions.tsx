@@ -1,10 +1,10 @@
 
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogTitle, 
-  Typography, 
-  Button, 
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Typography,
+  Button,
   Box,
   Divider,
   IconButton
@@ -18,22 +18,27 @@ interface TermsAndConditionsProps {
 
 export function TermsAndConditions({ open, onClose }: TermsAndConditionsProps) {
   return (
-    <Dialog 
-      open={open} 
+    <Dialog
+      open={open}
       onClose={onClose}
       maxWidth="md"
       fullWidth
       scroll="paper"
       aria-labelledby="terms-dialog-title"
     >
-      <DialogTitle id="terms-dialog-title" sx={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-        mb: 1
-      }}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>Terms and Conditions</Typography>
+      <DialogTitle component="div"
+        id="terms-dialog-title"
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          mb: 1,
+        }}>
+
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          Terms and Conditions
+        </Typography>
         <IconButton onClick={onClose} size="small" aria-label="close">
           <CloseIcon />
         </IconButton>
@@ -140,17 +145,17 @@ export function TermsAndConditions({ open, onClose }: TermsAndConditionsProps) {
           </Typography>
 
           <Divider sx={{ my: 2 }} />
-          
+
           <Typography variant="body2" sx={{ fontWeight: 500 }}>
             Last updated: April 11, 2025
           </Typography>
         </Box>
       </DialogContent>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-        <Button 
-          onClick={onClose} 
-          variant="contained" 
-          sx={{ 
+        <Button
+          onClick={onClose}
+          variant="contained"
+          sx={{
             bgcolor: "#C4A36D",
             "&:hover": {
               bgcolor: "#b3926a",

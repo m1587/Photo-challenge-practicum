@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom"
 import Logo from "../pages/logo"
+interface FooterProps {
+  onOpenTerms: () => void;
+}
 
-const Footer = () => {
+const Footer = ({ onOpenTerms }: FooterProps) => {
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -54,11 +57,6 @@ const Footer = () => {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link to="/terms-and-conditions" className="footer-link">
-                  Terms
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -106,12 +104,14 @@ const Footer = () => {
           <div className="footer-bottom-content">
             <p className="copyright">© 2024 PhotoContest. All rights reserved.</p>
             <div className="footer-bottom-links">
-              <Link to="/privacy" className="footer-bottom-link">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="footer-bottom-link">
+              <button
+                onClick={onOpenTerms}
+                className="footer-bottom-link"
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+              >
                 Terms of Service
-              </Link>
+              </button>
+
             </div>
           </div>
         </div>

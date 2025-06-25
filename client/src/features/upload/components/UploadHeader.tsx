@@ -1,4 +1,3 @@
-
 import { Box, Typography, Chip } from "@mui/material"
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera"
 import TrendingUpIcon from "@mui/icons-material/TrendingUp"

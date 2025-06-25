@@ -37,15 +37,11 @@ const Home = () => {
       const token = getToken()
       if (!token) return
 
-      console.log("Fetching uploaded files...")
-
       const response = await fetchImageUpload(token)
       if (!response.data || !Array.isArray(response.data)) {
         console.error("Invalid response data:", response.data)
         return
       }
-
-      console.log("Files received:", response.data)
 
       const files = response.data.map((fileName: string) => ({
         fileName,

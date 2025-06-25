@@ -61,7 +61,6 @@ const PreviousChallenges = () => {
         setSnackSeverity("success")
         setSnackOpen(true)
       } catch (error) {
-        console.error("Error fetching challenges:", error)
         setSnackMessage("Failed to load challenges. Please try again.")
         setSnackSeverity("error")
         setSnackOpen(true)

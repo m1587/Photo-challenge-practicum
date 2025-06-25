@@ -76,10 +76,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
         if (!file?.fileName) continue
 
         try {
-          // const imageResponse = await api.get("Image/Name", {
-          //   params: { imageName: file.fileName },
-          //   headers: { Authorization: `Bearer ${token}` },
-          // })
           const imageResponse = await fetchImageName(token, file.fileName);
           const image = imageResponse.data
           // ✨ סינון לפי האתגר הפעיל
@@ -118,26 +114,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
         [imageName]: (prevLikes[imageName] || 0) + 1,
       }))
 
-      // שליפת מידע על התמונה
-      // const imageResponse = await api.get(`Image/Name`, {
-      //   params: { imageName },
-      //   headers: { Authorization: `Bearer ${token}` },
-      // })
+
       const imageResponse = await fetchImageName(token, imageName);
       const imageId = imageResponse.data?.id
       if (!imageId) return
 
-      // שליחת הצבעה
-      // await api.post(
-      //   "Vote",
-      //   {
-      //     userId: context.state.id,
-      //     imageId: imageId,
-      //   },
-      //   {
-      //     headers: { Authorization: `Bearer ${token}` },
-      //   },
-      // )
       await fetchAddVoteImage(token, context.state.id, imageId);
       // עדכון מספר הלייקים מתוך השרת אחרי הצבעה מוצלחת
       setSuccessMessage("Your vote has been submitted successfully!");
@@ -171,13 +152,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ uploadedFiles, compact = fa
     }
   }, [uploadedFiles, fetchAllImageData])
 
-  // if (uploadedFiles.length === 0 || Object.keys(imageData).length === 0) {
-  //   return (
-  //     <Typography variant="body2" sx={{ color: "gray", mt: 2 }}>
-  //       אין תמונות להציג עבור האתגר הפעיל.
-  //     </Typography>
-  //   )
-  // }
   if (isLoading) {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>

@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Login onLoginSuccess={() => console.log('Login successful')} />,
+        element: <Login onLoginSuccess={() => {}} />,
       }
     ],
   },

@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react"
 import Navbar from "./Navbar"
 import { Outlet } from "react-router-dom"
@@ -6,26 +5,36 @@ import { Box } from "@mui/material"
 import type { LoginRef } from "../../features/user/components/Login"
 import Footer from "./Footer"
 import "../../styles/theme.css"
+import TermsAndConditions from "../pages/TermsAndConditions"
 
 const AppLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isTermsOpen, setIsTermsOpen] = useState(false)
 
   const loginRef = useRef<LoginRef>(null)
+
   useEffect(() => {
-    const token = sessionStorage.getItem("user") 
+    const token = sessionStorage.getItem("user")
     if (token) {
       setIsLoggedIn(true)
     }
   }, [])
+
   const handleLoginSuccess = () => {
     setIsLoggedIn(true)
   }
-
 
   const handleSwitchToLogin = () => {
     if (loginRef.current) {
       loginRef.current.openLoginModal()
     }
+  }
+
+  const handleOpenTerms = () => {
+    setIsTermsOpen(true)
+  }
+  const handleCloseTerms = () => {
+    setIsTermsOpen(false)
   }
 
   return (
@@ -51,7 +60,6 @@ const AppLayout = () => {
           },
         }}
       >
-        {/* Navbar with integrated user section */}
         <Navbar
           isLoggedIn={isLoggedIn}
           loginRef={loginRef}
@@ -71,7 +79,10 @@ const AppLayout = () => {
           <Outlet />
         </Box>
       </Box>
-      <Footer />
+
+      <Footer onOpenTerms={handleOpenTerms} />
+      <TermsAndConditions open={isTermsOpen} onClose={handleCloseTerms} />
+
     </>
   )
 }

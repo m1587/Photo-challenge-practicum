@@ -22,7 +22,6 @@ export default function ImageShare({ imageUrl }: ImageShareProps) {
       setTimeout(() => setIsCopied(false), 3000)
     } catch (err) {
       console.error("שגיאה בהעתקת הקישור:", err)
-      // אפשר להוסיף כאן הודעת שגיאה
     } finally {
       setIsLoading(false)
     }
