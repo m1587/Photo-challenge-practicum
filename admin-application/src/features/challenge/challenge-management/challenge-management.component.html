@@ -33,13 +33,13 @@
         <div class="challenge-meta">
           <div class="meta-item">
             <mat-icon>calendar_today</mat-icon>
-            <span>7 days duration</span>
+         <span> {{ getChallengeDuration(activeChallenge) }} days duration</span>
           </div>
-          <div class="meta-item" *ngIf="activeChallenge.winnerImgId">
+          <div class="meta-item" *ngIf="activeChallenge.winnerImageUrl">
             <mat-icon>star</mat-icon>
             <span>Winner Selected</span>
           </div>
-          <div class="meta-item" *ngIf="!activeChallenge.winnerImgId">
+          <div class="meta-item" *ngIf="!activeChallenge.winnerImageUrl">
             <mat-icon>pending</mat-icon>
             <span>Awaiting Results</span>
           </div>

@@ -213,15 +213,6 @@ mat-divider {
   margin: var(--space-10) 0;
 }
 
-/* Card Actions */
-mat-card-actions {
-  padding: var(--space-6) var(--space-10) var(--space-10) !important;
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-4);
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-primary);
-}
 
 /* Material Form Field Overrides */
 ::ng-deep .mat-mdc-form-field {
@@ -278,15 +269,6 @@ mat-card-actions {
   }
 
   .info-label {
-    width: 100%;
-  }
-
-  mat-card-actions {
-    padding: var(--space-6) !important;
-    flex-direction: column;
-  }
-
-  mat-card-actions button {
     width: 100%;
   }
 }

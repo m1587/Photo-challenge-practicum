@@ -42,8 +42,8 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
   public barChartType: ChartType = "bar"
   public isLoading = true
   public selectedTimeRange = "12"
-  public currentFontFamily = "Inter"
-  public currentFontSize = "medium"
+  // public currentFontFamily = "Inter"
+  // public currentFontSize = "medium"
 
   // Chart themes
   private chartThemes = {
@@ -89,72 +89,57 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
     },
   }
 
-  public barChartOptions: ChartConfiguration["options"] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
-        labels: {
-          font: {
-            family: this.currentFontFamily,
-          },
-        },
+public barChartOptions: ChartConfiguration["options"] = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: "top",
+      labels: {
+        // הסר את כל font
       },
-      tooltip: {
-        enabled: true,
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        titleFont: {
-          family: this.currentFontFamily,
-        },
-        bodyFont: {
-          family: this.currentFontFamily,
-        },
-        padding: 10,
-        cornerRadius: 4,
+    },
+    tooltip: {
+      enabled: true,
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      padding: 10,
+      cornerRadius: 4,
+      // הסר titleFont, bodyFont
+    },
+    title: {
+      display: false,
+      text: "Monthly Statistics",
+      // הסר font
+    },
+  },
+  scales: {
+    y: {
+      ticks: {
+        stepSize: 1,
+        precision: 0,
+        // הסר font
       },
-      title: {
+      beginAtZero: true,
+      grid: {
+        color: "rgba(0, 0, 0, 0.05)",
+      },
+    },
+    x: {
+      ticks: {
+        autoSkip: false,
+        // הסר font
+      },
+      grid: {
         display: false,
-        text: "Monthly Statistics",
-        font: {
-          family: this.currentFontFamily,
-          size: 16,
-          weight: "bold",
-        },
       },
     },
-    scales: {
-      y: {
-        ticks: {
-          stepSize: 1,
-          precision: 0,
-          font: {
-            family: this.currentFontFamily,
-          },
-        },
-        beginAtZero: true,
-        grid: {
-          color: "rgba(0, 0, 0, 0.05)",
-        },
-      },
-      x: {
-        ticks: {
-          autoSkip: false,
-          font: {
-            family: this.currentFontFamily,
-          },
-        },
-        grid: {
-          display: false,
-        },
-      },
-    },
-    animation: {
-      duration: 1000,
-      easing: "easeOutQuart",
-    },
-  }
+  },
+  animation: {
+    duration: 1000,
+    easing: "easeOutQuart",
+  },
+}
 
   public barChartData: ChartConfiguration["data"] = {
     labels: [],
@@ -184,14 +169,17 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
     // Register chart.js components
     Chart.register(...registerables)
   }
+  ngAfterViewInit(): void {
+    throw new Error("Method not implemented.")
+  }
   ngOnInit(): void {
     this.loadData()
   }
 
-  ngAfterViewInit(): void {
-    // Apply initial font settings
-    this.updateFontSettings()
-  }
+  // ngAfterViewInit(): void {
+  //   // Apply initial font settings
+  //   this.updateFontSettings()
+  // }
 
   loadData(): void {
     this.isLoading = true;
@@ -253,74 +241,6 @@ export class MonthlyPhotoReportComponent implements OnInit, AfterViewInit {
     if (this.chart) {
       this.chart.update()
     }
-  }
-
-  setFontFamily(fontFamily: string): void {
-    this.currentFontFamily = fontFamily
-    console.log("Font family set to:", this.currentFontFamily)
-    this.updateFontSettings()
-  }
-
-  setFontSize(size: string): void {
-    this.currentFontSize = size
-    this.updateFontSettings()
-  }
-
-  updateFontSettings(): void {
-    if (!this.barChartOptions || !this.barChartOptions.plugins || !this.barChartOptions.scales) return
-    console.log("Updating font settings:", this.currentFontFamily, this.currentFontSize)
-    // Update font size multiplier
-    const fontSizeMultiplier = this.currentFontSize === "small" ? 0.9 : this.currentFontSize === "large" ? 1.1 : 1
-
-    // Update legend fonts
-    if (this.barChartOptions.plugins.legend) {
-      this.barChartOptions.plugins.legend.labels = {
-        font: {
-          family: this.currentFontFamily,
-          size: 12 * fontSizeMultiplier,
-        },
-      }
-    }
-
-    // Update tooltip fonts
-    if (this.barChartOptions.plugins.tooltip) {
-      this.barChartOptions.plugins.tooltip.titleFont = {
-        family: this.currentFontFamily,
-        size: 14 * fontSizeMultiplier,
-      }
-      this.barChartOptions.plugins.tooltip.bodyFont = {
-        family: this.currentFontFamily,
-        size: 13 * fontSizeMultiplier,
-      }
-    }
-
-    // Update axis fonts
-    if (this.barChartOptions.scales["y"]) {
-      this.barChartOptions.scales["y"].ticks = {
-        ...this.barChartOptions.scales["y"].ticks,
-        font: {
-          family: this.currentFontFamily,
-          size: 11 * fontSizeMultiplier,
-        },
-      }
-    }
-
-    if (this.barChartOptions.scales["x"]) {
-      this.barChartOptions.scales["x"].ticks = {
-        ...this.barChartOptions.scales["x"].ticks,
-        font: {
-          family: this.currentFontFamily,
-          size: 11 * fontSizeMultiplier,
-        },
-      }
-    }
-
-    // Apply changes to chart
-    if (this.chart) {
-      this.chart.options = this.barChartOptions as ChartConfiguration["options"];
-      this.chart.update();
-    }
-
   }
 
   setChartTheme(theme: string): void {

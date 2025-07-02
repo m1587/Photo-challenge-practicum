@@ -39,12 +39,10 @@
     </div>
 
     <!-- Challenges Grid -->
-    <div *ngIf="!isLoadingHistory && finishedChallenges.length > 0" 
-         class="challenges-grid" 
-         [@staggerAnimation]="finishedChallenges.length">
-      <div *ngFor="let challenge of finishedChallenges; trackBy: trackByChallenge" 
-           class="challenge-card" [@slideInOut]>
-        
+    <div *ngIf="!isLoadingHistory && finishedChallenges.length > 0" class="challenges-grid"
+      [@staggerAnimation]="finishedChallenges.length">
+      <div *ngFor="let challenge of finishedChallenges; trackBy: trackByChallenge" class="challenge-card" [@slideInOut]>
+
         <div class="card-header">
           <div class="challenge-title">
             <h3>{{ challenge.title }}</h3>
@@ -57,19 +55,26 @@
 
         <div class="card-content">
           <p class="challenge-description">
-            {{ challenge.description.length > 150 ? (challenge.description | slice:0:150) + '...' : challenge.description }}
+            {{ challenge.description.length > 150 ? (challenge.description | slice:0:150) + '...' :
+            challenge.description }}
           </p>
 
           <div class="challenge-meta">
             <div class="meta-item">
               <mat-icon>schedule</mat-icon>
-              <span>Duration: 7 days</span>
+              <span>Duration: {{ getChallengeDuration(challenge) }} days</span>
             </div>
-            <div class="meta-item" *ngIf="challenge.winnerUserId || challenge.winnerImgId">
+            <div class="meta-item" *ngIf="challenge.winnerUserName">
               <mat-icon>emoji_events</mat-icon>
-              <span>Winner: {{ getWinnerInfo(challenge) }}</span>
+              <span>Winner: {{ challenge.winnerUserName }}</span>
             </div>
-            <div class="meta-item" *ngIf="!challenge.winnerUserId && !challenge.winnerImgId">
+            <div class="meta-item" *ngIf="challenge.winnerImageUrl">
+              <a [href]="challenge.winnerImageUrl" target="_blank" class="winner-link" matTooltip="View winning photo">
+                <mat-icon>image</mat-icon>
+              </a>
+              <img [src]="challenge.winnerImageUrl" alt="Winning Image" class="winner-thumbnail" />
+            </div>
+            <div class="meta-item" *ngIf="!challenge.winnerUserName">
               <mat-icon>info_outline</mat-icon>
               <span>No winner selected</span>
             </div>

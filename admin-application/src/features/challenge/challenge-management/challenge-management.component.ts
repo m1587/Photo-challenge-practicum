@@ -13,7 +13,6 @@ import { MatMenuModule } from "@angular/material/menu"
 import { MatTooltipModule } from "@angular/material/tooltip"
 import { MatDividerModule } from "@angular/material/divider"
 import { trigger, transition, style, animate } from "@angular/animations"
-import type { User } from "../../../core/moduls/User"
 import { AuthService } from "../../../services/auth/auth.service"
 import { MatDialogModule } from "@angular/material/dialog"
 import { ChallengeCreateComponent } from "../challenge-create/challenge-create.component"
@@ -68,10 +67,7 @@ export class ChallengeManagementComponent implements OnInit {
   userWinnerName: string | null = null
 
   constructor(
-    private http: HttpClient,
     private challengeService: ChallengeService,
-    private authService: AuthService,
-    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -109,7 +105,13 @@ export class ChallengeManagementComponent implements OnInit {
   toggleForm() {
     this.showForm = !this.showForm
   }
-
+  getChallengeDuration(challenge: Challenge): number {
+    const start = new Date(challenge.startDate)
+    const end = new Date(challenge.endDate)
+    const diffInMs = end.getTime() - start.getTime()
+    const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24))
+    return diffInDays
+  }
   updateWinner(challengeId: number) {
     if (!challengeId) return
 
@@ -156,22 +158,6 @@ export class ChallengeManagementComponent implements OnInit {
     this.loadActiveChallenge()
     this.loadChallengeStats()
   }
-
-  getWinnerInfo(challenge: Challenge): string {
-    if (challenge.winnerUserId) {
-      this.authService.getUserById(challenge.winnerUserId).subscribe({
-        next: (user: User) => {
-          this.userWinnerName = user.name
-        },
-        error: (err: any) => {
-          console.error("Error fetching user:", err)
-        },
-      })
-      return `${this.userWinnerName}`
-    }
-    return challenge.winnerImgId ? "Winner Selected" : "No Winner"
-  }
-
   closeHistory() {
     this.showHistory = false
   }

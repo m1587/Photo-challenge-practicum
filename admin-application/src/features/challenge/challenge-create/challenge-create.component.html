@@ -39,7 +39,7 @@
             <div class="ai-controls">
               <mat-form-field appearance="outline" class="topic-input">
                 <mat-label>Topic for AI Generation</mat-label>
-                <input matInput [(ngModel)]="topicInput" [ngModelOptions]="{standalone: true}"
+                <input matInput [(ngModel)]="topicInput" [ngModelOptions]="{standalone: true}"  (keydown.enter)="$event.preventDefault()" 
                   placeholder="Enter a topic (e.g., winter, nature, city life)">
                 <mat-icon matPrefix>lightbulb</mat-icon>
               </mat-form-field>
@@ -56,7 +56,7 @@
             <div *ngIf="generatedDescription" class="generated-preview">
               <div class="preview-header">
                 <span>Generated Description Preview</span>
-                <button mat-icon-button (click)="useGeneratedDescription()" matTooltip="Use this description">
+                <button mat-icon-button type="button" (click)="useGeneratedDescription()" matTooltip="Use this description">
                   <mat-icon>check_circle</mat-icon>
                 </button>
               </div>
@@ -91,16 +91,6 @@
                 <mat-error *ngIf="challengeForm.get('duration')?.hasError('max')">
                   Duration cannot exceed 30 days
                 </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline" class="half-width">
-                <mat-label>Difficulty Level</mat-label>
-                <mat-select formControlName="difficulty">
-                  <mat-option value="easy">Easy</mat-option>
-                  <mat-option value="medium">Medium</mat-option>
-                  <mat-option value="hard">Hard</mat-option>
-                </mat-select>
-                <mat-icon matPrefix>trending_up</mat-icon>
               </mat-form-field>
             </div>
           </div>

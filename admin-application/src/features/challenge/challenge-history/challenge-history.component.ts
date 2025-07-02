@@ -1,7 +1,7 @@
 import { Component, EventEmitter, type OnInit, Output } from "@angular/core"
 import { ChallengeService } from "../../../services/challenge/challenge.service"
 import { AuthService } from "../../../services/auth/auth.service"
-import type { Challenge } from "../../../core/moduls/Challenge"
+import { Challenge } from "../../../core/moduls/Challenge"
 import type { User } from "../../../core/moduls/User"
 import { CommonModule } from "@angular/common"
 import { MatButtonModule } from "@angular/material/button"
@@ -57,9 +57,10 @@ export class ChallengeHistoryComponent implements OnInit {
   constructor(
     private challengeService: ChallengeService,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
     this.loadFinishedChallenges()
   }
 
@@ -69,7 +70,7 @@ export class ChallengeHistoryComponent implements OnInit {
       next: (challenges) => {
         this.finishedChallenges = challenges
         this.isLoadingHistory = false
-        console.log("Loaded finished challenges:", challenges)
+        console.log("Loaded finished challenges:", this.finishedChallenges)
       },
       error: (err) => {
         console.error("Error loading finished challenges:", err)
@@ -77,25 +78,18 @@ export class ChallengeHistoryComponent implements OnInit {
         this.finishedChallenges = []
       },
     })
+
   }
 
   trackByChallenge(index: number, challenge: Challenge): number {
     return challenge.id
   }
-
-  getWinnerInfo(challenge: Challenge): string {
-    if (challenge.winnerUserId) {
-      this.authService.getUserById(challenge.winnerUserId).subscribe({
-        next: (user: User) => {
-          this.userWinnerName = user.name
-        },
-        error: (err: any) => {
-          console.error("Error retrieving user:", err)
-        },
-      })
-      return `${this.userWinnerName}`
-    }
-    return challenge.winnerImgId ? "Winner Selected" : "No Winner"
+  getChallengeDuration(challenge: Challenge): number {
+    const start = new Date(challenge.startDate)
+    const end = new Date(challenge.endDate)
+    const diffInMs = end.getTime() - start.getTime()
+    const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24))
+    return diffInDays
   }
 
   onClose() {
@@ -103,6 +97,7 @@ export class ChallengeHistoryComponent implements OnInit {
   }
 
   refreshHistory() {
+
     this.loadFinishedChallenges()
   }
 }

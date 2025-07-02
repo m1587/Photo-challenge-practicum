@@ -16,6 +16,7 @@ export class AuthService {
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(user));
   }
+  
 
   getUser(): User | null {
     if (this.currentUser) {
@@ -30,6 +31,7 @@ export class AuthService {
 
     return null;
   }
+
   clearUser(): void {
     this.currentUser = null;
     localStorage.removeItem('currentUser');

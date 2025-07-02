@@ -17,10 +17,6 @@
             <mat-icon>download</mat-icon>
             <span>Export Report</span>
           </button>
-          <button mat-menu-item [matMenuTriggerFor]="fontMenu">
-            <mat-icon>format_size</mat-icon>
-            <span>Font Options</span>
-          </button>
           <button mat-menu-item [matMenuTriggerFor]="themeMenu">
             <mat-icon>palette</mat-icon>
             <span>Chart Theme</span>
@@ -47,31 +43,7 @@
           </button>
         </mat-menu>
 
-        <mat-menu #fontMenu="matMenu">
-          <button mat-menu-item (click)="setFontFamily('Inter')">
-            <span [style.fontFamily]="'Inter'">Inter</span>
-          </button>
-          <button mat-menu-item (click)="setFontFamily('Roboto')">
-            <span [style.fontFamily]="'Roboto'">Roboto</span>
-          </button>
-          <button mat-menu-item (click)="setFontFamily('Open Sans')">
-            <span [style.fontFamily]="'Open Sans'">Open Sans</span>
-          </button>
-          <button mat-menu-item (click)="setFontFamily('Arial')">
-            <span [style.fontFamily]="'Arial'">Arial</span>
-          </button>
-          <mat-divider></mat-divider>
-          <button mat-menu-item (click)="setFontSize('small')">
-            <span style="font-size: 0.9em">Small Text</span>
-          </button>
-          <button mat-menu-item (click)="setFontSize('medium')">
-            <span style="font-size: 1em">Medium Text</span>
-          </button>
-          <button mat-menu-item (click)="setFontSize('large')">
-            <span style="font-size: 1.1em">Large Text</span>
-          </button>
-        </mat-menu>
-
+      
         <mat-menu #themeMenu="matMenu">
           <button mat-menu-item (click)="setChartTheme('default')">
             <div class="theme-preview default-theme"></div>

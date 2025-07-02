@@ -135,6 +135,7 @@
 
 /* Form Header */
 .form-header {
+   width: 100%;
   display: flex;
   align-items: center;
   padding: var(--space-8);

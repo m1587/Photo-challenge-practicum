@@ -63,7 +63,6 @@ export class ChallengeCreateComponent {
       title: ["", [Validators.required, Validators.minLength(3)]],
       description: ["", [Validators.required, Validators.minLength(10)]],
       duration: [7, [Validators.min(1), Validators.max(30)]],
-      difficulty: ["medium"],
     })
   }
 
@@ -94,7 +93,6 @@ export class ChallengeCreateComponent {
   onClose() {
     this.challengeForm.reset({
       duration: 7,
-      difficulty: "medium",
     })
     this.generatedDescription = ""
     this.topicInput = ""
@@ -112,7 +110,6 @@ export class ChallengeCreateComponent {
           })
           this.challengeForm.reset({
             duration: 7,
-            difficulty: "medium",
           })
           this.generatedDescription = ""
           this.topicInput = ""

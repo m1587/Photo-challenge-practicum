@@ -32,9 +32,6 @@ import { ERole } from "../../core/moduls/ERole"
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup
   currentUser: User | null = null
-  isEditing = false
-  isSaving = false
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -42,9 +39,10 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getUser()
-    this.initForm()
+    this.currentUser = this.authService.getUser();
+    this.initForm();
   }
+
 
   initForm(): void {
     this.profileForm = this.fb.group({
@@ -57,57 +55,6 @@ export class ProfileComponent implements OnInit {
 
     this.profileForm.disable()
   }
-
-  toggleEdit(): void {
-    this.isEditing = !this.isEditing
-
-    if (this.isEditing) {
-      this.profileForm.enable()
-    } else {
-      this.profileForm.disable()
-      this.initForm() 
-    }
-  }
-
-  saveProfile(): void {
-    if (this.profileForm.invalid) return
-
-    this.isSaving = true
-
-    const formValues = this.profileForm.value
-
-    if (this.currentUser) {
-      this.authService
-        .updateUser(this.currentUser.id, formValues)
-        .subscribe({
-          next: (updatedUser) => {
-            this.currentUser = updatedUser
-            this.isSaving = false
-            this.isEditing = false
-            this.profileForm.disable()
-            console.log("Profile updated successfully:", updatedUser)
-            // Update stored user
-            localStorage.setItem("currentUser", JSON.stringify(updatedUser))
-
-            this.snackBar.open("Profile updated successfully", "Close", {
-              duration: 3000,
-              panelClass: ["snackbar-success"],
-            })
-            window.location.reload();
-          },
-          error: (err) => {
-            console.error("Error updating profile:", err)
-            this.isSaving = false
-
-            this.snackBar.open("Failed to update profile", "Close", {
-              duration: 3000,
-              panelClass: ["snackbar-error"],
-            })
-          },
-        })
-    }
-  }
-
   getUserInitials(): string {
     if (!this.currentUser?.name) return ""
     const nameParts = this.currentUser.name.split(" ")

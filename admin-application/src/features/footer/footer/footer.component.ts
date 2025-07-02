@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-
+import { AuthService } from '../../../services/auth/auth.service';
 @Component({
   selector: 'app-footer',
   imports: [CommonModule, MatIconModule, MatButtonModule, MatDividerModule, RouterLink],
@@ -12,5 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
+
+constructor(public authService: AuthService) {}
  currentYear = new Date().getFullYear()
 }

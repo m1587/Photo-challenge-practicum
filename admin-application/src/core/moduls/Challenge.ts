@@ -3,8 +3,9 @@ export class Challenge {
         public id: number,
         public title: string,
         public description: string,
-        public duration: string,
-        public winnerImgId?: number | null,
-        public winnerUserId?: number | null,
+        public startDate: string,
+        public endDate: string,
+        public winnerImageUrl?: string | null,
+        public winnerUserName?: string | null,
     ) { }
 }

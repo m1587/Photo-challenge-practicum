@@ -68,12 +68,18 @@
   font-size: var(--font-size-base);
 }
 
-/* Links Section */
+ 
 .footer-links {
   flex: 2;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-12);
+  gap: var(--space-4); /* מרווח קטן יותר ביניהם */
+  justify-content: flex-end; /* יישור לימין */
+}
+a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: default;
 }
 
 .links-column {
