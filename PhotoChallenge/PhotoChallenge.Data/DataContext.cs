@@ -16,8 +16,15 @@ namespace PhotoChallenge.Data
         public DbSet<Image> Images { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            string dbServer = Environment.GetEnvironmentVariable("DB_SERVER");
+            string dbPort = Environment.GetEnvironmentVariable("DB_PORT");
+            string dbName = Environment.GetEnvironmentVariable("DB_DATABASE");
+            string dbUser = Environment.GetEnvironmentVariable("DB_USER");
+            string dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+            string connectionString = $"Server={dbServer};Port={dbPort};Database={dbName};User={dbUser};Password={dbPassword}";
             optionsBuilder.UseMySql(
-               @"Server=btqq5f1cn9nne7cyrqrr-mysql.services.clever-cloud.com;Port=3306;Database=btqq5f1cn9nne7cyrqrr;User=uxwrf8zl2kvyjklr;Password=WsmHc65KprRKxTf928gE",
+              @connectionString,
                 new MySqlServerVersion(new Version(9, 0, 0))
             );
         }
